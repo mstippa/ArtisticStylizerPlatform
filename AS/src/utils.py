@@ -11,8 +11,7 @@ WIDTH = 64
 CHANNELS = 3
 
 
-# http://cocodataset.org/#download
-# https://github.com/pdollar/coco
+
 
 class prjPaths:
     def __init__(self, getDataset=True):
