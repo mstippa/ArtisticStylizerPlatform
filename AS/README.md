@@ -6,20 +6,21 @@
 * getMSCOCO downloads mscoco dataset...may already be in mscoco api [getMSCOCO.sh](src/getMSCOCO.sh)
 
 ## TODOs
-Make sure that download and mscoco python api is set up
+### Make sure that download and mscoco python api is set up
 * [mscoco home](http://cocodataset.org/#home)
 * [mscoco dataset](http://cocodataset.org/#download)
 * [mscoco python api](https://github.com/pdollar/coco)
 
-## What this repo provides
+### Implement for Image Style Transfer
+* [Perceptual Losses For Real Time Style Transfer Super Resolution](https://arxiv.org/abs/1603.08155)
 
-### Image Style Transfer
-<img src="lib/demo/img.png" align="center" height="600" width="400">
+### Implement for Video Style Transfer
+* [Real-Time Neural Style Transfer for Videos](http://openaccess.thecvf.com/content_cvpr_2017/papers/Huang_Real-Time_Neural_Style_CVPR_2017_paper.pdf)
 
+### Persist Models
+* [Saving and Restoring](https://www.tensorflow.org/programmers_guide/saved_model)
 
-### Video Style Transfer
-![video style transfer](/lib/demo/video.gif)
-
+### Build APIs for Webserver
 
 ## References
 Image
