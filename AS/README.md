@@ -14,11 +14,11 @@ Make sure that download and mscoco python api is set up
 ## What this repo provides
 
 Image Style Transfer
-<img src="/../lib/demo/img.png" align="center" height="400" width="400">
+<img src="../lib/demo/img.png" align="center" height="400" width="400">
 
 
 Video Style Transfer
-<img src="/../lib/demo/video.gif" align="center" height="400" width="400">
+<img src="../lib/demo/video.gif" align="center" height="400" width="400">
 
 
 ## References
