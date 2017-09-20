@@ -1,5 +1,8 @@
 # Artistic Style Transfer
 
+Warming: All content found in this directory including this README file is confidential and not to be
+shared with members outside of this group (Rivas_T4).
+
 ## Files in this directory
 * MSCOCO data processing [dataProcessing.py](src/dataProcessing.py)
 * directory utilities [utils.py](src/utils.py)
@@ -12,15 +15,16 @@
 * [mscoco python api](https://github.com/pdollar/coco)
 
 ### Implement for Image Style Transfer
-* [Perceptual Losses For Real Time Style Transfer Super Resolution](https://arxiv.org/abs/1603.08155)
-
-### Implement for Video Style Transfer
 * [Fast Patch-based Style Transfer of Arbitrary Style](https://arxiv.org/abs/1612.04337) with code here: https://github.com/rtqichen/style-swap
 OR
 * [A Learned Representation For Artistic Style](https://arxiv.org/abs/1610.07629)
 WITH for improved image quality
 * [Instance Normalization: The Missing Ingredient for Fast Stylization](https://arxiv.org/abs/1607.08022)
 * [Improved Texture Networks: Maximizing Quality and Diversity in Feed-forward Stylization and Texture Synthesis](https://arxiv.org/abs/1701.02096)
+
+### Implement for Video Style Transfer
+# pending
+
 
 
 ### Persist Models
