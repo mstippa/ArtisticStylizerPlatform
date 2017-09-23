@@ -1,0 +1,36 @@
+september 20, 2017
+
+
+* 3 relational rules:
+      1) 1nf: all intersections of rows and columns are atomic
+      2) 2nf: in 1nf and no partial key dependencies {A,B} → {C} but also {A} → {C} then {C} is partially functionally dependent on {A,B}.
+      what not where rule: you cannot interact with a table in a positional way
+      3) 3nf: all rows are unique
+Goal is 3nf or bcnf
+
+* 4 cardinalities:
+
+create table emp(
+    eid as primary key,
+    fn,
+    ln,
+    dob
+)
+
+create table hobbies(
+    hid as primary key,
+    name,
+    doc
+)
+
+create table eh(
+    eid as foreign key, -- these two create a composite key
+    hid as foreign key,
+)
+
+* weak entities and strong entities
+must 'kill' children before we 'kill' parents
+* delete cascade
+
+* stored procedures
+allow use to put logic in the database that is not of a declarative nature
