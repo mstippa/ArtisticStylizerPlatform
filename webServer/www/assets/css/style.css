@@ -10,6 +10,20 @@ html { overflow-y: scroll; }
 
 /* buttons */
 .button {
+	background-color: #FA7470 !important;
+	width: 100%;
+}
+
+.modal-button {
+	background-color: #FA7470 !important;
+	color: black !important;
+}
+
+.navbar-inverse .navbar-toggle{
+	background-color: #FA7470;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
 	background-color: #FA7470;
 }
 
@@ -34,6 +48,7 @@ html { overflow-y: scroll; }
 
 .navbar li a {
 	color: black !important;
+	padding-right: 30px;
 }
 
 .navbar li a:hover {
@@ -61,8 +76,7 @@ html { overflow-y: scroll; }
 }
 
 .navbar-inverse .navbar-nav>li>a:hover {
-	background-color: #FA7470;
-	color: white;
+	color: #FA7470 !important;
 }
 
 .profile {
@@ -156,16 +170,25 @@ html { overflow-y: scroll; }
 	width: 100%;
 	height: 525px;
 	z-index: -1;
-	background-image: url("/assets/images/blurryback3.jpg");
+	/*background-image: url("./assblurryback3.jpg");*/
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
+#image-wrapper {
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
 /* ---- grid ---- */
+
+.content {
+	margin-top: 575px;
+}
 
 .grid {
   /*background: #DDD;*/
-  margin-top: 575px;
 }
 
 /* clearfix */
@@ -207,11 +230,9 @@ html { overflow-y: scroll; }
 
 .footer-container {
 	width: 100%;
-	position: relative;
-	bottom: 0px;
 	border-top: 1px solid #FA7470;
 	height: 125px;
-	margin-top: 100px;
+	margin-top: 200px;
 	text-align: center;
 	line-height: 125px;
 	color: gray;
@@ -235,4 +256,145 @@ html { overflow-y: scroll; }
 	margin-top: 25px;
 	font-size: 20px;
 	text-align: left;
+}
+
+/* ---- Profile Page Content ---- */
+
+.profile-container {
+	margin-top: 125px;
+}
+
+#pwd-label {
+	margin-top: 15px;
+}
+
+
+/* ---- Create Account Content ---- */
+
+.subscripitions {
+	height: 175px;
+	border: 1px solid #333;
+	border-radius: 15px;
+	margin-right: 10px;
+	padding: 0px;
+	overflow: hidden;
+	background-color: #F9F3F1;
+}
+
+.subscripitions-title {
+	width: 100%;
+	background-color: #FA7470;
+	margin: 0px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.subscripitions-amount {
+	margin-top: 35px;
+}
+
+.subscripitions-descrip {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.subscripitions-footer {
+	font-size: 12px;
+	background-color: #E8E4E1;
+	bottom: 0px;
+	position: absolute;
+	margin: 0px;
+	padding-bottom: 5px;
+	color: #B1ACA9;
+	width: 100%;
+}
+
+.free-subscription {
+	margin-top: 10px;
+	border: 1px solid #333;
+	border-radius: 15px;
+	/*text-align: center;*/
+	height: 35px;
+	line-height: 35px;
+	background-color: #E7D3CB;
+	padding-left: 15px;
+}
+
+#play-arrow {
+	line-height: 35px;
+	float:right;
+}
+
+.create-account-form {
+	margin-top: 60px;
+}
+
+
+/* ---- Admin Page ---- */
+
+.chart {
+
+}
+
+
+/* ---- Explore Page ---- */
+
+.explore-content {
+	margin-top: 200px;
+}
+
+#explore-title {
+	font-size: 45px;
+}
+
+
+/* ---- Explore Page Search bar ---- */
+
+
+#custom-search-input{
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+		margin-top: 50px;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 23px;
+}
+
+.glyphicon-search {
+	color: #FA7470;
+}
+
+
+/* ---- Account Page ---- */
+
+.account-content {
+	margin-top: 200px;
 }

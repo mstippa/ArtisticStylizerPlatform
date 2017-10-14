@@ -30,7 +30,7 @@ exports.build = function(title, pagetitle, content){
         	'<div class="collapse navbar-collapse" id="myNavbar">',
           	'<ul class="nav navbar-nav navbar-right">',
               '<li><a href="#"><span></span>About</a><li>',
-            	'<li><a href="login.html"><span></span>Login</a></li>',
+            	'<li><a href="login"><span></span>Login</a></li>',
           	'</ul>',
         	'</div>',
       	'</div>',

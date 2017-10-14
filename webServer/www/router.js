@@ -24,23 +24,22 @@ exports.get = function(request, response){
 				response.end();
 		});
 	}else if(/.(jpg)$/.test(path) || /.(png)$/.test(path)){
+    // get the img
+		var img = fs.readFileSync(path.substring(1));
+		response.writeHead(200, {
+    	'Content-Type': 'image/gif'
+    });
+		console.log("path: "+path.substring(1));
+		response.end(img, 'binary');
+
+  }else if(/.(js)$/.test(path) ){
                 // get the img
 		var img = fs.readFileSync(path.substring(1));
 
 		response.writeHead(200, {
-                                'Content-Type': 'image/gif'
-                });
+    		'Content-Type': 'text/javascript'
+    });
 		response.end(img, 'binary');
-
-        }else if(/.(js)$/.test(path) ){
-		response.writeHead(200, {
-			'Content-Type': 'text/javascript'
-		});
-		fs.readFile(__dirname +path, 'utf8', function(err, data){
-				if(err) throw err;
-				response.write(data,'utf8');
-				response.end();
-		});
 	}else{
 		//sending the request to the correct controller if not CSS file
 		if(path === '/' || path === '/home'){
@@ -49,6 +48,16 @@ exports.get = function(request, response){
 			require('./controllers/about-controller').get(request, response);
 		} else if (path === '/login') {
 				require('./controllers/login-controller').get(request, response);
+		} else if (path === '/create-account') {
+					require('./controllers/create-account-controller').get(request, response);
+		} else if (path === '/profile') {
+					require('./controllers/profile-controller').get(request, response);
+		} else if (path === '/admin') {
+				require('./controllers/admin-controller').get(request, response);
+		} else if (path === '/explore') {
+			 	require('./controllers/explore-controller').get(request, response);
+		} else if (path === '/account') {
+				require('./controllers/account-controller').get(request, response);
 		}else
 			require('./controllers/404').get(request, response);
 		}
