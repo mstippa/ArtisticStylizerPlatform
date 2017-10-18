@@ -14,6 +14,7 @@ exports.build = function(title, pagetitle, content){
       '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>',
       '<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>',
       '<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>',
+      '<script type="text/javascript" src="assets/javascript/helper.js"></script>',
       '<link rel="stylesheet" type="text/css" href="assets/css/style.css">',
     '</head>',
     '<body>',

@@ -15,7 +15,7 @@ exports.build = function(){
       '<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>',
       '<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>',
       '<script type="text/javascript" src="assets/javascript/chart.js"></script>',
-      '<script type="text/javascript" src="assets/javascript/expand-table.js"></script>',
+      '<script type="text/javascript" src="assets/javascript/helper.js"></script>',
       '<link rel="stylesheet" type="text/css" href="assets/css/style.css">',
     '</head>',
     '<body>',

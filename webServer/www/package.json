@@ -1,11 +1,10 @@
 {
-	"name": "Artistic Styler",
-	"version": "1.0.0",
-	"description": "this is the backend to the artistic styler platform system",
-	"main": "index.js",	
-	"scripts" {
-		"test" :"echo \"Error: no test specified\" && exit 1",
-		"start": "nodejs index.js"
+	"name" : "asp",
+	"version" : "1.0.1",
+	"description" : "artisticStylizerPlatform's webserver code",
+	"main" : "server.js",	
+	"scripts" : {
+		"start" : "node server.js"
 	},
 	"author" : "Enter team names"
 }

@@ -1,7 +1,13 @@
+//initalize db
+var db = require('./db');
+
+
 //this is the port and ip information we will listen for
 //should be set to the web server
 var http_IP = '10.10.7.179';
 var http_port = 8080;
+
+
 
 //basic node.js module for http
 var http = require('http');
@@ -25,5 +31,15 @@ var server = http.createServer(function(request, response){
 	//the router directs the request to the correct controller
 	require('./router').get(request,response);
 });//end server()
-server.listen(http_port,http_IP); //listen to the ip at the port specified above
-console.log('listening to http://' + http_IP + ':' + http_port); //output to console
+
+//connect to the database then listen for requests
+db.connect(db.MODE_PRODUCTION, function(err){
+	if(err) {
+		console.log('Unable to connect to mysql');
+		process.exit(1);
+	} else { 
+		server.listen(http_port,http_IP); //listen to the ip at the port specified above
+		console.log('listening to http://' + http_IP + ':' + http_port); //output to console
+
+	}
+})

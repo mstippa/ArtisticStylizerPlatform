@@ -8,23 +8,23 @@
 	user.
 
 **/
-
-//things we need -- the test data and the homepage html template
+var User = require('../model/user');
 var template = require('../views/view-home');
-var test_data = require('../model/test-data');
+var db = require('../db');
 
 
 exports.get = function(request, response) {
 
-	//get each profile and output the email address
-	var profiles = test_data.profiles;
-	var email = "";
-		i = 0;
-	for(i = 0 ; i < profiles.count; ){
-		email = email + "<li>" + profiles.profiles[i].email + "</li>";
-		i = i+1;
-	}
-	email = "<ul> " + email + "</ul>";
+
+	//TESTING USER OBJECT TO READ DATABASE
+	var user = new User();
+	user.getUser(1, function(err, newUser){
+		if(err) throw err;
+
+		//NO ERROR SO LETS DO SOMETHING WITH OUR USER WE FOUND
+		user = newUser;
+		console.log(user);
+	});
 
 	//put in the headers that we were successful
 	response.writeHead(200, {
@@ -34,8 +34,8 @@ exports.get = function(request, response) {
 	//write the response with the 3 input parameters title, pagetitle, content
 	response.write(template.build(
 		"Test web page on node.js",
-		"" + profiles.subscriptionStatus + " user emails",
-		"<p>The emails of ASP's Premium Users are:</p>" + email)
+		"user emails",
+		"<p>The emails of ASP's Premium Users are:</p>")
 	);
 	response.end();
-};
+}

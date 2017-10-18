@@ -12,8 +12,7 @@ exports.get = function(request, response){
 	var path = request.requrl.pathname;
 	path = path.toLowerCase();
 
-	//testing to see whether the request is for a CSS file and loading it in if
-	//so.
+	
 	if(/.(css)$/.test(path)){
 		response.writeHead(200, {
 				'Content-Type': 'text/css'
@@ -23,16 +22,20 @@ exports.get = function(request, response){
 				response.write(data, 'utf8');
 				response.end();
 		});
-	}else if(/.(jpg)$/.test(path) || /.(png)$/.test(path)){
-    // get the img
+
+	} else if(/.(jpg)$/.test(path) || /.(png)$/.test(path)){
+    	// get the img
 		var img = fs.readFileSync(path.substring(1));
+		
+		//write the response header
 		response.writeHead(200, {
-    	'Content-Type': 'image/gif'
-    });
-		console.log("path: "+path.substring(1));
+    		'Content-Type': 'image/gif'
+    	});
+
+		//send the img back as a binary
 		response.end(img, 'binary');
 
-  }else if(/.(js)$/.test(path) ){
+	} else if(/.(js)$/.test(path) ){
                 // get the img
 		var img = fs.readFileSync(path.substring(1));
 
@@ -40,7 +43,8 @@ exports.get = function(request, response){
     		'Content-Type': 'text/javascript'
     });
 		response.end(img, 'binary');
-	}else{
+	
+	} else{
 		//sending the request to the correct controller if not CSS file
 		if(path === '/' || path === '/home'){
 			require('./controllers/home').get(request, response);
@@ -60,5 +64,5 @@ exports.get = function(request, response){
 				require('./controllers/account-controller').get(request, response);
 		}else
 			require('./controllers/404').get(request, response);
-		}
+	}
 }

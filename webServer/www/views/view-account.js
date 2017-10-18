@@ -15,6 +15,7 @@ exports.build = function(title, pagetitle, content){
       '<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>',
       '<link rel="stylesheet" type="text/css" href="assets/css/style.css">',
     	'<script type="text/javascript" src="assets/javascript/home-grid.js"></script>',
+      '<script type="text/javascript" src="assets/javascript/helper.js"></script>',
     '</head>',
     '<body>',
     	'<nav class="navbar navbar-inverse">',

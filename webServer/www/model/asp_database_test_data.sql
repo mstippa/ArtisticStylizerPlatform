@@ -71,7 +71,7 @@ INSERT INTO styles (style_path)
 
 -- premium_styles table test data
 INSERT INTO premium_styles (style_path)
-	VALUES ("/etc/ArtisticStylizerPlatform/webServer/www/assets/premium_styles/premiumStyle1.png");
+	VALUES ("/etc/ArtisticStylizerPlatform/webServer/www/userData/premium_styles/premiumStyle1.png");
 
 -- profile table test data
 INSERT INTO profiles (user_id)

@@ -10,6 +10,7 @@
 **/
 
 //things we need -- the test data and the homepage html template
+var User = require('../model/user');
 var template = require('../views/view-login');
 
 
@@ -24,6 +25,7 @@ exports.get = function(request, response) {
 	response.write(template.build(
 		)
 	);
+
 
 	response.end();
 };
