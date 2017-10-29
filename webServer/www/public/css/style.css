@@ -1,0 +1,440 @@
+body {
+	font-family: 'Libre Franklin', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+/* force scrollbar */
+html { overflow-y: scroll; }
+
+
+/* buttons */
+.button {
+	background-color: #FA7470 !important;
+	width: 100%;
+}
+
+.modal-button {
+	background-color: #FA7470 !important;
+	color: black !important;
+}
+
+.navbar-inverse .navbar-toggle{
+	background-color: #FA7470;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+	background-color: #FA7470;
+}
+
+/*.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+	background-color: #FA7470;
+	border-color: black;
+}*/
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+	background-color: #FA7470;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+/* ----- Navigation Bar ------ */
+
+.navbar {
+	position:relative;
+
+	padding-bottom:5px;
+}
+
+.navbar-fixed {
+	top:0;
+	z-index: 100;
+	position: fixed;
+	width: 100%;
+	background-color:white;
+	height:100px;
+}
+.navbar-right{
+	float:right;
+}
+.navbar-links{
+	position:absolute;
+	right:5px;
+	bottom:0;	
+}
+.logo {
+	position: absolute;
+	left: 0;
+	
+}
+.navbar-content {
+
+}
+.navbar li a {
+	color: black !important;
+	padding-right: 30px;
+}
+
+.navbar li a:hover {
+	color: #FA7470;
+}
+
+.navbar .navbar-brand  {
+	color: #FA7470;
+}
+
+.navbar-brand:focus, .navbar-inverse .navbar-brand:hover {
+	color: #FA7470;
+	height: 100px;
+	width : 125px;
+}
+
+.sign-up {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #FA7470;
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+	margin-right: 15px;
+	margin-top: 11px;
+	padding-top: 4px !important;
+	padding-bottom: 4px !important;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+	color: #FA7470 !important;
+}
+
+.profile {
+	padding: 0px !important;
+}
+
+.open .profile {
+	background-color: transparent !important;
+}
+
+#profilePic {
+	border-radius: 100%;
+}
+
+.dropdown a:hover {
+	background-color: #f1f1f1;
+}
+
+.show {display:block;}
+
+/* ----- Wrapper Section Home Page ------ */
+
+.wrapper {
+	position: absolute;
+	top: 5px;
+	width: 100%;
+	height: 525px;
+	display: flex;
+  	align-items: center;
+  	width: 100%;
+}
+
+.wrapper-content {
+	width: 50%;
+  margin: 0 auto;
+}
+
+.wrapper-copy {
+	/*text-align: center;*/
+	color: black !important;
+}
+
+#home-wrapper {
+	position: absolute;
+	top: 200px;
+}
+
+
+#upload {
+  font-size: 35px;
+  color: white;
+  padding: 25px;
+  background-color: #FA7470;
+  border-radius: 15px;
+  margin: auto;
+  opacity: .7;
+  overflow: hidden;
+	width: 50%;
+}
+
+.file-upload{display:block;text-align:center;font-size: 12px;}
+.file-upload .file-select{display:block;/*border: 2px solid #dce4ec;*/cursor:pointer;height:40px;line-height:40px;text-align:left;overflow:hidden;position:relative;}
+.file-upload .file-select .file-select-button{/*background:#dce4ec;*/padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select .file-select-name{line-height:40px;display:inline-block;padding:0 0px;}
+.file-upload .file-select:hover{border-color:#FA7470;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select:hover .file-select-button{background:#FA7470;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select{border-color:#3fa46a;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select .file-select-button{background:#FA7470;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select input[type=file]{z-index:100;cursor:pointer;position:absolute;height:100%;width:100%;top:0;left:0;opacity:0;filter:alpha(opacity=0);}
+.file-upload .file-select.file-select-disabled{opacity:0.65;}
+.file-upload .file-select.file-select-disabled:hover{cursor:default;display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;margin-top:5px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select.file-select-disabled:hover .file-select-button{/*background:#dce4ec;color:#666666;*/padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+
+#camera_icon {
+	vertical-align: middle;
+}
+
+#video_icon {
+	vertical-align: middle;
+}
+
+/* ----- Modal Section ------ */
+
+.modal-body {
+	text-align: center;
+}
+
+.styles {
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	height: 75px;
+	width: 75px;
+	display: inline-block;
+	margin: 10px;
+}
+
+#image {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 525px;
+	z-index: -1;
+	/*background-image: url("./assblurryback3.jpg");*/
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#image-wrapper {
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+/* ---- grid ---- */
+
+.content {
+	margin-top: 575px;
+}
+
+.grid {
+  /*background: #DDD;*/
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  /*height: 120px;*/
+  float: left;
+  background: #D26;
+  border: 2px solid #333;
+  /*border-color: hsla(0, 0%, 0%, 0.5);*/
+  /*border-radius: 5px;*/
+}
+
+.grid-item img {
+  display: block;
+  width: 100%;
+}
+
+/* ---- Login Content ---- */
+
+.login-container {
+	margin-top: 175px;
+}
+
+#login-error {
+	
+}
+
+
+/* ---- footer ---- */
+
+.footer-container {
+	width: 100%;
+	border-top: 1px solid #FA7470;
+	height: 125px;
+	margin-top: 200px;
+	text-align: center;
+	line-height: 125px;
+	color: gray;
+}
+
+.footer-content {
+	margin-left: 10px;
+	display: inline-block;
+
+}
+
+/* ---- About Page Content ---- */
+
+.about-title {
+	margin-top: 150px;
+	font-size: 40px;
+	color: #FA7470;
+}
+
+.about-content {
+	margin-top: 25px;
+	font-size: 20px;
+	text-align: left;
+}
+
+/* ---- Profile Page Content ---- */
+
+.profile-container {
+	margin-top: 125px;
+}
+
+#pwd-label {
+	margin-top: 15px;
+}
+
+
+/* ---- Create Account Content ---- */
+
+.subscripitions {
+	height: 175px;
+	border: 1px solid #333;
+	border-radius: 15px;
+	margin-right: 10px;
+	padding: 0px;
+	overflow: hidden;
+	background-color: #F9F3F1;
+}
+
+.subscripitions-title {
+	width: 100%;
+	background-color: #FA7470;
+	margin: 0px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.subscripitions-amount {
+	margin-top: 35px;
+}
+
+.subscripitions-descrip {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.subscripitions-footer {
+	font-size: 12px;
+	background-color: #E8E4E1;
+	bottom: 0px;
+	position: absolute;
+	margin: 0px;
+	padding-bottom: 5px;
+	color: #B1ACA9;
+	width: 100%;
+}
+
+.free-subscription {
+	margin-top: 10px;
+	border: 1px solid #333;
+	border-radius: 15px;
+	/*text-align: center;*/
+	height: 35px;
+	line-height: 35px;
+	background-color: #E7D3CB;
+	padding-left: 15px;
+}
+
+#play-arrow {
+	line-height: 35px;
+	float:right;
+}
+
+.create-account-form {
+	margin-top: 60px;
+}
+
+
+/* ---- Admin Page ---- */
+
+.chart {
+
+}
+
+
+/* ---- Explore Page ---- */
+
+.explore-content {
+	margin-top: 200px;
+}
+
+#explore-title {
+	font-size: 45px;
+}
+
+
+/* ---- Explore Page Search bar ---- */
+
+
+#custom-search-input{
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+		margin-top: 50px;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 23px;
+}
+
+.glyphicon-search {
+	color: #FA7470;
+}
+
+
+/* ---- Account Page ---- */
+
+.account-content {
+	margin-top: 200px;
+}

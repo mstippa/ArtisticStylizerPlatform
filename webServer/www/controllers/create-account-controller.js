@@ -14,16 +14,21 @@ var template = require('../views/view-create-account');
 
 
 
-exports.get = function(request, response) {
+exports.get = function(req, res) {
 
 	//put in the headers that we were successful
-	response.writeHead(200, {
-			'Content-Type':'text/html'
+	// response.writeHead(200, {
+	// 		'Content-Type':'text/html'
+	// });
+
+	return res.render("../views/create-account.ejs", { 
+		message : req.flash('signupMessage'),
+		user 	: req.user 
 	});
 
-	response.write(template.build(
-		)
-	);
-
-	response.end();
 };
+
+exports.post = function(req, res){
+	
+	return res.render("../views/create-account.ejs", { message: req.flash('signupMessage') });
+}

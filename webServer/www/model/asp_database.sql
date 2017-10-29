@@ -10,8 +10,8 @@
 		 table contraints are implemented here
 
 
-	Author:			Anthony Soricelli
-	Last edit:		10/8/2017
+	Author:			Anthony Soricelli, Morgan Stippa
+	Last edit:		10/24/2017
 
 *************************************************************/
 
@@ -51,7 +51,7 @@ use asp_database;
 CREATE TABLE IF NOT EXISTS `users` (
 	`user_id` 				int(11) 		NOT NULL		AUTO_INCREMENT,
 	`username` 				varchar(30) 	NOT NULL 		UNIQUE,
-	`email_address` 		varchar(30) 	NOT NULL 		UNIQUE,
+	`email_address` 		varchar(30) 	UNIQUE,
 	`password` 				varchar(255) 	NOT NULL,
 	`dob` 					DATE 			DEFAULT NULL,
 	`fname` 				varchar(20),
@@ -76,19 +76,6 @@ CREATE TABLE IF NOT EXISTS `subscriptions` (
 	`type`					varchar(30)		NOT NULL		UNIQUE,
 
 	PRIMARY KEY(`subscription_id`)
-);
-
--- Reported_Content table structure
-CREATE TABLE IF NOT EXISTS 'reported_content' (
-	'report_id'				int(11)			NOT NULL		AUTO_INCREMENT,
-	'reported_profile_id'	int(11)			NOT NULL,
-	'reporter_profile_id'	int(11)			NOT NULL,
-	'video_id'				int(11)			NOT NULL,
-	'picture_id'			int(11)			NOT NULL,
-	'date_reported'			TIMESTAMP 		DEFAULT CURRENT_TIMESTAMP,
-	'description'			varchar(255),
-
-	PRIMARY KEY('report_id')
 );
 
 -- payments table structure
@@ -184,6 +171,19 @@ CREATE TABLE IF NOT EXISTS `videos` (
 	`date_created`			TIMESTAMP		DEFAULT CURRENT_TIMESTAMP,
 
 	PRIMARY KEY(`video_id`)
+);
+
+-- Reported_Content table structure
+CREATE TABLE IF NOT EXISTS `reported_content` (
+	`report_id`				int(11)			NOT NULL		AUTO_INCREMENT,
+	`reported_profile_id`	int(11)			NOT NULL,
+	`reporter_profile_id`	int(11)			NOT NULL,
+	`video_id`				int(11)			NOT NULL,
+	`picture_id`			int(11)			NOT NULL,
+	`date_reported`			TIMESTAMP 		DEFAULT CURRENT_TIMESTAMP,
+	`description`			varchar(255),
+
+	PRIMARY KEY(`report_id`)
 );
 
  -- usages table structure

@@ -13,29 +13,12 @@ var template = require('../views/view-home');
 var db = require('../db');
 
 
-exports.get = function(request, response) {
+exports.get = function(req, res) {
 
 
-	//TESTING USER OBJECT TO READ DATABASE
 	var user = new User();
-	user.getUser(1, function(err, newUser){
-		if(err) throw err;
+	
 
-		//NO ERROR SO LETS DO SOMETHING WITH OUR USER WE FOUND
-		user = newUser;
-		console.log(user);
-	});
-
-	//put in the headers that we were successful
-	response.writeHead(200, {
-			'Content-Type':'text/html'
-	});
-
-	//write the response with the 3 input parameters title, pagetitle, content
-	response.write(template.build(
-		"Test web page on node.js",
-		"user emails",
-		"<p>The emails of ASP's Premium Users are:</p>")
-	);
-	response.end();
+	return res.render("../views/home.ejs", { user : req.user });
+	
 }

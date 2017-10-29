@@ -14,16 +14,12 @@ var template = require('../views/view-explore');
 
 
 
-exports.get = function(request, response) {
+exports.get = function(req, res) {
 
 	//put in the headers that we were successful
-	response.writeHead(200, {
-			'Content-Type':'text/html'
-	});
+	// response.writeHead(200, {
+	// 		'Content-Type':'text/html'
+	// });
 
-	response.write(template.build(
-		)
-	);
-
-	response.end();
+	return res.render("../views/explore.ejs", { user : req.user });
 };

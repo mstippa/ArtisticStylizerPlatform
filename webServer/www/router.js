@@ -1,68 +1,174 @@
+// make our router
+var express = require('express');
+var router  = express.Router();
+var passport = require('passport');
 
-// these are the file system (fs) and url modules that come as part of
-// node.js
-var url = require('url');
-var fs = require('fs');
+/********************************************************************
+* 				MIDDLEWARE SPECIFIC TO THIS ROUTER
+*********************************************************************/
+// called everytime router is used
+router.use(function log(req, res, next) {
+	//for now just log the time the route is being issued
+	console.log('Router     timeOfRoute: ', Date.now(), 'req: ', req.originalUrl);
+	//console.log('res', res);
+	//TODO statistics
 
-//this allows our server file (server.js) to use this get(request,response)
-//function, passing the request and response objects through
-exports.get = function(request, response){
-	//getting the path of the URL request
-	request.requrl = url.parse(request.url, true);
-	var path = request.requrl.pathname;
-	path = path.toLowerCase();
+	//next will call the corrisponding get or post
+	next();
+});
 
+
+/************************************************************************
+*							INDEX ROUTES
+************************************************************************/
+router.get('/home', function(req, res){
+	require('./controllers/home').get(req, res);
+});
+
+router.get('/', function(req, res){
+	require('./controllers/home').get(req, res);
+});
+
+router.post('/', function(req,res){
+	require('./controllers/home').get(req, res);
+});
+
+
+/************************************************************************
+*							ABOUT ROUTE
+************************************************************************/ 
+router.get('/about', function(req, res){
+	require('./controllers/about-controller').get(req, res);
+});
+
+
+
+/************************************************************************
+*							SIGNUP ROUTE
+************************************************************************/
+router.get('/create-account', function(req, res){
+	require('./controllers/create-account-controller').get(req, res);
+});
+
+router.post('/create-account', passport.authenticate('local-signup',
+		{ 
+		  successRedirect : '/profile', //r edirect to the secure profile section
+		  failureRedirect : '/create-account', //
+		  failureFlash: true // allow flash messages
+		})
+);
+
+/**
+router.post('/create-account', 
+	function(req, res, next){
+		passport.authenticate('local-signup', function(err, user, info){
+			
+			// there was an error, throw it
+			if(err) return next(err);
+
+			console.log("im here");
+			console.log(user);
+
+			//username probably already exists
+			if(user) return require('./controllers/about-controller').post(req, res, info);
+
+			// ok no errors lets log in
+			req.logIn(user, function(err){
+				if(err) return next(err);
+
+				return res.redirect('/profile');
+			})
+		})
+		next();
+	},
 	
-	if(/.(css)$/.test(path)){
-		response.writeHead(200, {
-				'Content-Type': 'text/css'
-		});
-		fs.readFile(__dirname +path, 'utf8', function(err,data){
-				if(err) throw err;
-				response.write(data, 'utf8');
-				response.end();
-		});
+);
+**/
 
-	} else if(/.(jpg)$/.test(path) || /.(png)$/.test(path)){
-    	// get the img
-		var img = fs.readFileSync(path.substring(1));
-		
-		//write the response header
-		response.writeHead(200, {
-    		'Content-Type': 'image/gif'
-    	});
+/************************************************************************
+*							LOGIN ROUTES
+************************************************************************/
+router.get('/login', function(req, res){
+	require('./controllers/login-controller').get(req, res);
+});
 
-		//send the img back as a binary
-		response.end(img, 'binary');
+router.post('/login', passport.authenticate('local-login', 
+		{
+			successRedirect : '/profile',
+			failureRedirect : '/login',
+			failureFlash    : true
+		})
+);
 
-	} else if(/.(js)$/.test(path) ){
-                // get the img
-		var img = fs.readFileSync(path.substring(1));
 
-		response.writeHead(200, {
-    		'Content-Type': 'text/javascript'
-    });
-		response.end(img, 'binary');
-	
-	} else{
-		//sending the request to the correct controller if not CSS file
-		if(path === '/' || path === '/home'){
-			require('./controllers/home').get(request, response);
-		} else if (path === '/about') {
-			require('./controllers/about-controller').get(request, response);
-		} else if (path === '/login') {
-				require('./controllers/login-controller').get(request, response);
-		} else if (path === '/create-account') {
-					require('./controllers/create-account-controller').get(request, response);
-		} else if (path === '/profile') {
-					require('./controllers/profile-controller').get(request, response);
-		} else if (path === '/admin') {
-				require('./controllers/admin-controller').get(request, response);
-		} else if (path === '/explore') {
-			 	require('./controllers/explore-controller').get(request, response);
-		} else if (path === '/account') {
-				require('./controllers/account-controller').get(request, response);
-		}else
-			require('./controllers/404').get(request, response);
-	}
+/************************************************************************
+*							LOGOUT
+*
+*				logs the user out of their session
+*
+************************************************************************/
+router.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
+})
+
+/************************************************************************
+*							PROFILE ROUTE
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.get('/profile', isLoggedIn, function(req, res){
+	require('./controllers/profile-controller').get(req, res);
+});
+
+
+
+/************************************************************************
+*							ADMIN ROUTE
+*
+*				make sure the user is logged in and an admin
+*
+************************************************************************/
+router.get('/admin', function(req, res){
+	require('./controllers/admin-controller').get(req, res);
+});
+
+
+
+/************************************************************************
+*							EXPLORE ROUTE
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.get('/explore', function(req, res){
+	require('./controllers/explore-controller').get(req, res);
+});
+
+
+
+/************************************************************************
+*							ACCOUNT ROUTE
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.get('/account', function(req, res){
+	require('./controllers/account-controller').get(req, res);
+});
+
+
+//export the router to our application
+module.exports = router;
+
+//checks if the user is autheticated
+function isLoggedIn(req, res, next){
+
+	//if user is authenticated in the session, carry on
+	if (req.isAuthenticated()) 
+		return next();
+
+	//if not redirect to home page
+	res.redirect('/');
 }

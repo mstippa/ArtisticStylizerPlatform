@@ -14,16 +14,8 @@ var template = require('../views/view-about');
 
 
 
-exports.get = function(request, response) {
+exports.get = function(req, res) {
 
-	//put in the headers that we were successful
-	response.writeHead(200, {
-			'Content-Type':'text/html'
-	});
+	return res.render("../views/about.ejs", { user : req.user });
 
-	response.write(template.build(
-		)
-	);
-
-	response.end();
 };

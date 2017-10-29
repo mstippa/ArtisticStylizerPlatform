@@ -11,21 +11,31 @@
 
 //things we need -- the test data and the homepage html template
 var User = require('../model/user');
-var template = require('../views/view-login');
+var html = require('../views/view-login');
 
 
 
-exports.get = function(request, response) {
+exports.get = function(req, res) {
 
 	//put in the headers that we were successful
-	response.writeHead(200, {
-			'Content-Type':'text/html'
+	// response.writeHead(200, {
+	// 		'Content-Type':'text/html'
+	// });
+
+	// response.render("../views/login.ejs");
+	return res.render("../views/login.ejs",  { 
+		message : req.flash('loginMessage'), 
+		user    : req.user
 	});
-
-	response.write(template.build(
-		)
-	);
-
-
-	response.end();
 };
+
+exports.post = function(req, res){
+	console.log(info);
+	return res.render('../views/login.ejs', { message : req.flash('loginMessage') });
+}
+
+//this is for updating the page when they hit the login button
+// exports.post = function(request, response){
+// 	request.render()
+// 	response.end();
+// };

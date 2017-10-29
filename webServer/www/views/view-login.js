@@ -1,5 +1,5 @@
 
-exports.build = function(){
+exports.build = function(row,col,endrow){
   return [
     '<!DOCTYPE HTML>',
     '<html lang="en">',
@@ -13,8 +13,8 @@ exports.build = function(){
     	'<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>',
       '<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>',
       '<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>',
-      '<script type="text/javascript" src="assets/javascript/helper.js"></script>',
-      '<link rel="stylesheet" type="text/css" href="assets/css/style.css">',
+      '<script type="text/javascript" src="/javascript/helper.js"></script>',
+      '<link rel="stylesheet" type="text/css" href="/css/style.css">',
     '</head>',
     '<body>',
     	'<nav class="navbar navbar-inverse">',
@@ -37,7 +37,7 @@ exports.build = function(){
     	'</nav>',
 
       '<div class="container login-container">',
-        '<form>',
+        '<form action="">',
           '<div class="row">',
             '<div class="col-md-6 col-md-offset-3">',
               '<div class="form-group">',
@@ -54,10 +54,13 @@ exports.build = function(){
           '</div>',
           '<div class="row">',
             '<div class="col-md-6 col-md-offset-3">',
-              '<button type="button" class="btn btn-primary btn-lg btn-block button id="login-button">Login</button>',
+              '<button type="submit" class="btn btn-primary btn-lg btn-block button id="login-button">Login</button>',
             '</div>',
           '</div>',
         '</form>',
+        '#{row}',
+        '#{col}',
+        '#{endrow}',
       '</div>',
 
       '<div class="footer-container">',
