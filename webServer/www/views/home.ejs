@@ -19,90 +19,97 @@
 	<!-- write the header -->
 	<% include partials/header %>
 
-	<!-- <div class="wrapper">
-		<div class="wrapper-content">
-			<h1 class="wrapper-copy">Choose a Photo or Video to Style</h1>
-	    	<div id="upload">
-	      		<div class="file-upload" data-toggle="modal" data-target="#myModal">
-	        		<div class="file-select">
-	          			<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon">camera_alt</i></div>
-	          			<div class="file-select-name" id="noFile">Choose Photo</div>
-	         			 <input type="file" name="chooseFile" id="chooseFile" onchange="readURL(this);"/>
-	        		</div>
-	      		</div>
-				<div class="file-upload" data-toggle="modal" data-target="#myModal">
-	        		<div class="file-select">
-	          			<div class="file-select-button" id="fileName"><i class="material-icons" id="video_icon">videocam</i></div>
-	         			<div class="file-select-name" id="noFile">Choose Video</div>
-	          			<input type="file" name="chooseFile" id="chooseFile" onchange="readURL(this);">
-	        		</div>
-	      		</div>
-	    	</div> -->
-			<!-- Modal -->
-			<!-- <div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog">
-	  				<div class="modal-content">
-	    				<div class="modal-header">
-	      					<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<div class="styles"></div><div class="styles"></div><div class="styles"></div>
-	    				</div>
-	    				<div class="modal-body">
-	      					<img id="uploaded-image" src="#"/>
-	    				</div>
-	    				<div class="modal-footer">
-							<button type="button" class="btn btn-primary">Save content</button>
-	      					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    				</div>
-	  				</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
 	<div class="container" id="home-wrapper">
 		<div class="row">
-			<div class="col-md-6"><h3>Upload a Photo or Video to StylE</h3></div>
-			<div class="col-md-6"><h3>Upload a Photo to Transfer Style From</h3></div>
+			<div class="col-md-10 col-md-offset-1"><h1 style="font-weight:bold; color: #FA7470; font-size: 50px">Stylize</h1></div>
+		</div>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1"><h1 style="margin-top: 10px">Upload a Photo or Video to Style</h1></div>
 		</div>	
+		<div class="row">
+			<div class="col-md-4 col-md-offset-1 upload" id="upload-photo">
+		      	<div class="file-upload" data-toggle="modal" data-target="#myModal">
+		        	<div class="file-select">
+		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon" style="font-size: 30px">camera_alt</i></div>
+		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Photo</div>
+		          		<input type="file" name="chooseFile" id="chooseFile" onchange="readURL(this);"/>
+		        	</div>
+		      	</div>
+			</div>
+			<div class="col-md-4 upload" id="upload-video">   	
+				<div class="file-upload" data-toggle="modal" data-target="#myModal">
+		        	<div class="file-select">
+		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="video_icon" style="font-size: 30px">videocam</i></div>
+		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Video</div>
+		          		<input type="file" name="chooseFile" id="chooseFile" onchange="readURL(this);">
+		        	</div>
+		      	</div>
+			</div>	
+		</div>
+		<div class="modal fade" id="myModal" role="dialog">
+    		<div class="modal-dialog">
+      			<div class="modal-content">
+        			<div class="modal-header">
+        				<div class="container">
+        				<div class="row">
+        				<div class="col-md-6" style="text-align: center">Choose Style</div>
+        				</div>
+          				<div class="row">
+    					<div class="styles"><p></div>
+    					<div class="styles"></div><div class="styles"></div>
+    					</div>
+    					</div>
+        			</div>
+        			<div class="modal-body">
+          				<img id="uploaded-image" src="#"/>
+        			</div>
+        			<div class="modal-footer">
+						<button type="button" class="btn btn-primary modal-button">Save content</button>
+          				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        			</div>
+      			</div>
+    		</div>
+  		</div>	
 	</div>	
-	<!-- <div id="image"><img src="/images/blurryback3.jpg" id="image-wrapper"></div> -->
+  <!-- <div id="image"><img src="images/blurryback3.jpg" id="image-wrapper"></div> -->
 
 	<div class="content">
 	  <div class="grid">
 	    <div class="grid-sizer"></div>
 	    <div class="grid-item">
-	      <img src="/images/dinah.jpg" />
+	      <img src="images/dinah.jpg" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/rowing.jpg" />
+	      <img src="images/rowing.jpg" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/rowing2.jpg" />
+	      <img src="images/rowing2.jpg" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/dog.jpg" />
+	      <img src="images/dog.jpg" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/cape.jpg" />
+	      <img src="images/cape.jpg" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/pip.png" />
+	      <img src="images/pip.png" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/snow.jpg" />
+	      <img src="images/snow.jpg" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/compound.png" />
+	      <img src="images/compound.png" />
 	    </div>
 	    <div class="grid-item">
-	      <img src="/images/food.jpg" />
+	      <img src="images/food.jpg" />
 	    </div>
 	  </div>
-	</div>  
+	</div>
 
 		<div class="footer-container">
 	        <a class="footer-content" href="ebinizerlop@gmail.com">Email Us</a>
 	        <span class ="footer-content" >&copy; Copyright 1738. No Rights Reserved</span>
-	  	</div>
+	  </div>
 
 </body>
 

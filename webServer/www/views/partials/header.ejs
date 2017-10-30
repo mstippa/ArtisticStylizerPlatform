@@ -1,45 +1,26 @@
-<nav class="navbar navbar-inverse">
-	<div class="navbar-fixed">
-	<div class="container-fluid">
-		<div class="navbar-header">
-		</div>
-		<div class="collapse navbar-collapse navbar-content" id="myNavbar">
-			<a href="/home">
-	  			<img src="/images/artilizerlogo2.png" class="logo" width= "200px";
-					height= "150px">
-	  		</a>
-	  		<div class="navbar-links">
-	  		<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="/explore">
-						<span class="explore">Explore</span>
-					</a>
-				</li>
-	    		<li>
-	    			<a href="/about">
-	    				<span class="about">About</span>
-	    			</a>
-	    		</li>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  	<div class="container-fluid">
+    	<div class="navbar-header">
+      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+      		</button>
+      		<a class="navbar-brand" href="#">ASP</a>
+    	</div>
+    	<div class="collapse navbar-collapse" id="myNavbar">
+      		<ul class="nav navbar-nav navbar-right">
+				<li><a href="explore.html"><span class="=explore"></span>Explore</a></li>
+        		<li><a href="about.html"><span class="=about"></span>About</a></li>
 	    		<!-- if the user isnt logged in display the loggin & signup link -->
 	    		<% if(!user){ %>
-	    			<li>
-	    				<a href="/login">
-	    					<span class="login">Login</span>
-	    				</a>
-	    			</li>
-	    			<li>
-	    				<a href="/create-account">
-	    					<span class="sign-up">Create Account</span>
-	    				</a>
-	    			</li>
+	    			<li><a href="/login"><span class="login">Login</span></a></li>
+	    			<li><a href="/create-account"><span class="sign-up">Create Account</span></a></li>
 	    		<% } %>
 	    		<!-- only display the dropdown if the user is logged in -->
 				<% if(user){ %>
 					<li class="dropdown">
-	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="/profile">
-	          				<img id="profilePic" src="/images/pip.png" width="50px" height="50px">
-	          				<span class="caret"></span>
-	          			</a>
+	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="/images/pip.PNG" width="50px" height="50px"><span class="caret"></span></a>
 	          			<ul class="dropdown-menu">
 	            			<li>
 	            				<a href="/profile">Profile</a>
@@ -51,8 +32,6 @@
 	        		</li>
 	        	<% } %> <!-- end if -->
 	  		</ul>
-	  		</div>
-		</div>
-	</div>
+	  	</div>
 	</div>
 </nav>
