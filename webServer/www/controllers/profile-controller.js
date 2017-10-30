@@ -8,10 +8,7 @@
 	user.
 
 **/
-
-
-
-exports.get = function(req, res) {
+ exports.get = function(req, res) {
 
 	//put in the headers that we were successful
 	// response.writeHead(200, {

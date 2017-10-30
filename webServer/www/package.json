@@ -1,10 +1,28 @@
 {
-	"name" : "asp",
-	"version" : "1.0.1",
-	"description" : "artisticStylizerPlatform's webserver code",
-	"main" : "server.js",	
-	"scripts" : {
-		"start" : "node server.js"
+	"name": "asp",
+	"version": "1.0.2",
+	"description": "artisticStylizerPlatform's webserver code",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
 	},
-	"author" : "Enter team names"
+	"author": "Anthony Soricelli, Morgan, Mike, Eric",
+	"repository": {
+		"type": "git",
+		"url": "github.com/MichaelGuarin0/ArtisticStylizerPlatform"
+	},
+	"dependencies": {
+		"async": "^2.5.0",
+		"bcrypt-nodejs": "*",
+		"body-parser": "*",
+		"connect-flash": "*",
+		"cookie-parser": "*",
+		"ejs": "*",
+		"express": "*",
+		"express-session": "*",
+		"method-override": "*",
+		"mysql": "*",
+		"passport": "*",
+		"passport-local": "*"
+	}
 }

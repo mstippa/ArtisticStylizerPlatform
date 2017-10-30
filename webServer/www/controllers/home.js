@@ -9,7 +9,6 @@
 
 **/
 var User = require('../model/user');
-var template = require('../views/view-home');
 var db = require('../db');
 
 

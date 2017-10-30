@@ -9,11 +9,6 @@
 
 **/
 
-//things we need -- the test data and the homepage html template
-var template = require('../views/view-account');
-
-
-
 exports.get = function(req, res) {
 
 	return res.render("../views/account.ejs", { user : req.user });
