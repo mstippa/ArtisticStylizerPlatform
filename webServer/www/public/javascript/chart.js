@@ -14,7 +14,7 @@ var myLineChart = new Chart(ctxL, {
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
+                data: [67, 14, 40, 156, 86, 56, 120]
             }
         ]
     },
@@ -27,7 +27,7 @@ ctxL = document.getElementById("process-time-chart").getContext('2d');
 myLineChart = new Chart(ctxL, {
     type: 'line',
     data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["11/25/", "February", "March", "April", "May", "June", "July"],
         datasets: [
             {
                 label: "Processing Time",
@@ -45,5 +45,9 @@ myLineChart = new Chart(ctxL, {
         responsive: true
     }
 });
+
+$( function() {
+    $( ".datepicker" ).datepicker();
+  } );
 
 }

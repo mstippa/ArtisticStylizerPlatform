@@ -2,9 +2,14 @@ function expandTable() {
 
   // Find a <table> element with id="myTable":
   var table = document.getElementById("admin-table");
+  var numRows;
 
-  // number of rows in the table
-  var numRows = table.rows.length;
+  if (table.rows === null) {
+    numRows = 0;
+  } else {
+    numRows = table.rows.length;
+  }
+
 
   // Create an empty <tr> element and add it to the 1st position of the table:
   var row = table.insertRow(numRows);

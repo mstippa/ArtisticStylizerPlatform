@@ -14,106 +14,100 @@
       <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
       <script type="text/javascript" src="/javascript/chart.js"></script>
-      <script type="text/javascript" src="/javascript/helper.js"></script>
+      <script type="text/javascript" src="/javascript/expand-table.js"></script>
       <link rel="stylesheet" type="text/css" href="/css/style.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-    	<!-- write the header -->
-      <% include partials/header %>
+ 
+      <nav class="navbar navbar-inverse navbar-toggleable-sm">
+        <div class="container-fluid">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar class="navbar-toggler-icon""></span>
+                <span class="icon-bar class="navbar-toggler-icon""></span>
+                <span class="icon-bar class="navbar-toggler-icon""></span>
+              </button>
+              <a class="navbar-brand" href=""><img id="logo" src="/images/logotwo.png" width="50px" height="50px"></a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#systemUsage"><span class="navbar-tab">System Usage</span></a></li>
+                <li><a href="#reports"><span class="navbar-tab">Reports</span></a></li>
+                <li><a href="/logout"><span class="sign-up">Logout</span></a></li>
+              <!-- only display the dropdown if the user is logged in -->
+            </ul>
+          </div>
+      </div>
+    </nav>
       
-      <div class="container">
+      <div class="container admin-container">
         <div class="row">
           <div class="col-md-12">
-            <h2>System Usage</h2>
+            <h2 id="#systemUsage">System Usage</h2>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <canvas id="data-upload-chart" class="chart"></canvas>
+              <canvas id="data-upload-chart" class="chart" style="width: 100%;"></canvas>
+              <label for="datePickerOne">Start Date</label>
+              <input id ="datePickerOne" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 10px">
+              <label for="datePickerTwo">End Date</label>
+              <input id="datePickerTwo" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 5px;">
+              <button type="button" class="btn btn-primary  button" style="width: 50px;">OK</button>
           </div>
           <div class="col-md-6">
             <canvas id="process-time-chart" class="chart"></canvas>
+            <label for="datePickerOne">Start Date</label>
+            <input id ="datePickerOne" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 10px">
+            <label for="datePickerTwo">End Date</label>
+            <input id="datePickerTwo" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 5px;">
+            <button type="button" class="btn btn-primary  button" style="width: 50px;">OK</button>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-2">
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle button" type="button" data-toggle="dropdown">Start Date
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle button" type="button" data-toggle="dropdown">End Date
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <button type="button" class="btn btn-primary  button">OK</button>
-          </div>
-          <div class="col-md-2">
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle button" type="button" data-toggle="dropdown">Start Date
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle button" type="button" data-toggle="dropdown">End Date
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <button type="button" class="btn btn-primary  button">OK</button>
-          </div>
-        </div>
-        <div class="row" id="reports">
+        <div class="row" id="reports" style="margin-top: 30px;">
           <div class="col-md-12">
-            <h2>Reports</h2>
+            <h2 id="reports">Reports</h2>
           </div>
         </div>
         <div class="row">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>User</th>
-                <th>Descripition</th>
-                <th>Reported User</th>
-                <th>Content</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>09/23/2017</td>
-                <td>h_clinton</td>
-                <td>Content contains nudity</td>
-                <td>d_trump44</td>
-                <td>content_link</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <div class="col-md-8">
+            <table class="table table-striped" id="admin-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>User</th>
+                  <th>Descripition</th>
+                  <th>Reported User</th>
+                  <th>Content</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>09/23/2017</td>
+                  <td>h_clinton</td>
+                  <td>Content contains nudity</td>
+                  <td>d_trump44</td>
+                  <td>content_link</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+          </div>
         <div class="row">
           <div class="col-md-2">
     				<button type="button" class="btn btn-primary button" onclick="expandTable()">Expand Table</button>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-12">
+        </div>  
       </div>
-
 
 
       <div class="footer-container">
-            <a class="footer-content" href="ebinizerlop@gmail.com">Email Us</a>
-            <span class ="footer-content" >&copy; Copyright 1738. No Rights Reserved</span>
-      </div>
+        <a class="footer-content" href="ebinizerlop@gmail.com" style="color: black;">Contact us</a>
+        <p class ="footer-content" style="font-size: 12px;">&copy; 2017 Artilizer, No Rights Reserved</p>
+    </div>
 
     </body>

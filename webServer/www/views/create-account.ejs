@@ -13,18 +13,33 @@
       <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
       <script type="text/javascript" src="/javascript/helper.js"></script>
       <link rel="stylesheet" type="text/css" href="/css/style.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
     	<!-- write the header -->
       <% include partials/header %>
-      
+
+      <h1 id="stick">|</h1>
       <div class="container login-container">
-        
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+            <p class="logo-div">A</p>
+            <p class="logo-div">R</p>
+            <p class="logo-div">T</p>
+            <p class="logo-div">I</p>
+            <p class="logo-div">L</p>
+            <p class="logo-div">I</p>
+            <p class="logo-div">Z</p>
+            <p class="logo-div">E</p>
+            <p class="logo-div">R</p>
+          </div>
+        </div>
+        <br/><br/><br/><br/><br/><br/> <br/>
         <!-- show any messages that come back with authentication -->
           <% if (message.length > 0) { %>
               <div class="alert alert-danger"><%= message %></div>
           <% } %>
-
+          
         <form action="/create-account" method="post">
           <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -49,9 +64,9 @@
       </div>
 
       <div class="footer-container">
-            <a class="footer-content" href="ebinizerlop@gmail.com">Email Us</a>
-            <span class ="footer-content" >&copy; Copyright 1738. No Rights Reserved</span>
-      </div>
-
+        <a class="footer-content" href="ebinizerlop@gmail.com" style="color: black;">Contact us</a>
+        <p class ="footer-content" style="font-size: 12px;">&copy; 2017 Artilizer, No Rights Reserved</p>
+    </div>
+      <script type="text/javascript" src="/javascript/animations.js"></script>
     </body>
 
