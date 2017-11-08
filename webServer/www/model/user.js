@@ -1,6 +1,7 @@
 /** user.js **/
 var db = require('../db.js');
 var bcrypt = require('bcrypt-nodejs');
+var Profile = require('./profile');
 
 // constructor
 function User(userId,username , email, password , dob, firstname, lastname, subId){
@@ -21,11 +22,9 @@ function User(userId,username , email, password , dob, firstname, lastname, subI
 User.findById = function(userId, done){
 	db.get(db.READ, function(err,connection) {
 		if (err) return done(err);
-		console.log("userid: ",userId);
 		connection.query('SELECT * FROM users WHERE user_id = ?'
 				, [userId]
 				, function(err, result){
-					console.log("error", err);
 					if (err) done(err);	
 					if (!result) done('invalid user_id', null);
 					else done(null, new User(result[0].user_id
@@ -99,13 +98,15 @@ User.prototype.save = function(done){
 			function(err, result){
 				if(err) done(err);
 
-				//no error so just return the userid
+				//make sure to create the profile
+				Profile.createProfile(result.insertId);
+
+				//return the userid
 				done(null, result.insertId);
 			}
 		);
 	});
 }
-
 
 // checking if password is valid
 User.prototype.validPassword = function(password) {

@@ -8,15 +8,19 @@
 	user.
 
 **/
+var sessionUser = require('../model/user.js');
+var Profile = require('../model/profile.js');
+
  exports.get = function(req, res) {
+ 	sessionUser = req.user;
 
-	//put in the headers that we were successful
-	// response.writeHead(200, {
-	// 		'Content-Type':'text/html'
-	// });
+ 	Profile.getProfile(sessionUser.userid, function(err, result){
+ 		if(err) throw err;
 
-	// build the html page or "ejs" page
-	return res.render("../views/profile.ejs", { user : req.user })
+ 		var profile = result;
+ 	});
+
+	return res.render("../views/profile.ejs", { user : sessionUser })
 
 	
 };
