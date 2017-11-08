@@ -16,11 +16,12 @@ var Profile = require('../model/profile.js');
 
  	Profile.getProfile(sessionUser.userid, function(err, result){
  		if(err) throw err;
-
+		
  		var profile = result;
- 	});
+		return res.render("../views/profile.ejs", { user    : sessionUser ,
+							    profile : profile })
 
-	return res.render("../views/profile.ejs", { user : sessionUser })
+ 	});
 
 	
 };
