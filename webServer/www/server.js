@@ -68,6 +68,11 @@ app.use(express.static('public', options));
 var router = require('./router');
 app.use(router); 
 
+/**************************************************************
+*					File upload	
+***************************************************************/
+var formidable = require('formidable');
+var fs = require('fs');
 
 /**************************************************************
 *						Database
