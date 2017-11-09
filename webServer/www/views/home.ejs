@@ -45,7 +45,9 @@
 		        	<div class="file-select">
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon" style="font-size: 30px">camera_alt</i></div>
 		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Photo</div>
-		          		<input id="uploadPhoto" type="file" class="upload" multiple="multiple" accept="image/*" />
+                        <form action="upload_photo" method="post" enctype="multipart/form-data">
+		          		    <input id="uploadPhoto" type="file" class="upload" multiple="multiple" accept="image/*" />
+                        </form>
 		        	</div>
 		      	</div>
 			</div>
@@ -54,7 +56,9 @@
 		        	<div class="file-select">
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="video_icon" style="font-size: 30px">videocam</i></div>
 		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Video</div>
-		          		<input id="uploadVideo" type="file" class="upload" multiple="multiple" accept="image/*" />
+                        <form action="upload_video" method="post" enctype="multipart/form-data">
+		          		  <input id="uploadVideo" type="file" class="upload" multiple="multiple" accept="image/*" />
+                        </form>
 		        	</div>
 		      	</div>
 			</div>	

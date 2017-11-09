@@ -187,15 +187,40 @@ function isLoggedIn(req, res, next){
 }
 
 /**************************************************************************
-*			        UPLOAD FILE ROUTE
+*			       PHOTO UPLOAD FILE ROUTE
 *	
 *
 ***************************************************************************/
-router.get('/upload', function(req, res){
+router.get('/upload_photo', function(req, res){
 	return res.render('home.ejs');
 });
-router.post('/upload', function(req, res){
+router.post('/upload_photo', function(req, res){
 	require('./controllers/upload-image-controller').post(req,res);
+});
+//export the router to our application
+module.exports = router;
+
+//checks if the user is autheticated
+function isLoggedIn(req, res, next){
+
+	//if user is authenticated in the session, carry on
+	if (req.isAuthenticated()) 
+		return next();
+
+	//if not redirect to home page
+	res.redirect('/');
+}
+
+/**************************************************************************
+*			       VIDEO UPLOAD FILE ROUTE
+*	
+*
+***************************************************************************/
+router.get('/upload_video', function(req, res){
+	return res.render('home.ejs');
+});
+router.post('/upload_video', function(req, res){
+	require('./controllers/upload-video-controller').post(req,res);
 });
 //export the router to our application
 module.exports = router;
