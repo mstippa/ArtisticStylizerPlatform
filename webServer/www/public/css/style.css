@@ -42,13 +42,14 @@ html {
 	border-bottom: 2px solid #FA7470;
 	color: #FA7470 !important;
 	padding-bottom: 4px;
+}	
 
 .navbar {
 	background-color: white;
 	z-index: 1;
 	border-color: white;
 	border-radius: 0px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23);
+	/*box-shadow: 0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23);*/
 }
 
 .navbar li a {
@@ -730,4 +731,11 @@ textarea { height: 80px; resize: none; }
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
 }
+
+
+
+
+.editableTable { border:solid 1px; width:100% } .editableTable td { border:solid 1px; } .editableTable .cellEditing { padding: 0; } .editableTable .cellEditing input[type=text]{ width:100%; border:0; background-color:rgb(255,253,210); }
+
+
 

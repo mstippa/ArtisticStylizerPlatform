@@ -15,6 +15,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
       <script type="text/javascript" src="/javascript/chart.js"></script>
       <script type="text/javascript" src="/javascript/expand-table.js"></script>
+      <script type="text/javascript" src="/javascript/edit-table.js"></script>
       <link rel="stylesheet" type="text/css" href="/css/style.css">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -34,7 +35,9 @@
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#systemUsage"><span class="navbar-tab">System Usage</span></a></li>
                 <li><a href="#reports"><span class="navbar-tab">Reports</span></a></li>
-                <li><a href="/logout"><span class="sign-up">Logout</span></a></li>
+                <li><a href="#queue"><span class="navbar-tab">Queue</span></a></li>
+                <li><a href="#logs"><span class="navbar-tab">System Logs</span></a></li>
+                <li><a href="/#"><span class="sign-up">Logout</span></a></li>
               <!-- only display the dropdown if the user is logged in -->
             </ul>
           </div>
@@ -58,10 +61,10 @@
           </div>
           <div class="col-md-6">
             <canvas id="process-time-chart" class="chart"></canvas>
-            <label for="datePickerOne">Start Date</label>
-            <input id ="datePickerOne" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 10px">
-            <label for="datePickerTwo">End Date</label>
-            <input id="datePickerTwo" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 5px;">
+            <label for="datePickerThree">Start Date</label>
+            <input id ="datePickerThree" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 10px">
+            <label for="datePickerFour">End Date</label>
+            <input id="datePickerFour" type="text" class="datepicker" style="width: 100px;display: inline; border: 1px solid #D3D3D3; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.08); border-radius: 2px; margin-right: 5px;">
             <button type="button" class="btn btn-primary  button" style="width: 50px;">OK</button>
           </div>
         </div>
@@ -72,7 +75,7 @@
         </div>
         <div class="row">
           <div class="col-md-8">
-            <table class="table table-striped" id="admin-table">
+            <table class="table table-striped" id="reports-table">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -93,15 +96,86 @@
               </tbody>
             </table>
           </div>  
-          </div>
+        </div>
         <div class="row">
           <div class="col-md-2">
-    				<button type="button" class="btn btn-primary button" onclick="expandTable()">Expand Table</button>
+    				<button type="button" class="btn btn-primary button" onclick="expandReportsTable()">Expand Table</button>
+          </div>
+        </div>
+        <div class="row" id="queue" style="margin-top: 30px;">
+          <div class="col-md-12">
+            <h2 id="queue">Queue</h2>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-        </div>  
+          <div class="col-md-8">
+            <table class="table table-striped" id="queue-table">
+              <thead>
+                <tr>
+                  <th>UsageID</th>
+                  <th>ProfileID</th>
+                  <th>StyleID</th>
+                  <th>VideoID</th>
+                  <th>PictureID</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>4</td>
+                  <td>23</td>
+                  <td>50</td>
+                  <td>34</td>
+                  <td>54</td>
+                  <td>05/24/16</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary button" onclick="expandQueueTable()">Expand Table</button>
+          </div>
+        </div>
+        <div class="row" id="logs" style="margin-top: 30px;">
+          <div class="col-md-3">
+            <h2 id="logs">System Logs</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <table class="table table-striped" id="logs-table">
+              <thead>
+                <tr>
+                  <th>UsageID</th>
+                  <th>StartTime</th>
+                  <th>EndTime</th>
+                  <th>ProfileID</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>23</td>
+                  <td>34/54/23</td>
+                  <td>3/5/23</td>
+                  <td>23</td>
+                  <td>05/24/16</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary button" onclick="expandLogsTable()">Expand Table</button>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary button" onclick="clearLogsTable()">Clear Logs</button>
+          </div>
+        </div>
+        
       </div>
 
 

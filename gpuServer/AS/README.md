@@ -4,33 +4,18 @@ Warming: All content found in this directory including this README file is confi
 shared with members outside of this group (Rivas_T4).
 
 ## Files in this directory
-* MSCOCO data processing [dataProcessing.py](src/dataProcessing.py)
-* directory utilities [utils.py](src/utils.py)
-* getMSCOCO downloads mscoco dataset...may already be in mscoco api [getMSCOCO.sh](src/getMSCOCO.sh)
 
 ## TODOs
-### Make sure that download and mscoco python api is set up
-* [mscoco home](http://cocodataset.org/#home)
-* [mscoco dataset](http://cocodataset.org/#download)
-* [mscoco python api](https://github.com/pdollar/coco)
+* add handling of pngs
+* add ability to resize images 
+* build logging 
+* add ability to handle video
 
 ### Implement for Image Style Transfer
-* [Fast Patch-based Style Transfer of Arbitrary Style](https://arxiv.org/abs/1612.04337) with code here: https://github.com/rtqichen/style-swap
-OR
-* [A Learned Representation For Artistic Style](https://arxiv.org/abs/1610.07629)
-WITH for improved image quality
-* [Instance Normalization: The Missing Ingredient for Fast Stylization](https://arxiv.org/abs/1607.08022)
-* [Improved Texture Networks: Maximizing Quality and Diversity in Feed-forward Stylization and Texture Synthesis](https://arxiv.org/abs/1701.02096)
 
 ### Implement for Video Style Transfer
-# pending
-
-
 
 ### Persist Models
-* [Saving and Restoring](https://www.tensorflow.org/programmers_guide/saved_model)
-
-### Build APIs for Webserver
 
 ## References
 Image
