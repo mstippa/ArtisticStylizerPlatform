@@ -159,6 +159,19 @@ router.get('/account', function(req, res){
 });
 
 
+
+/************************************************************************
+*							Upgrade Route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.get('/upgrade', function(req, res){
+	require('./controllers/upgrade-controller').get(req, res);
+});
+
+
+
 //export the router to our application
 module.exports = router;
 
