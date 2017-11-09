@@ -13,7 +13,7 @@ app.set('view engine', 'ejs'); //set the view engine to ejs
 *						Server information
 ***************************************************************/
 var http_IP = '10.10.7.179';
-var http_port = 8085;
+var http_port = 8087;
 
 /**************************************************************
 *					Passport authentication
