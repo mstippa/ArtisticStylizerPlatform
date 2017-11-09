@@ -185,3 +185,28 @@ function isLoggedIn(req, res, next){
 	//if not redirect to home page
 	res.redirect('/');
 }
+
+/**************************************************************************
+*			        UPLOAD FILE ROUTE
+*	
+*
+***************************************************************************/
+router.get('/upload', function(req, res){
+	return res.render('home.ejs');
+});
+router.post('/upload', function(req, res){
+	require('./controllers/upload-image-controller').post(req,res);
+});
+//export the router to our application
+module.exports = router;
+
+//checks if the user is autheticated
+function isLoggedIn(req, res, next){
+
+	//if user is authenticated in the session, carry on
+	if (req.isAuthenticated()) 
+		return next();
+
+	//if not redirect to home page
+	res.redirect('/');
+}
