@@ -134,7 +134,7 @@ $(document).ready(function(){
     });
     $('#imagepreview').css({
       visibility: 'visible'
-    });
+      });
     }, 4000);
   }
 
