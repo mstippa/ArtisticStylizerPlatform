@@ -6,7 +6,10 @@ var Picture = require('./picture.js');
 var Video   = require('./video.js');
 var Style   = require('./style.js');
 var async   = require('async');
+var fs      = require('fs'); // for writing to the file system
 
+// default path for all profiles
+var PATH    = './profiles/'
 
 // constructor
 function Profile(userId, profileId){
@@ -89,8 +92,24 @@ Profile.createProfile = function(userId, done){
 			function(err, result){
 				if(err) return done(err);
 
+				// now we make a path for them in the file system
+				fs.mkdir(PATH+result.insertId, function(err){
+					if(err) return done(err);
+
+					//now make a path for the pictures, videos and styles
+					fs.mkdir(PATH+result.insertId+"/pictures", function(err){
+						if(err) return done(err);
+					})
+					fs.mkdir(PATH+result.insertId+"/videos", function(err){
+						if(err) return done(err);
+					})
+					fs.mkdir(PATH+result.insertId+"/styles", function(err){
+						if(err) return done(err);
+					})
+				}); 
+
 				// load the profile into memory
-				Profile.getProfile(userId, done); 
+				Profile.getProfile(userId, done);
 			});
 	});
 }

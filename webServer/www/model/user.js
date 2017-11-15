@@ -93,15 +93,17 @@ User.prototype.save = function(done){
 			+' VALUES (?,?,?,?,?,?,?)',
 			userOptions,
 			function(err, result){
-				if(err) done(err);
+				if(err) return done(err);
 
 				//make sure to create the profile
 				Profile.createProfile(result.insertId, function(err){
-					if(err) throw err;
+					if(err) return done(err);
+
+					//return the userid with no errors
+					return done(null, result.insertId);
 				});
 
-				//return the userid
-				done(null, result.insertId);
+				
 			}
 		);
 	});

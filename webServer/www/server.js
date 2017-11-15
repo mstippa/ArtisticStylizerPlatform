@@ -9,46 +9,6 @@ var app     = express();
 
 app.set('view engine', 'ejs'); //set the view engine to ejs
 
-/**************************************************************
-*						Server information
-***************************************************************/
-var http_IP = '10.10.7.179';
-var http_port = 8087;
-
-/**************************************************************
-*					Passport authentication
-***************************************************************/
-var passport     = require('passport');
-var session 	 = require('express-session');
-var flash        = require('connect-flash');
-
-app.use(session({ secret: 'aspawesomeness'})); //session secret
-app.use(passport.initialize());
-app.use(passport.session()); //persistent login sessions
-app.use(flash());
-
-require('./config/passport')(passport); // pass passport for configuration
-
-
-/**************************************************************
-*						Parsers
-***************************************************************/
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); //get information from html forms
-
-
-/**********************************************************
-*						Router
-**********************************************************/
-
-//first we'll make some middleware to get rid of capital extensions
-app.use(function(req, res, next){
-	req.url = req.url.toLowerCase();
-	next();
-})
-
 //serve our static files (css, js, ect) here
 var options = {
 	dotfile: 'ignore',
@@ -64,15 +24,67 @@ var options = {
 
 app.use(express.static('public', options));
 
+/**************************************************************
+*						Server information
+***************************************************************/
+var http_IP = '10.10.7.179';
+var http_port = 8087;
+
+/**************************************************************
+*					Passport authentication
+*						AND
+*					Session data
+***************************************************************/
+var passport     = require('passport');
+var session 	 = require('express-session');
+var flash        = require('connect-flash');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+
+// Passport does not directly manage your session, it only uses the session.
+// So you configure session attributes (e.g. life of your session) via express
+var sessionOpts = {
+  saveUninitialized: true, // saved new sessions
+  resave: false, // do not automatically write to the session store
+  secret: 'asp',
+  cookie : { httpOnly: true, maxAge: 2419200000 } // configure when sessions expires
+}
+
+
+app.use(cookieParser('aspawesomeness')); // read cookies (needed for auth)
+app.use(bodyParser()); //get information from html forms
+
+app.use(session(sessionOpts)); //tell our app to use sessions initalized with our sessionOpts
+
+app.use(passport.initialize());
+app.use(passport.session()); //persistent login sessions
+app.use(flash());
+
+require('./config/passport')(passport); // pass passport for configuration
+
+
+/**********************************************************
+*						Router
+**********************************************************/
+
+//first we'll make some middleware to get rid of capital extensions
+app.use(function(req, res, next){
+	req.url = req.url.toLowerCase();
+	//console.log(req);
+	next();
+})
+
 //send all other routes here
 var router = require('./router');
 app.use(router); 
 
 /**************************************************************
-*					File upload	
-***************************************************************/
-var formidable = require('formidable');
-var fs = require('fs');
+*						error handling middleware
+**************************************************************/
+app.use(function(err, req, res, next){
+	console.error(err.stack);
+	next(err);
+})
 
 /**************************************************************
 *						Database
