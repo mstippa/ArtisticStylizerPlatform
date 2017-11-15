@@ -1,4 +1,5 @@
 //server.js
+//var upload = multer({dest: '/home/mike/'})
 
 /*******************************************
 *					SET UP
@@ -85,6 +86,10 @@ app.use(function(err, req, res, next){
 	console.error(err.stack);
 	next(err);
 })
+/***************************************************************
+*					File upload	
+***************************************************************/
+var multer = require('multer');
 
 /**************************************************************
 *						Database
