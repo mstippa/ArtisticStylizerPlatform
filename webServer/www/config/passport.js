@@ -14,7 +14,7 @@ module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(userid, done) {
 
-        done(null, userid);
+        return done(null, userid);
     });
 
     // used to deserialize the user
@@ -22,7 +22,7 @@ module.exports = function(passport) {
         console.log("userDeserialize :", user);
         User.findByUsername(user.username, function(err, user) {
             console.log(err);
-            done(err, user);
+            return done(err, user);
         });
     });
 
