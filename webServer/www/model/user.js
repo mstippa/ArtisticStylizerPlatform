@@ -15,8 +15,6 @@ function User(userId,username , email, password , dob, firstname, lastname, subI
 		this.subId = subId;
 }
 
-// public methods =============
-
 
 // gets the user by user_id
 User.findById = function(userId, done){
@@ -27,14 +25,14 @@ User.findById = function(userId, done){
 				, function(err, result){
 					if (err) done(err);	
 					if (!result) done('invalid user_id', null);
-					else done(null, new User(result[0].user_id
-									  , result[0].username
-								  	  , result[0].email_address
-								  	  , result[0].password
-								  	  , result[0].dob
-								   	  , result[0].fname
-								  	  , result[0].lname
-								  	  , result[0].subscription_id
+					done(null, new User(result[0].user_id,
+										result[0].username,
+								  	  	result[0].email_address,
+								  	  	result[0].password,
+								  	    result[0].dob,
+								   	    result[0].fname,
+								  	    result[0].lname,
+								  	    result[0].subscription_id
 					));
 				}
 		);
@@ -51,18 +49,17 @@ User.findByUsername = function(username, done){
 		connection.query('SELECT * FROM users WHERE username = ?'
 				, [username]
 				, function(err, result){
-
 					if (err) return done(err); //just return the error if there is one	
-
 					if (result.length === 0) return done(null, false, 'invalid username');
-					var newUser = new User(result[0].user_id
-									  , result[0].username
-								  	  , result[0].email_address
-								  	  , result[0].password
-								  	  , result[0].dob
-								   	  , result[0].fname
-								  	  , result[0].lname
-								  	  , result[0].subscription_id);
+					
+					var newUser = new User(result[0].user_id,
+									       result[0].username,
+								  	       result[0].email_address,
+								           result[0].password,
+								  	       result[0].dob,
+								   	       result[0].fname,
+								  	       result[0].lname,
+								  	       result[0].subscription_id);
 
 					return done(null, newUser);
 				 }
@@ -80,29 +77,33 @@ User.prototype.save = function(done){
 
 	//first lets save our values to an array
 	var userOptions = [
-		this.username ,
-		this.email ,
-		this.password ,
-		this.dob ,
-		this.firstname ,
-		this.lastname ,
+		this.username,
+		this.email,
+		this.password,
+		this.dob,
+		this.firstname,
+		this.lastname,
 		this.subId
 	];
 
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
-		connection.query(
-			'INSERT INTO users (username, email_address, password, dob, fname, lname, subscription_id) VALUES (?,?,?,?,?,?,?)',
+		connection.query('INSERT INTO users (username, email_address, password, dob, fname, lname, subscription_id)'
+			+' VALUES (?,?,?,?,?,?,?)',
 			userOptions,
 			function(err, result){
-				if(err) done(err);
+				if(err) return done(err);
 
 				//make sure to create the profile
-				Profile.createProfile(result.insertId);
+				Profile.createProfile(result.insertId, function(err){
+					if(err) return done(err);
 
-				//return the userid
-				done(null, result.insertId);
+					//return the userid with no errors
+					return done(null, result.insertId);
+				});
+
+				
 			}
 		);
 	});

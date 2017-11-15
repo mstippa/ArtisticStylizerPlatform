@@ -6,12 +6,18 @@
 
 	after we get the data we brake it down into list items to be printed to the
 	user.
+
 **/
 var User = require('../model/user');
 var db = require('../db');
-// var db = require('../db');
+
+
 exports.get = function(req, res) {
 
+
 	var user = new User();
+	
+
 	return res.render("../views/home.ejs", { user : req.user });
+	
 }
