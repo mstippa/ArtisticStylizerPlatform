@@ -56,16 +56,22 @@ exports.post = function(req, res){
 		var options = {
 			pythonPath: '/usr/bin/python3',
 		        scriptPath: '/home/mike/ArtisticStylizerPlatform/gpuServer/AS/src',
-		        args: [req.files[0].path, req.files[1].path, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/tmp', 256, 512]
+		        args: [req.files[0].path, req.files[1].path, '/home/tony/ArtisticStylizerPlatform/webServer/www/tmp', 256, 512]
 		};
 		try{
 			PythonShell.run('inference_master.py', options, function(err){
 				if (err) throw err;
-				Profile.getProfile(req.user.userid, function(err, result) {
+				
+				// load the user first
+				var currentUser = req.user;
+				console.log("current user: ", currentUser);
+
+				Profile.getProfile(currentUser.userid, function(err, result) {
 					if (err) throw err
 					
 					var userProfile = result;
-					return res.render("../views/home.ejs", { user : req.user, profile : userProfile });
+					
+					return res.render("../views/home.ejs", { user : req.user });
 				})
 			});
 		}
