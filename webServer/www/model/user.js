@@ -23,6 +23,8 @@ User.findById = function(userId, done){
 		connection.query('SELECT * FROM users WHERE user_id = ?'
 				, [userId]
 				, function(err, result){
+					connection.release();
+
 					if (err) done(err);	
 					if (!result) done('invalid user_id', null);
 					done(null, new User(result[0].user_id,
@@ -49,7 +51,10 @@ User.findByUsername = function(username, done){
 		connection.query('SELECT * FROM users WHERE username = ?'
 				, [username]
 				, function(err, result){
+					connection.release();
+
 					if (err) return done(err); //just return the error if there is one	
+					
 					if (result.length === 0) return done(null, false, 'invalid username');
 					
 					var newUser = new User(result[0].user_id,
@@ -97,6 +102,8 @@ User.prototype.save = function(done){
 
 				//make sure to create the profile
 				Profile.createProfile(result.insertId, function(err){
+					connection.release();
+					
 					if(err) return done(err);
 
 					//return the userid with no errors

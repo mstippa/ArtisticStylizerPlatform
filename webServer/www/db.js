@@ -20,21 +20,24 @@ exports.connect = function(mode, done) {
       host: 'localhost',
       user: 'asp_read_write',
       password: 'readWrite',
-      database: PRODUCTION_DB
+      database: PRODUCTION_DB,
+      connectionLimit : 1000
     });
 
     state.pool.add('READ', {
       host: 'localhost',
       user: 'asp_read_only',
       password: 'readOnly',
-      database: PRODUCTION_DB
+      database: PRODUCTION_DB,
+      connectionLimit : 1000
     });
   } else {
     state.pool = mysql.createPool({
       host: 'localhost',
       user: 'asp_read_write',
       password: 'readWrite',
-      database: TEST_DB
+      database: TEST_DB,
+      connectionLimit : 1000
     });
   }
 
@@ -53,12 +56,14 @@ exports.get = function(type, done) {
 
 	if(type === exports.WRITE){
 		state.pool.getConnection('WRITE', function (err, connection){
-			if(err) return done(err);
+      if(err) return done(err);
+
 			done(null, connection);
 		});
 	} else {
 		state.pool.getConnection('READ', function(err, connection) {
-			if (err) return done(err);
+      if (err) return done(err);
+
 			done(null, connection);
 		});
 	}
