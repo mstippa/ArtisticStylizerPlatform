@@ -10,14 +10,38 @@
 **/
 var User = require('../model/user');
 var db = require('../db');
+var Profile = require('../model/profile');
 
 
 exports.get = function(req, res) {
 
+	if (req.user === undefined) {
+		var user = new User();
+		return res.render("../views/home.ejs", { user: req.user});
+	} else {
+		console.log("dong");
+		var userProfile;
+		Profile.getProfile(req.user.userid, function(err, res) {
+			if (err) throw err;
+			userProfile = res;
+			profileReturn();
+		});
 
-	var user = new User();
+		function profileReturn() {
+			res.render("../views/home.ejs" , {user: req.user, profile: userProfile});
+		}
+			
+	}
+
+
+	// var currentUser = req.user;
+
+	// Profile.getProfile(currentUser.userid, function(err, res) {
+	// 	if (err) throw err;
+	// 	var userProfile = res;
+	// 	return res.render("../views/home.ejs" ,{user: currentUser, profile: userProfile});
+	// });
 	
 
-	return res.render("../views/home.ejs", { user : req.user });
 	
 }

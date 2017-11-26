@@ -28,7 +28,7 @@ app.use(express.static('public', options));
 *						Server information
 ***************************************************************/
 var http_IP = '10.10.7.179';
-var http_port = 8088;
+var http_port = 8084;
 
 /**************************************************************
 *					Passport authentication

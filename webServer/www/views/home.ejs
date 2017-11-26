@@ -41,11 +41,13 @@
 		</div>	
 		<div class="row">
 			<div class="col-md-4 col-md-offset-1 upload" id="upload-photo">
-		      	<div class="file-upload" data-toggle="modal" data-target="#myModal">
-		        	<div class="file-select">
+		      	<div class="file-upload" data-toggle="modal" data-target="#uploadModal">
+		        	<div class="file-select">	
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon" style="font-size: 30px">camera_alt</i></div>
 		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Photo</div>
-		          		<input id="uploadPhoto" type="file" class="upload" multiple="multiple" accept=".png,.jpg" />
+		          		<form method="post" id="uploadPhotoForm" enctype="multipart/form-data">
+		          			<input id="uploadPhoto" type="file" class="upload" accept=".png,.jpg" name="content"  onchange="uploadContent('uploadPhotoForm')" />
+		          		</form>	
 		        	</div>
 		      	</div>
 			</div>
@@ -54,9 +56,9 @@
 		        	<div class="file-select">
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="video_icon" style="font-size: 30px">videocam</i></div>
 		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Video</div>
-                        <form action="upload_video" method="post" enctype="multipart/form-data">
-		          		  <input id="uploadVideo" type="file" class="upload" multiple="multiple" accept="image/*" />
-                        </form>
+		          		<form method="post" id="uploadVideoForm" enctype="multipart/form-data">
+		          			<input id="uploadVideo" type="file" class="upload" multiple="multiple" accept="image/*" name="content" onchange="uploadContent('uploadVideoForm')"/>
+		          		</form>	
 		        	</div>
 		      	</div>
 			</div>	
@@ -75,18 +77,25 @@
 							            <div class="item active">
 						                    <ul class="thumbnails">
 						                        <li class="col-sm-4 first-style-carousel">
-													<div class="thumbnail" style="text-align: center; height: 135px; line-height: 130px;" >Upload Style
-														<a href="#"></a>
+													<div class="thumbnail" style="text-align: center; height: 135px; line-height: 130px;" >
+														<div class="file-upload">
+															<div class="file-select" style="height: 100%; ">
+																<div class="file-select-name" id="premiumStyle" style="font-size:15px">Upload Style</div>
+																<form method="post" id="styleUploadForm" enctype="multipart/form-data">
+																	<input id="stylePhoto" type="file" class="upload" accept=".png, .jpg" name="style"/>
+																</form>	
+															</div>	
+														</div>	
 						                            </div>
 						                        </li>
 						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing2.jpg" alt=""></a>
+													<div class="thumbnail default-style" >
+														<img src="/images/rowing2.jpg" alt="" style="max-width: 100%">
 													</div>
 						                        </li>
 						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing2.jpg" alt=""></a>
+													<div class="thumbnail default-style">
+														<img src="/images/rowing2.jpg" style="max-width: 100%">
 													</div>
 						                        </li>
 						                    </ul>
@@ -94,18 +103,18 @@
 						            	<div class="item">
 						                    <ul class="thumbnails">
 						                        <li class="col-sm-4 first-style-carousel">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing.jpg" alt=""></a>
+													<div class="thumbnail default-style">
+														<img src="/images/rowing.jpg" style="max-width: 100%">
 													</div>
 						                        </li>
 						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing.jpg" alt=""></a>
+													<div class="thumbnail default-style">
+														<img src="/images/rowing.jpg" style="max-width: 100%">
 													</div>
 						                        </li>
 						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing.jpg" alt=""></a>
+													<div class="thumbnail default-style">
+														<img src="/images/rowing.jpg" style="max-width: 100%">
 													</div>
 						                        </li>
 						                    </ul>
@@ -142,130 +151,18 @@
       			</div>
     		</div>
   		</div>
-  		<div class="modal fade content-modal" id="homeModal" role="dialog">
-    		<div class="modal-dialog">
-      		<!-- Modal content-->
-      			<div class="modal-content">
-        			<div class="modal-header">
-          				<div class="container carousel-container">
-        					<div class="row">
-        						<div class="col-md-12" style="text-align: center">Choose A Style</div>
-        					</div>
-          					<div class="row">
-          						<div class="carousel" id="myCarousel">
-							        <div class="carousel-inner">
-							            <div class="item active">
-						                    <ul class="thumbnails">
-						                        <li class="col-sm-4 first-style-carousel">
-													<div class="thumbnail" style="text-align: center; height: 135px; line-height: 130px;" >Upload Style
-														<a href="#"></a>
-						                            </div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing2.jpg" alt="" class="carousel-images"></a>
-													</div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing2.jpg" alt="" class="carousel-images"></a>
-													</div>
-						                        </li>
-						                    </ul>
-						              	</div><!-- /Slide1 --> 
-						            	<div class="item">
-						                    <ul class="thumbnails">
-						                        <li class="col-sm-4 first-style-carousel">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing.jpg" alt="" class="carousel-images"></a>
-													</div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing.jpg" alt="" class="carousel-images"></a>
-													</div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail">
-														<a href="#"><img src="/images/rowing.jpg" alt="" class="carousel-images"></a>
-													</div>
-						                        </li>
-						                    </ul>
-						             	</div><!-- /Slide2 -->  
-							        </div>
-							    </div>	
-    							<!-- <div class="styles"></div>
-    							<div class="styles"></div>
-    							<div class="styles"></div> -->
-    						</div>
-    						<nav>
-							<ul class="control-box pager">
-								<li><a data-slide="prev" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
-								<li><a data-slide="next" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-right"></i></li>
-							</ul>
-						</nav>
-    					</div>
-        			</div>
-        			<div class="modal-body">
-          				<img id="imagepreview" src="" style="width:100%;"/>
-          				<div class="sk-folding-cube">
-						  <div class="sk-cube1 sk-cube" style="background-color: #FA7470;"></div>
-						  <div class="sk-cube2 sk-cube" style="background-color: #FA7470;"></div>
-						  <div class="sk-cube4 sk-cube" style="background-color: #FA7470;"></div>
-						  <div class="sk-cube3 sk-cube" style="background-color: #FA7470;"></div>
-						</div>
-        			</div>
-        			<div class="modal-footer">
-        				<div class="fb-share-button" data-href="http://10.10.7.179:8085/public/images/pip.png" data-layout="button" data-size="small" data-mobile-iframe="true"><a style="float:left; width: 50px; height: 50px; margin-right: 10px;" class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F10.10.7.179%2Fpublic%2Fimages%2Fpip.png&amp;src=sdkpreparse"><img src="/images/facebook.png"/></a></div>
-        				<img src="/images/twitter.png" style="float:left; width: 50px; height: 50px"/>
-        				<button type="button" class="btn btn-primary modal-button" id="saveButton">Save content</button>
-          				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        			</div>
-      			</div>
-    		</div>
-  		</div>
 
 	</div>	
 
-	<div class="content">
-  	  <div class="grid">
-  	    <div class="grid-sizer"></div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/dinah.jpg"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/rowing.jpg"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/rowing2.jpg"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/dog.jpg"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/cape.jpg"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/pip.png"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/snow.jpg"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/compound.png"></a>
-  	    </div>
-  	    <div class="grid-item">
-  	      <a href="#" class="pop"><img src="/images/food.jpg"></a>
-  	    </div>
-  	  </div>
-    </div>
+	<!-- write the grid -->
+	<% include partials/grid %>
 
 	<div class="footer-container">
         <a class="footer-content" href="ebinizerlop@gmail.com" style="color: black;">Contact us</a>
         <p class ="footer-content" style="font-size: 12px;">&copy; 2017 Artilizer, No Rights Reserved</p>
   	</div>	
-
 </body>
+
 
 <form action="upload_photo" method="post" enctype="multipart/form-data">
 content: <input type="file" name="photo" accept=".png,.jpg"><br>

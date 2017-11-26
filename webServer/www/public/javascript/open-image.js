@@ -1,6 +1,7 @@
 // this js page deals with everything modal
 
 
+
 var contentURL;
 
 $(document).ready(function(){
@@ -17,14 +18,11 @@ $(document).ready(function(){
   // displays the clicked on image in a modal on the home page
   $('.pop').on('click', function() {
     contentURL = $(this).find('img').attr('src');
-    $('#imagepreview').attr('src', contentURL);
+    $('#uploaded-image').attr('src', contentURL);
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
-    $('#imagepreview').css({
-      visibility: 'visible'
-    });
-    $('#homeModal').modal('show');
+    $('#uploadModal').modal('show');
   });
 
   // facebook share button
@@ -45,22 +43,23 @@ $(document).ready(function(){
 
   // displays the uploaded image or video in a modal
   function readURL(input, id) {
-      if (input.files && input.files[0]) {
-          var reader = new FileReader();
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-          reader.onload = function (e) {
-              $('#' + id).attr('src', e.target.result);
-              $('.sk-folding-cube').css({
-                visibility: 'hidden'
-              });
-              $('#uploaded-image').css({
-                visibility: 'visible'
-              })
-              $('#uploadModal').modal('show');
-          }
+        reader.onload = function (e) {
+            $('#' + id).attr('src', e.target.result);
+            $('.sk-folding-cube').css({
+              visibility: 'hidden'
+            });
+            $('#uploaded-image').css({
+              visibility: 'visible'
+            })
+            $('#uploadModal').modal('show');
+        }
 
-          reader.readAsDataURL(input.files[0]);
-      }
+        reader.readAsDataURL(input.files[0]);
+
+    }
   }    
   
   // displays the uploaded profile pic
@@ -101,18 +100,10 @@ $(document).ready(function(){
     $('#uploadModal').modal('hide');
   });
 
-  // hides the upload modal when the save
-  $('#saveButton').click(function() {
-    $('#homeModal').modal('hide');
 
-  });
-
-  // hides the image in the modal when a style is clicked and shows the loading animation
-  $('.thumbnails').click(function() {
+  // hides the image in the modal when a style is clicked, shows the loading animation and calls styleContent
+  $('.default-style').click(function() {
     $('#uploaded-image').css({
-      visibility: 'hidden'
-    });
-    $('#imagepreview').css({
       visibility: 'hidden'
     });
     $('.sk-folding-cube').css({
@@ -120,8 +111,18 @@ $(document).ready(function(){
     });
 
     // call stop animation function
-    stopAnimation();
+    stopAnimation();  
+
+    var style = $(this).find('img').attr('src');
+    var content = $('#uploaded-image').attr('src');
+    styleContent(content, style);
+
   });
+
+  $('#stylePhoto').change(function() {
+    var content = $('#uploaded-image').attr('src');
+    uploadStyle(content);
+  })
 
   // function will hide the animation and display the stylized image in the modal after 4 seconds
   function stopAnimation() {
@@ -132,15 +133,41 @@ $(document).ready(function(){
       $('#uploaded-image').css({
       visibility: 'visible'
     });
-    $('#imagepreview').css({
-      visibility: 'visible'
-      });
     }, 4000);
   }
 
-  $
-
-
+    
 })
+
+// sends the upload photo form to the content-upload controller
+function uploadContent(contentForm) {
+  var http = new XMLHttpRequest();
+  var form = document.getElementById(contentForm);
+  var formData = new FormData(form);
+  http.open("POST", "contentUpload", true);
+  // var form = document.getElementById("uploadPhotoForm").value;
+  http.send(formData);
+}
+
+// sends the content path and style path to the sytle-content-controller
+function styleContent(contentPath, stylePath) {
+  var http = new XMLHttpRequest();
+  // var form = document.getElementById('stylePhotoForm');
+  // var formData = new FormData(form);
+  var content = document.getElementById('content-photo');
+  http.open("POST", "style-content", true);
+  http.send(contentPath, stylePath);
+}
+
+
+function uploadStyle(contentPath) {
+  var http = new XMLHttpRequest();
+  var form = document.getElementById('uploadStyleForm');
+  var formData = new FormData(form);
+  console.log(formData);
+  http.open("POST", "styleUpload", true);
+  // var form = document.getElementById("uploadPhotoForm").value;
+  http.send(contentPath, formData); 
+}
 
 

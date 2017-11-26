@@ -170,57 +170,59 @@ router.get('/upgrade', function(req, res){
 });
 
 
-
-//export the router to our application
-module.exports = router;
-
-//checks if the user is autheticated
-function isLoggedIn(req, res, next){
-
-	//if user is authenticated in the session, carry on
-	if (req.isAuthenticated()) 
-		return next();
-
-	//if not redirect to home page
-	res.redirect('/');
-}
-
 /**************************************************************************
 *			       PHOTO UPLOAD FILE ROUTE
 *	
 *
 ***************************************************************************/
-router.get('/upload_photo', function(req, res){
-	return res.render('home.ejs');
-});
+
 router.post('/upload_photo', function(req, res){
 	require('./controllers/upload-image-controller').post(req,res);
 });
-//export the router to our application
-module.exports = router;
 
-//checks if the user is autheticated
-function isLoggedIn(req, res, next){
-
-	//if user is authenticated in the session, carry on
-	if (req.isAuthenticated()) 
-		return next();
-
-	//if not redirect to home page
-	res.redirect('/');
-}
 
 /**************************************************************************
 *			       VIDEO UPLOAD FILE ROUTE
 *	
 *
 ***************************************************************************/
-router.get('/upload_video', function(req, res){
-	return res.render('home.ejs');
-});
+
 router.post('/upload_video', function(req, res){
 	require('./controllers/upload-video-controller').post(req,res);
 });
+
+
+/**************************************************************************
+*			       Upload content route
+*	
+*
+***************************************************************************/
+// router.get('/contentUpload', function(req, res) {
+// 	require('./controllers/home').get(req, res);
+// });
+router.post('/contentUpload', function(req, res){
+	require('./controllers/content-upload-controller').post(req,res);
+});
+
+/**************************************************************************
+*			      Style content route
+*	
+*
+***************************************************************************/
+router.post('/style-content', function(req, res){
+	require('./controllers/style-content-controller').post(req,res);
+});
+
+/**************************************************************************
+*			      Style content route
+*	
+*
+***************************************************************************/
+router.post('/styleUpload', function(req, res){
+	require('./controllers/style-upload-controller').post(req,res);
+});
+
+
 //export the router to our application
 module.exports = router;
 
