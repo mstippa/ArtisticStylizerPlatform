@@ -24,10 +24,10 @@ exports.get = function(req, res) {
 		Profile.getProfile(req.user.userid, function(err, res) {
 			if (err) throw err;
 			userProfile = res;
-			profileReturn();
+			profileReturn(userProfile);
 		});
 
-		function profileReturn() {
+		function profileReturn(userProfile) {
 			res.render("../views/home.ejs" , {user: req.user, profile: userProfile});
 		}
 			

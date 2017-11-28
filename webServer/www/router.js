@@ -214,12 +214,21 @@ router.post('/style-content', function(req, res){
 });
 
 /**************************************************************************
-*			      Style content route
+*			      Upload style and stylize content route
 *	
 *
 ***************************************************************************/
 router.post('/styleUpload', function(req, res){
 	require('./controllers/style-upload-controller').post(req,res);
+});
+
+/**************************************************************************
+*			      Save content route
+*	
+*
+***************************************************************************/
+router.post('/save-content', function(req, res){
+	require('./controllers/save-content-controller').post(req,res);
 });
 
 
