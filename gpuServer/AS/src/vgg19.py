@@ -46,4 +46,3 @@ class VGG19:
     return input, layers
   # end
 # end
-
