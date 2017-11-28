@@ -2,11 +2,11 @@ import tensorflow as tf
 from module_utils import Utils
 
 class Ops(Utils):
-  def __init__(self, FLAGS):
-    super().__init__(FLAGS)
+  def __init__(self, args):
+    super().__init__(args)
   # end
 
-  def run(self, FLAGS, sess):
+  def run(self, args, sess):
     """
     """
     content_img_placeholder, style_img_placeholder = self.get_placeholder_inputs()
