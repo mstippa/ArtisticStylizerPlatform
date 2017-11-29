@@ -8,11 +8,11 @@ var multer = require('multer');
 
 var storage = multer.diskStorage({
   destination: function(req, res, callback){
-    callback(null, 'tmp/');
+    callback(null, 'public/tmp/');
   },
 
   filename: function(req, file, callback){
-    callback(null, file.originalname)
+    callback(null, file.originalname);
   }
 });
 
@@ -21,10 +21,9 @@ var upload = multer({storage: storage}).single('content');
 exports.post = function(req, res){
   upload(req, res, function(err){
     if(err) throw err;
-    else {
       // req.files is an ojbect where fieldname is the key and value is the array of files
       res.send("success");
-    }
+    
 
   });
 

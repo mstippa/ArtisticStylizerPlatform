@@ -71,66 +71,14 @@
         					<div class="row">
         						<div class="col-md-12" style="text-align: center">Choose Style</div>
         					</div>
-          					<div class="row">
-          						<div class="carousel" id="uploadCarousel">
-							        <div class="carousel-inner">
-							            <div class="item active">
-						                    <ul class="thumbnails">
-						                        <li class="col-sm-4 first-style-carousel">
-													<div class="thumbnail" style="text-align: center; height: 135px; line-height: 130px;" >
-														<div class="file-upload">
-															<div class="file-select" style="height: 100%; ">
-																<div class="file-select-name" id="premiumStyle" style="font-size:15px">Upload Style</div>
-																<form method="post" id="styleUploadForm" enctype="multipart/form-data">
-																	<input id="stylePhoto" type="file" class="upload" accept=".png, .jpg" name="style"/>
-																</form>	
-															</div>	
-														</div>	
-						                            </div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail default-style" >
-														<img src="/images/rowing2.jpg" alt="" style="max-width: 100%">
-													</div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail default-style">
-														<img src="/images/rowing2.jpg" style="max-width: 100%">
-													</div>
-						                        </li>
-						                    </ul>
-						              	</div><!-- /Slide1 --> 
-						            	<div class="item">
-						                    <ul class="thumbnails">
-						                        <li class="col-sm-4 first-style-carousel">
-													<div class="thumbnail default-style">
-														<img src="/images/rowing.jpg" style="max-width: 100%">
-													</div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail default-style">
-														<img src="/images/rowing.jpg" style="max-width: 100%">
-													</div>
-						                        </li>
-						                        <li class="col-sm-4">
-													<div class="thumbnail default-style">
-														<img src="/images/rowing.jpg" style="max-width: 100%">
-													</div>
-						                        </li>
-						                    </ul>
-						             	</div><!-- /Slide2 -->  
-							        </div>
-							    </div>	
-    							<!-- <div class="styles"></div>
-    							<div class="styles"></div>
-    							<div class="styles"></div> -->
-    						</div>
+							<!-- write the header -->
+							<% include partials/styles %>
     						<nav>
-							<ul class="control-box pager">
-								<li><a data-slide="prev" href="#uploadCarousel" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
-								<li><a data-slide="next" href="#uploadCarousel" class=""><i class="glyphicon glyphicon-chevron-right"></i></li>
-							</ul>
-						</nav>
+								<ul class="control-box pager">
+									<li><a data-slide="prev" href="#uploadCarousel" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+									<li><a data-slide="next" href="#uploadCarousel" class=""><i class="glyphicon glyphicon-chevron-right"></i></li>
+								</ul>
+							</nav>
     					</div>
         			</div>
         			<div class="modal-body">

@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="carousel" id="uploadCarousel">
+	    <div class="carousel-inner">
+	        <div class="item active">
+	            <ul class="thumbnails">
+	                <li class="col-sm-4 first-style-carousel">
+						<div class="thumbnail" style="text-align: center; height: 135px; line-height: 130px;" >
+							<div class="file-upload">
+								<div class="file-select" style="height: 100%; ">
+									<div class="file-select-name" id="premiumStyle" style="font-size:15px">Upload Style</div>
+									<form method="post" id="styleUploadForm" enctype="multipart/form-data">
+										<input id="stylePhoto" type="file" class="upload" accept=".png, .jpg" name="style"/>
+									</form>	
+								</div>	
+							</div>	
+	                    </div>
+	                </li>
+<% var i = 0; %>
+<% var styleCounter = 1; %>
+<% console.log(style.length); %>
+<% while (i < style.length-1) { %>
+    <% if (styleCounter === 3) { %>
+      			</ul>
+      		</div>
+      		<div class="item">
+      			<ul class="thumbnails">
+      	<% styleCounter = 0; %>	
+     <% } %>
+      				<li class="col-sm-4">
+						<div class="thumbnail default-style" >
+							<img src=<%style[i].style_path;%> alt="" style="max-width: 100%">
+						</div>
+	                </li>
+	<% styleCounter ++; %>
+	<% i++; %>
+<% } %>	
+	<% if (styleCounter !== 3) { %>
+	            </ul>
+	        </div>	
+	<% } %> 
+	    </div>
+	</div>	
+</div>

@@ -1,4 +1,4 @@
-/*************************************************************
+ /*************************************************************
 	ASP DATABASE INITALIZATION FILE
 	
 	Purpose:
@@ -268,3 +268,4 @@ ALTER TABLE usages
 	ADD FOREIGN KEY(style_id)				REFERENCES styles(style_id);
 ALTER TABLE usages
 	ADD FOREIGN KEY(premium_style_id)		REFERENCES premium_styles(premium_style_id);
+

@@ -46,9 +46,9 @@ $(document).ready(function(){
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
     inputName = inputName.replace(/.*[\/\\]/, '');
-    console.log($('#profilePic').attr('src'))
 
-    $('#uploaded-image').attr('src', '/tmp/'+ inputName);
+    document.getElementById('uploaded-image').src = '/tmp/'+inputName;
+    // $('#uploaded-image').attr('src', '/tmp/'+ inputName);
     // $('#' + id).attr('src', e.target.result);
     $('.sk-folding-cube').css({
       visibility: 'hidden'
@@ -114,7 +114,7 @@ $(document).ready(function(){
     var content = $('#uploaded-image').attr('src');
     console.log(style);
     console.log(content);
-    styleContent(content, style);
+    styleContent(content, '/public/styles/van_gogh_vincent_7.jpg');
 
   });
 
@@ -137,7 +137,8 @@ $(document).ready(function(){
 
   // call saveContent when the save button is clicked
   $('#saveButton').click(function() {
-    var contentToSave = $('#uploaded-image').attr('src');
+    // var contentToSave = $('#uploaded-image').attr('src');
+    var contentToSave = 'donald.jpg';
     saveContent(contentToSave);
   });
 
@@ -184,9 +185,20 @@ function uploadStyle(contentPath) {
 
 // sends the stylized photo to the save-content controller to be saved
 function saveContent(contentPath) {
-  var http = new XMLHttpRequest();
-  http.open("POST", "save-content", true);
-  http.send(contentPath);
+  console.log("lets fucj");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var response = this.responseText;
+        console.log(response);
+        return (this.responseText);
+     } else {
+      return false;
+     }
+  };
+  xhttp.open("POST", "save-content", false);
+  xhttp.send(contentPath); 
+
 }
 
 

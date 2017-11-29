@@ -24,11 +24,17 @@ exports.get = function(req, res) {
 		Profile.getProfile(req.user.userid, function(err, res) {
 			if (err) throw err;
 			userProfile = res;
-			profileReturn(userProfile);
+			Profile.getDefaultStyles(function(err, res) {
+				if (err) throw err;
+				var styles = res;
+				console.log(res);
+				profileReturn(userProfile, styles);
+			});
+			
 		});
 
-		function profileReturn(userProfile) {
-			res.render("../views/home.ejs" , {user: req.user, profile: userProfile});
+		function profileReturn(userProfile, defaultStyles) {
+			res.render("../views/home.ejs" , {user: req.user, profile: userProfile, style: defaultStyles});
 		}
 			
 	}

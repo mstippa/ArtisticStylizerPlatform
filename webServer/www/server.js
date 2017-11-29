@@ -71,8 +71,6 @@ require('./config/passport')(passport); // pass passport for configuration
 //first we'll make some middleware to get rid of capital extensions
 app.use(function(req, res, next){
 	req.url = req.url.toLowerCase();
-	console.log(req.url);
-	console.log("asdfasdfasdfasdfasdfasdfasd")
 	next();
 })
 

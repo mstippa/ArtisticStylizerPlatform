@@ -9,21 +9,36 @@ var mv = require('mv');
 
 
 exports.post = function(req, res){
-  // move the file from tmp/ to the user's profile directory
-  console.log(req.body);
-  // var picture = req; 
-  // mv(req, 'profiles/'+Profile.profileid+'/pictures/', function(err) {
-  //   if (err) throw err;
-  //   else {
-  //     console.log("content moved");
-  //     // saveToDatabase(req);
-  //   }  
- 
-  // // function saveToDatabase(req) {
-  // //   Profile.savePicture()
-  // // }   
 
-  // });
+  req.on("data", function(data) {
+    // turn the request into a string which is the path of the content image
+    var contentPath = String(data);
+    console.log(contentPath);
+    var userProfile;
+    Profile.getProfile(req.user.userid, function(err, res) {
+      if (err) throw err;
+      userProfile = res;
+
+      // move the file from tmp/ to the user's profile directory
+      mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
+        if (err) throw err;
+        else {
+          console.log("content moved");
+          // saveToDatabase(req);
+        } 
+      });
+
+ 
+    // function saveToDatabase(req) {
+    //   Profile.savePicture()
+    // }   
+    
+    });
+
+      res.send();
+
+  });
+  
 
 
 };

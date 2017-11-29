@@ -1,10 +1,4 @@
-/**
-	This is just a little demo of what we can do with node.js
-	we first get the data we need (in this case wer're requiring
-	'../model/test-data' but in the future we can get data from a database)
-	after we get the data we brake it down into list items to be printed to the
-	user.
-**/
+
 
 //things we need -- the test data and the homepage html template
 var User = require('../model/user');
@@ -13,20 +7,6 @@ var multer = require('multer');
 var upload = multer({dest: 'tmp/'})
 var PythonShell = require('python-shell');
 
-/*
-exports.post = function(req, res){
-	var form = new formidable.IncomingForm();
-	form.parse(req, function(err, fields, files){
-		var oldpath = files.filetoupload.path;
-		var newpath = '/home/mike/' + files.filetoupload.name;
-		fs.rename(oldpath, newpath, function(err){
-			if (err) throw err;
-			res.write('files uploaded and moved!');
-			res.end();
-		});
-	});
-}
-*/
 
 var storage = multer.diskStorage({
 	destination: function(req, res, callback){
@@ -34,7 +14,6 @@ var storage = multer.diskStorage({
 	},
 
 	filename: function(req, file, callback){
-		console.log(file);
 		callback(null, file.originalname)
 	}
 });
@@ -48,15 +27,15 @@ exports.post = function(req, res){
 			return;
 		}
 		// req.files is an ojbect where fieldname is the key and value is the array of files
-		console.log(req.files);
+		console.log(req.files[0]);
 		console.log('photo uploaded');
 		var options = {
 			pythonPath: '/usr/bin/python3',
-		        scriptPath: '/home/mike/repos/cmpt475_Nov28/ArtisticStylizerPlatform/webServer/www',
-		        args: [req.files[0].path, req.files[1].path, '/home/mike/results', 256, 512]
+		        scriptPath: '/home/mike/repos/cmpt475_Nov28/ArtisticStylizerPlatform/gpuServer/AS/src/',
+		        args: [req.files[0].path, req.files[1].path, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/tmp', 256, 512]
 		};
 		try{
-			PythonShell.run('processManager.py', options, function(err){
+			PythonShell.run('inference_master.py', options, function(err){
 		        if (err) throw err;
 			});
 		}
