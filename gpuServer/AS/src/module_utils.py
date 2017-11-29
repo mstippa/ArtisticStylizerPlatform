@@ -4,24 +4,23 @@ from matplotlib import image
 from vgg19 import VGG19
 
 class Utils:
-  def __init__(self, FLAGS):
-    print('Utils constructor')
+  def __init__(self, args):
     # constants
-    self.DECODER_T7 = "../lib/model_files/decoder.t7"
-    self.VGG_T7 = "../lib/model_files/vgg_normalised.t7"
+    self.DECODER_T7 = "/home/mike/ArtisticStylizerPlatform/gpuServer/AS/lib/model_files/decoder.t7"
+    self.VGG_T7 = "/home/mike/ArtisticStylizerPlatform/gpuServer/AS/lib/model_files/vgg_normalised.t7"
     self.ALPHA = 1
-    self.init_FLAGS(FLAGS)
+    self.init_args(args)
   # end
 
-  def init_FLAGS(self, FLAGS):
+  def init_args(self, args):
     # TODO determine if other flags are needed
     # image paths 
-    self.STYLE_IMG_PATH = FLAGS.style_img_path
-    self.CONTENT_IMG_PATH = FLAGS.content_img_path
-    self.RESULT_IMG_PATH = FLAGS.result_img_path
+    self.STYLE_IMG_PATH = args.style_img_path
+    self.CONTENT_IMG_PATH = args.content_img_path
+    self.RESULT_IMG_PATH = args.result_img_path
 
-    self.STYLE_EXT_TYPE = self._get_ext(img_path=FLAGS.style_img_path)
-    self.CONTENT_EXT_TYPE = self._get_ext(img_path=FLAGS.content_img_path)
+    self.STYLE_EXT_TYPE = self._get_ext(img_path=args.style_img_path)
+    self.CONTENT_EXT_TYPE = self._get_ext(img_path=args.content_img_path)
   # end
 
   def _get_ext(self, img_path):
