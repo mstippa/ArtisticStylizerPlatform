@@ -230,13 +230,13 @@ Profile.loadVideos = function(videos, done){
 
 
 // save a premium style in asp database
-Profile.saveStyle = function(profileid, style, done){
+Profile.saveStyle = function(profileid, stylePath, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) done(err);
 
 		// first we make a async call to save the style
 		connection.query('insert into premium_styles(style_path) values(?)',
-			[style.stylePath],
+			[stylePath],
 			function(err, result){
 				if (err) return done(err);
 
@@ -256,12 +256,13 @@ Profile.saveStyle = function(profileid, style, done){
 				);	
 			}
 		);
-		
 	});
 }
 
 // save the picture in asp database
-Profile.savePicture = function(picture, done){
+Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
+	// create a picture object with no pictureid yet
+	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
 
@@ -281,7 +282,7 @@ Profile.savePicture = function(picture, done){
 			function(err, result){
 				connection.release();
 
-				if (err) return done(err);
+				if (err) return   (err);
 				// we saved the picture to the database now we need to write the picture to the file style
 				// TODO write the picture to file system
 
@@ -297,7 +298,9 @@ Profile.savePicture = function(picture, done){
 
 
 // save a video to the asp database
-Profile.saveVideo = function(video, done){
+Profile.saveVideo = function(profileid, videoPath, videoLength, styleid, psid, dateCreated, done){
+	var video = new Video(profileid, videoPath, videoLength, styleid, psid, dateCreated);
+	
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
 
