@@ -9,7 +9,7 @@ var async   = require('async');
 var fs      = require('fs'); // for writing to the file system
 
 // default path for all profiles
-var PATH    = './profiles/'
+var PATH    = '/public/profiles/'
 
 // constructor
 function Profile(userId, profileId){
