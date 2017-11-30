@@ -19,7 +19,7 @@ exports.post = function(req, res){
       if (err) throw err;
       userProfile = res;
 
-      // move the file from tmp/ to the user's profile directory
+      // move the file from /public/tmp to the user's profile directory 
       mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
         if (err) throw err;
         else {

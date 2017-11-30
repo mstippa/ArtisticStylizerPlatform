@@ -22,6 +22,7 @@ $(document).ready(function(){
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
+    console.log("penis2");
     $('#uploadModal').modal('show');
   });
 
@@ -33,7 +34,7 @@ $(document).ready(function(){
 
   // calls uploadcontent and readURL function when user uploads a photo
   $("#uploadPhoto").change(function () {
-    uploadContent('uploadPhotoForm')
+    uploadContent('uploadPhotoForm');
     readURL( this.value);
   });
 
@@ -56,6 +57,7 @@ $(document).ready(function(){
     $('#uploaded-image').css({
       visibility: 'visible'
     })
+    console.log("penis1");
     $('#uploadModal').modal('show');
   }    
   
@@ -138,7 +140,9 @@ $(document).ready(function(){
   // call saveContent when the save button is clicked
   $('#saveButton').click(function() {
     // var contentToSave = $('#uploaded-image').attr('src');
-    var contentToSave = 'donald.jpg';
+
+    var contentToSave = document.getElementById('uploaded-image').src;
+    contentToSave = contentToSave.replace(/.*[\/\\]/, '');
     saveContent(contentToSave);
   });
 
@@ -151,7 +155,7 @@ function uploadContent(contentForm) {
     var formData = new FormData(form);
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          var response = this.responseText;
+          var response = String(this.responseText);
           console.log(response);
           return (this.responseText);
        } else {
@@ -185,7 +189,6 @@ function uploadStyle(contentPath) {
 
 // sends the stylized photo to the save-content controller to be saved
 function saveContent(contentPath) {
-  console.log("lets fucj");
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
