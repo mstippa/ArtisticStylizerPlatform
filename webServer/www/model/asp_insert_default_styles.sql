@@ -18,6 +18,30 @@ use asp_database;
 **************************************/
 
 INSERT INTO styles(style_path)
+
+	VALUES ("/default_styles/alien_rainbow.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/brickwall.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/deja_vu.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/divisionism.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/instagael.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/oil_on_canvas.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/van_gogh.jpg");
+
+INSERT INTO styles(style_path)
+	VALUES ("/default_styles/water_ripple.jpg");
+
 	VALUES ("~/ArtisticStylizerPlatform/webServer/www/public/default_styles/alien_rainbow.jpg");
 
 INSERT INTO styles(style_path)
@@ -40,3 +64,4 @@ INSERT INTO styles(style_path)
 
 INSERT INTO styles(style_path)
 	VALUES ("~/ArtisticStylizerPlatform/webServer/www/public/default_styles/water_ripple.jpg");
+
