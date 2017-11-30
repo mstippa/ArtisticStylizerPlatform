@@ -98,6 +98,7 @@ $(document).ready(function(){
   });
 
 
+
   // hides the image in the modal when a style is clicked, shows the loading animation and calls styleContent
   $('.default-style').click(function() {
     $('#uploaded-image').css({
@@ -107,17 +108,21 @@ $(document).ready(function(){
       visibility: 'visible'
     });
 
-    // call stop animation function
+    // start the loading animation
     stopAnimation();  
 
     var style = $(this).find('img').attr('src');
-    var content = $('#uploaded-image').attr('src');
+    style = style.replace(/.*[\/\\]/, '');
+    var content = document.getElementById('uploaded-image').src;
+    content = content.replace(/.*[\/\\]/, '');
     console.log(style);
     console.log(content);
-    styleContent(content, '/public/styles/van_gogh_vincent_7.jpg');
-
+    styleContent(content, 'van_gogh_vincent_7.jpg');
+    document.getElementById('uploaded-image').src = '/public/tmp/result.jpg';
+    
   });
 
+  // calls uploadStyle when user chooses to upload a style
   $('#stylePhoto').change(function() {
     var content = $('#uploaded-image').attr('src');
     uploadStyle(content);
@@ -166,12 +171,20 @@ function uploadContent(contentForm) {
 }
 
 // sends the content path and style path to the sytle-content-controller
-function styleContent(contentPath, stylePath) {
-  var http = new XMLHttpRequest();
-  // var form = document.getElementById('stylePhotoForm');
-  // var formData = new FormData(form);
-  http.open("POST", "style-content", true);
-  http.send(contentPath, stylePath);
+function styleContent(content, style) {
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var response = this.responseText;
+        console.log(response);
+        return (this.responseText);
+     } else {
+      return false;
+     }
+  };
+  xhttp.open("POST", "style-content", false);
+  xhttp.send(content + " " + style);
 }
 
 // sends the content path and upload style form to the style-upload-controller 
@@ -190,7 +203,7 @@ function saveContent(contentPath) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        var response = this.responseText;
+        var response = String(this.responseText);
         console.log(response);
         return (this.responseText);
      } else {

@@ -5,12 +5,12 @@ var User = require('../model/user');
 var Profile = require('../model/profile');
 var multer = require('multer');
 
-
+// store the image in tmp folder in the public directory
 var storage = multer.diskStorage({
   destination: function(req, res, callback){
     callback(null, 'public/tmp/');
   },
-
+  // keep the filename the same as the uploaded name
   filename: function(req, file, callback){
     callback(null, file.originalname);
   }

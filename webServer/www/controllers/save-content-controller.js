@@ -15,23 +15,28 @@ exports.post = function(req, res){
     var contentPath = String(data);
     console.log(contentPath);
     var userProfile;
+    // get the user's profile
     Profile.getProfile(req.user.userid, function(err, res) {
       if (err) throw err;
       userProfile = res;
 
       // move the file from /public/tmp to the user's profile directory 
-      mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
-        if (err) throw err;
+      mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
+        if (err) res.send("fail")
         else {
-          console.log("content moved");
-          // saveToDatabase(req);
+          saveToDatabase(userProfile);
+          res.send("success");
+        
         } 
       });
 
  
-    // function saveToDatabase(req) {
-    //   Profile.savePicture()
-    // }   
+    function saveToDatabase(userProfile) {
+      Profile.savePicture(userProfile.profileid, '/public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, null, null, null, null, null, function (err, res)) {
+        if (err) throw err;
+        else
+      }
+    }   
     
     });
 

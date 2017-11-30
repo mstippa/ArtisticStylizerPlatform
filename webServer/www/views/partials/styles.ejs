@@ -17,8 +17,8 @@
 	                </li>
 <% var i = 0; %>
 <% var styleCounter = 1; %>
-<% console.log(style.length); %>
 <% while (i < style.length-1) { %>
+<% console.log(style[i].stylePath); %>
     <% if (styleCounter === 3) { %>
       			</ul>
       		</div>
@@ -28,7 +28,7 @@
      <% } %>
       				<li class="col-sm-4">
 						<div class="thumbnail default-style" >
-							<img src=<%style[i].style_path;%> alt="" style="max-width: 100%">
+							<img src= "<%= style[i].stylePath %>" alt="" style="max-width: 100%">
 						</div>
 	                </li>
 	<% styleCounter ++; %>
