@@ -4,9 +4,10 @@
     <div clas"grid>
       <div class="grid-sizer"></div>
       <%var i = 0; %>
+      <% console.log(profile.pictures.length) %>
       <% while (i < profile.pictures.length) { %>
           <div class="grid-item">
-          <a href="#" class="pop"><img src= <% profile.pictures[i].picture_path %> ></a>
+          <a href="#" class="pop"><img src= "<%= profile.pictures[i].picturePath %>" ></a>
           </div> 
           <% i++; %> 
       <% } %>
