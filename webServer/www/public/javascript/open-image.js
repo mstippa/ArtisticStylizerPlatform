@@ -22,7 +22,6 @@ $(document).ready(function(){
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
-    console.log("penis2");
     $('#uploadModal').modal('show');
   });
 
@@ -57,7 +56,6 @@ $(document).ready(function(){
     $('#uploaded-image').css({
       visibility: 'visible'
     })
-    console.log("penis1");
     $('#uploadModal').modal('show');
   }    
   
