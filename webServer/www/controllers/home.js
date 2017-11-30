@@ -19,7 +19,6 @@ exports.get = function(req, res) {
 		var user = new User();
 		return res.render("../views/home.ejs", { user: req.user});
 	} else {
-		console.log("dong");
 		var userProfile;
 		Profile.getProfile(req.user.userid, function(err, res) {
 			if (err) throw err;

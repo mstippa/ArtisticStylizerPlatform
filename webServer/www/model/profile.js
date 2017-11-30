@@ -263,7 +263,7 @@ Profile.saveStyle = function(profileid, stylePath, done){
 Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
 	// create a picture object with no pictureid yet
 	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
-	console.log("here");
+
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
 
