@@ -189,7 +189,8 @@ CREATE TABLE IF NOT EXISTS `reported_content` (
  -- usages table structure
 CREATE TABLE IF NOT EXISTS `usages` (
 	`usage_id`				int(11)			NOT NULL		AUTO_INCREMENT,
-	`process_time`			TIME 			DEFAULT '00:00:00',
+	`start_time`			DATETIME,
+	`end_time`				DATETIME,
 	`content_size`			int(11),
 	`profile_id`			int(11),
 	`style_id`				int(11),
