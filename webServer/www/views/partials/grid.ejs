@@ -1,0 +1,50 @@
+<!-- Onyly display the grid if the user is logged in -->
+<% if(user){ %>
+  <div class="content">
+    <div clas"grid>
+      <div class="grid-sizer"></div>
+      <%var i = 0; %>
+      <% while (i < profile.pictures.length) { %>
+          <div class="grid-item">
+          <a href="#" class="pop"><img src= <% profile.pictures[i].picture_path %> ></a>
+          </div> 
+          <% i++; %> 
+      <% } %>
+<% } %> <!-- end if -->       
+    </div>
+  </div>
+
+
+  <!--  <div class="content">
+    <div class="grid">
+      <div class="grid-sizer"></div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/dinah.jpg"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/rowing.jpg"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/rowing2.jpg"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/dog.jpg"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/cape.jpg"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/pip.png"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/snow.jpg"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/compound.png"></a>
+      </div>
+      <div class="grid-item">
+        <a href="#" class="pop"><img src="/images/food.jpg"></a>
+      </div>
+    </div>
+  </div> -->
+ 
