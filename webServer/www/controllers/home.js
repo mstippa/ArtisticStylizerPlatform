@@ -26,7 +26,6 @@ exports.get = function(req, res) {
 			Profile.getDefaultStyles(function(err, res) {
 				if (err) throw err;
 				var styles = res;
-				console.log(res);
 				profileReturn(userProfile, styles);
 			});
 			
