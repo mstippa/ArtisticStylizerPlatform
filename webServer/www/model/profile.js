@@ -9,7 +9,7 @@ var async   = require('async');
 var fs      = require('fs'); // for writing to the file system
 
 // default path for all profiles
-var PATH    = '/public/profiles/'
+var PATH    = 'public/profiles/'
 
 // constructor
 function Profile(userId, profileId){
@@ -263,6 +263,7 @@ Profile.saveStyle = function(profileid, stylePath, done){
 Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
 	// create a picture object with no pictureid yet
 	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
+	console.log("here");
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
 
@@ -282,12 +283,13 @@ Profile.savePicture = function(profileid, picturePath, size, resolution, styleid
 			function(err, result){
 				connection.release();
 
-				if (err) return   (err);
+				if (err) return   done(err);
 				// we saved the picture to the database now we need to write the picture to the file style
 				// TODO write the picture to file system
 
+				console.log("result " , result);
 				// lets update our picture object with a picture_id and return it
-				picture.pictureid = result[0].picture_id;
+				picture.pictureid = result.picture_id;
 
 				// return the saved picture to the callback
 				return done(err, picture);

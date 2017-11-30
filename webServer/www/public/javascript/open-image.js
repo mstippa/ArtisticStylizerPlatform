@@ -146,7 +146,7 @@ $(document).ready(function(){
 
     var contentToSave = document.getElementById('uploaded-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
-    saveContent(contentToSave);
+    saveContent('donald.jpg');
   });
 
 })
