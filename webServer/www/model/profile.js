@@ -240,6 +240,10 @@ Profile.saveStyle = function(profileid, stylePath, done){
 			function(err, result){
 				if (err) return done(err);
 
+				var style = [
+					profileid,
+					result[0]
+				]
 				// now we save the profile_style relationship
 				connection.query('insert into profile_styles values(? ,?)',
 					{
@@ -261,33 +265,28 @@ Profile.saveStyle = function(profileid, stylePath, done){
 
 // save the picture in asp database
 Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
-	// create a picture object with no pictureid yet
-	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
-	console.log("here");
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
+			//first lets save our values to an array
+		var picture = [
+			profileid,
+			picturePath,
+			size,
+			resolution,
+			styleid,
+			psid,
+			dateCreated
+		];
 
 		// insert the picture into the picture table
-		connection.query('insert into pictures(profile_id, picture_path, size, resolution, style_id, premium_style_id, date_created)' 
-			+' values(?, ?, ?, ?, ?, ?, ?)',
-			{
-				profile_id   	 : picture.profileid,
-				picture_path 	 : picture.picturePath,
-				size 		 	 : picture.size,
-				resolution   	 : picture.resolution,
-				style_id     	 : picture.styleid,
-				premium_style_id : picture.psid,
-				date_created     : picture.dateCreated
-
-			},
+		connection.query('INSERT INTO pictures(profile_id, picture_path, size, resolution, style_id, premium_style_id, date_created)'
+			+' VALUES(?, ?, ?, ?, ?, ?, ?)',
+			picture,
 			function(err, result){
 				connection.release();
 
 				if (err) return   done(err);
-				// we saved the picture to the database now we need to write the picture to the file style
-				// TODO write the picture to file system
-
-				console.log("result " , result);
+			
 				// lets update our picture object with a picture_id and return it
 				picture.pictureid = result.picture_id;
 
