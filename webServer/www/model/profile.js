@@ -265,6 +265,10 @@ Profile.saveStyle = function(profileid, stylePath, done){
 
 // save the picture in asp database
 Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
+
+	// create a picture object with no pictureid yet
+	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
+
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
 			//first lets save our values to an array

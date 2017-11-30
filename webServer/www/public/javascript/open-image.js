@@ -1,10 +1,14 @@
 // this js page deals with everything modal
 
-
-
+// global variable that holds the src of a clicked on image to be displayed in a modal
 var contentURL;
 
 $(document).ready(function(){
+
+  // turn of auto cycle in the carousel
+  $('.carousel').carousel({
+    interval: false
+  }); 
 
   // dislplays the clicked on image in a modal on the explore page
 	$('.pop').on('click', function() {
@@ -48,8 +52,7 @@ $(document).ready(function(){
     inputName = inputName.replace(/.*[\/\\]/, '');
 
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
-    // $('#uploaded-image').attr('src', '/tmp/'+ inputName);
-    // $('#' + id).attr('src', e.target.result);
+
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
