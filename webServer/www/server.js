@@ -87,33 +87,48 @@ app.use(function(err, req, res, next){
 })
 
 /**************************************************************
-*						Database
+*                                               Database
 ***************************************************************/
 var mysql = require('mysql');
 var async = require('async');
 // app.use(async()); // async database
 
-//init the db 
+//init the db
 var db = require('./db');
 
 //connect to the database then listen for requests
 db.connect(db.MODE_PRODUCTION, function(err){
-	if(err) {
-		//error case, cannot connect to sql database
+        if(err) {
+                //error case, cannot connect to sql database
 
-		console.log('Unable to connect to mysql'); //log the error
+                console.log('Unable to connect to mysql'); //log the error
 
-		//exit the program gracefully
-		process.exit(1);
-	} else { 
-		
-		/****************************************************************************
-		*			Tell the app to listen to the speicfied port and ip
-		****************************************************************************/
-		app.listen(http_port,http_IP); 
+                //exit the program gracefully
+                process.exit(1);
+        } else {
+                /**************************************************************
+                *                               Set up the queue for style transfers
+                **************************************************************/
+                var options = {
+                        pythonPath: '/usr/bin/python3'
+                };
+                var PythonShell = require('python-shell');
+                var pyshell = new PythonShell('./scripts/processManager.py', options);
+                // event handler for when a style transfer is completed
+                pyshell.on('message', function(message){
+                        // received a message sent from the Python script (a simple "print" statement)
+                        console.log(message);
 
-		//output to console
-		console.log('listening to http://' + http_IP + ':' + http_port); 
+                        // we finished a style transfer, write the useage to the database
+                });
 
-	}
+                /****************************************************************************
+                *                       Tell the app to listen to the speicfied port and ip
+                ****************************************************************************/
+                app.listen(http_port,http_IP);
+
+                //output to console
+                console.log('listening to http://' + http_IP + ':' + http_port);
+
+        }
 });
