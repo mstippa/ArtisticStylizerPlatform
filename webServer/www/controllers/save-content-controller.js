@@ -19,6 +19,7 @@ exports.post = function(req, res){
     Profile.getProfile(req.user.userid, function(err, result) {
       if (err) throw err;
 
+
       // Profile object gets returned
       userProfile = result;
       
@@ -33,13 +34,13 @@ exports.post = function(req, res){
       // saves the picture to the database
       function saveToDatabase(userProfile) {
         Profile.savePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/pictures/'+contentPath, null, null, null, null, null, function (err, result) {
-        
-          if (err) throw err;
-          else {
-            // yay we saved 
-          }
-        });
-      }
+        if (err) throw err;
+        else {
+          // yay we saved 
+        }
+      });
+    }
+
 
     
     });

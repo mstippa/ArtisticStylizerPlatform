@@ -209,7 +209,6 @@ router.post('/upload_photo', function(req, res){
 });
 
 
-
 //export the router to our application
 module.exports = router;
 
