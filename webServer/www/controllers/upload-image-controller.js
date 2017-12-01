@@ -52,7 +52,7 @@ exports.post = function(req, res){
 		console.log('photo uploaded');
                 var options = {
                         pythonPath: '/usr/bin/python3',
-                        scriptPath: '/home/mike/repos/cmpt475_Nov29/ArtisticStylizerPlatform/webServer/ww
+                        scriptPath: '/home/mike/repos/cmpt475_Nov29/ArtisticStylizerPlatform/webServer/www/scripts',
                         args: [req.files[0].path, req.files[1].path, '/home/mike/results', 256, 512]
                 };
                 try{
