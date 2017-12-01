@@ -18,14 +18,13 @@ exports.post = function(req, res){
     Profile.getProfile(req.user.userid, function(err, result) {
       if (err) throw err;
       userProfile = result;
-
+      
       // move the file from /public/tmp to the user's profile directory 
       mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
         if (err) throw err;
         else {
-          saveToDatabase(userProfile);
-        
-        } 
+          saveToDatabase(userProfile);  
+       } 
       });
 
 
@@ -38,12 +37,6 @@ exports.post = function(req, res){
         }
       });
     }
-    
-
-    
-
-    
- 
 
     
     });
