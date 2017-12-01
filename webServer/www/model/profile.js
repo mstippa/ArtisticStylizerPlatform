@@ -132,7 +132,7 @@ Profile.getProfilePicture = function(profileId){
 		[profileId],
 		function(err, result){
 			connection.release();
-			return done(err, result);
+			return done(err, result.profile_pic_path);
 		}
 	});
 }
