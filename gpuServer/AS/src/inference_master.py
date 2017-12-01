@@ -8,6 +8,14 @@ from tensorflow.python.client import device_lib
 import argparse
 from inference_ops import Ops
 
+logger = logging.getLogger("inference_master")
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s:%(name)s:%(message)s")
+fileHandler = logging.FileHandler("inference_master.log")
+fileHandler.setFormatter(formatter)
+
+logger.addHandler(fileHandler)
+
 parser = argparse.ArgumentParser()
 # image paths 
 parser.add_argument("content_img_path", type=str, help="full path to content image")
@@ -34,6 +42,8 @@ with tf.Graph().as_default() as graph:
     sess = tf.Session(config=session_config)
   else:
     sess = tf.Session()
-
+  
+  logger.info("start style transfer")
   model = Ops(args=args)
   model.run(args=args, sess=sess)
+  logger.info("end style transfer")
