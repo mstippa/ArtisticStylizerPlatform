@@ -22,6 +22,7 @@ function Profile(userId, profileId){
 	this.payments      =    null;
 	this.subscription  =    null;
 	this.usages        =    null;
+	this.profilePath   =    null;
 }
 
 
@@ -110,6 +111,31 @@ Profile.createProfile = function(userId, done){
 	});
 }
 
+
+Profile.changeProfilePicture = function(profileId, picturePath, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?'),
+		[picturePath, profileId],
+		function(err, result){
+			connection.release();
+			return done(err, result);
+		}
+	});
+}
+
+Profile.getProfilePicture = function(profileId){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(er);
+		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?'),
+		[profileId],
+		function(err, result){
+			connection.release();
+			return done(err, result);
+		}
+	});
+}
 
 // gets all styles associated with the profile id
 Profile.getStyles = function(profileid, done){
@@ -265,10 +291,6 @@ Profile.saveStyle = function(profileid, stylePath, done){
 
 // save the picture in asp database
 Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
-
-	// create a picture object with no pictureid yet
-	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
-
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
 			//first lets save our values to an array
