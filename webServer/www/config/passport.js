@@ -19,9 +19,7 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(user, done) {
-        console.log("userDeserialize :", user);
         User.findByUsername(user.username, function(err, user) {
-            console.log(err);
             return done(err, user);
         });
     });
@@ -55,12 +53,11 @@ module.exports = function(passport) {
 
             	// check to see if theres already a user with that username
             	if (user) {
-                    console.log("user already exists");
-                	return done(null, false,req.flash('signupMessage', 'That username is already taken.'));
+                   return done(null, false,req.flash('signupMessage', 'That username is already taken.'));
             	} else {
             		// no user with that username, lets create one
             		// create the user
-                    console.log("new user :", user);
+                   
 
             		var newUser = new User();
 

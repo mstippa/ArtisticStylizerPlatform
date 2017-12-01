@@ -9,7 +9,7 @@ var async   = require('async');
 var fs      = require('fs'); // for writing to the file system
 
 // default path for all profiles
-var PATH    = './profiles/'
+var PATH    = 'public/profiles/'
 
 // constructor
 function Profile(userId, profileId){
@@ -22,6 +22,7 @@ function Profile(userId, profileId){
 	this.payments      =    null;
 	this.subscription  =    null;
 	this.usages        =    null;
+	this.profilePath   =    null;
 }
 
 
@@ -110,6 +111,31 @@ Profile.createProfile = function(userId, done){
 	});
 }
 
+
+Profile.changeProfilePicture = function(profileId, picturePath, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?'),
+		[picturePath, profileId],
+		function(err, result){
+			connection.release();
+			return done(err, result);
+		}
+	});
+}
+
+Profile.getProfilePicture = function(profileId){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(er);
+		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?'),
+		[profileId],
+		function(err, result){
+			connection.release();
+			return done(err, result.profile_pic_path);
+		}
+	});
+}
 
 // gets all styles associated with the profile id
 Profile.getStyles = function(profileid, done){
@@ -240,6 +266,10 @@ Profile.saveStyle = function(profileid, stylePath, done){
 			function(err, result){
 				if (err) return done(err);
 
+				var style = [
+					profileid,
+					result[0]
+				]
 				// now we save the profile_style relationship
 				connection.query('insert into profile_styles values(? ,?)',
 					{
@@ -261,33 +291,30 @@ Profile.saveStyle = function(profileid, stylePath, done){
 
 // save the picture in asp database
 Profile.savePicture = function(profileid, picturePath, size, resolution, styleid, psid, dateCreated, done){
-	// create a picture object with no pictureid yet
-	var  picture = new Picture(null, profileid, picturePath, size, resolution, styleid, psid, dateCreated);
 	db.get(db.WRITE, function(err, connection){
 		if (err) return done(err);
+			//first lets save our values to an array
+		var picture = [
+			profileid,
+			picturePath,
+			size,
+			resolution,
+			styleid,
+			psid,
+			dateCreated
+		];
 
 		// insert the picture into the picture table
-		connection.query('insert into pictures(profile_id, picture_path, size, resolution, style_id, premium_style_id, date_created)' 
-			+' values(?, ?, ?, ?, ?, ?, ?)',
-			{
-				profile_id   	 : picture.profileid,
-				picture_path 	 : picture.picturePath,
-				size 		 	 : picture.size,
-				resolution   	 : picture.resolution,
-				style_id     	 : picture.styleid,
-				premium_style_id : picture.psid,
-				date_created     : picture.dateCreated
-
-			},
+		connection.query('INSERT INTO pictures(profile_id, picture_path, size, resolution, style_id, premium_style_id, date_created)'
+			+' VALUES(?, ?, ?, ?, ?, ?, ?)',
+			picture,
 			function(err, result){
 				connection.release();
 
-				if (err) return   (err);
-				// we saved the picture to the database now we need to write the picture to the file style
-				// TODO write the picture to file system
-
+				if (err) return   done(err);
+			
 				// lets update our picture object with a picture_id and return it
-				picture.pictureid = result[0].picture_id;
+				picture.pictureid = result.picture_id;
 
 				// return the saved picture to the callback
 				return done(err, picture);
