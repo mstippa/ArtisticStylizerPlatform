@@ -44,15 +44,11 @@ $(document).ready(function(){
     readURL( this.value);
   });
 
-  // calls uploadcontent and readURL function when user uploads a video
-  $("#uploadVideo").change(function () {
-      uploadContent('uploadVideoForm');
-      readURL(this.value);
-  });
 
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
     inputName = inputName.replace(/.*[\/\\]/, '');
+    console.log(inputName);
 
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
 
@@ -153,7 +149,7 @@ $(document).ready(function(){
     var contentToSave = document.getElementById('uploaded-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
     saveContent(contentToSave);
-    console.log("poop");
+    console.log(response);
     if (response === "saved") {
       $('#uploaded-image').css({
       visibility: 'hidden'
@@ -178,8 +174,7 @@ function uploadContent(contentForm) {
        }
     };
     xhttp.open("POST", "contentUpload", false);
-    xhttp.send(formData); 
-
+    xhttp.send(formData);
 }
 
 // sends the content path and style path to the sytle-content-controller

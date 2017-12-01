@@ -29,9 +29,10 @@ exports.post = function(req, res){
 */
 
 var storage = multer.diskStorage({
-        destination: function(req, res, callback){
-                callback(null, 'tmp/');
-        },
+
+	destination: function(req, res, callback){
+		callback(null, 'public/tmp/');
+	},
 
         filename: function(req, file, callback){
                 console.log(file);
@@ -42,6 +43,7 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage}).array('photo', 2);
 
 exports.post = function(req, res){
+
         upload(req, res, function(err){
                 if(err){
                         console.log('error occured');
@@ -64,4 +66,7 @@ exports.post = function(req, res){
                         console.log(err);
                 }
         });
+
+
+
 };
