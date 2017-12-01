@@ -3,6 +3,9 @@
 // global variable that holds the src of a clicked on image to be displayed in a modal
 var contentURL;
 
+// global variable that holds the response 
+var response;
+
 $(document).ready(function(){
 
   // turn of auto cycle in the carousel
@@ -149,7 +152,13 @@ $(document).ready(function(){
 
     var contentToSave = document.getElementById('uploaded-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
-    saveContent('donald.jpg');
+    saveContent(contentToSave);
+    console.log("poop");
+    if (response === "saved") {
+      $('#uploaded-image').css({
+      visibility: 'hidden'
+    });
+    }
   });
 
 })
@@ -161,7 +170,7 @@ function uploadContent(contentForm) {
     var formData = new FormData(form);
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          var response = String(this.responseText);
+          response = String(this.responseText);
           console.log(response);
           return (this.responseText);
        } else {
@@ -179,7 +188,7 @@ function styleContent(content, style) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        var response = this.responseText;
+        response = this.responseText;
         console.log(response);
         return (this.responseText);
      } else {
@@ -206,7 +215,7 @@ function saveContent(contentPath) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        var response = String(this.responseText);
+        response = String(this.responseText);
         console.log(response);
         return (this.responseText);
      } else {
