@@ -34,12 +34,12 @@ exports.post = function(req, res){
       // saves the picture to the database
       function saveToDatabase(userProfile) {
         Profile.savePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/pictures/'+contentPath, null, null, null, null, null, function (err, result) {
-        if (err) throw err;
-        else {
-          // yay we saved 
-        }
-      });
-    }
+          if (err) throw err;
+          else {
+            // yay we saved 
+          }
+        });
+      }
 
 
     
@@ -48,6 +48,7 @@ exports.post = function(req, res){
       res.send("saved");
 
   });
+  
   res.send("saved");
 
 
