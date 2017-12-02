@@ -3,36 +3,17 @@
     <div class="grid-sizer"></div>
 
 <% var i = 0; %>
-<% while (i < 25) { %>
+<% while (i < profiles.length) { %>
+  <% console.log(profiles[i].pictures); %>
+  <% if(profiles[i].pictures !== undefined) { %>
+    <% console.log("poop") %>
     <div class="grid-item">
-      <a href="#" class="pop"><img src="<%= /profiles/i//dinah.jpg"></a>
-
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/dinah.jpg"></a>
+      <a href="#" class="pop"><img src="<%= "/profiles/"+ profiles[i].profileid + "/" + profiles[i].pictures[0].picturePath %>" name="<% profiles[i].pictures[0].pictureid %>" </a>
     </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/rowing.jpg"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/rowing2.jpg"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/dog.jpg"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/cape.jpg"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/pip.png"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/snow.jpg"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/compound.png"></a>
-    </div>
-    <div class="grid-item">
-      <a href="#" class="pop"><img src="/images/food.jpg"></a>
-    </div>
+  <% } %>  
+<% i++; %>    
+<% } %>   
   </div>
-</div>
+</div>     
+
+   

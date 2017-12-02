@@ -9,12 +9,22 @@
 
 **/
 
+var Profile = require('../model/profile');
+
 exports.get = function(req, res) {
 
-	//put in the headers that we were successful
-	// response.writeHead(200, {
-	// 		'Content-Type':'text/html'
-	// });
+	var userProfiles;
+	Profile.getAllProfiles(function(err, result) {
+		console.log(result);
+		if (err) throw err;
+		userProfiles = result;
+		displayPage(userProfiles);
+	})
 
-	return res.render("../views/explore.ejs", { user : req.user });
+	function displayPage(userProfiles) {
+		return res.render("../views/explore.ejs", { user : req.user, profiles: userProfiles });
+	}	
 };
+
+
+
