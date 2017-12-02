@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`dob` 					DATE 			DEFAULT NULL,
 	`fname` 				varchar(20),
 	`lname` 				varchar(20),
-	`subscription_id`		int(11)			DEFAULT 1,
+	`subscription_id`		int(11)			DEFAULT 0,
 	
 	PRIMARY KEY(`user_id`)
 );
@@ -218,13 +218,11 @@ ALTER TABLE user_payments
 	ADD FOREIGN KEY(user_id)				REFERENCES users(user_id);
 
 -- REPORTED_CONTENT table constraints
-ALTER TABLE reported_content
-	ADD FOREIGN KEY(reported_profile_id)	REFERENCES profiles(profile_id);
-ALTER TABLE reported_content
+ALTER TABLE reports
 	ADD FOREIGN KEY(reporter_profile_id)	REFERENCES profiles(profile_id);
-ALTER TABLE reported_content
+ALTER TABLE reports
 	ADD FOREIGN KEY(video_id)				REFERENCES videos(video_id);
-ALTER TABLE reported_content
+ALTER TABLE reports
 	ADD FOREIGN KEY(picture_id)				REFERENCES pictures(picture_id);				
 
 -- TRANSACTIONS table constraints
