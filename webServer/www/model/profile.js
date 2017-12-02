@@ -426,16 +426,15 @@ Profile.getReports = function(done){
 	});
 }
 
-Profile.getAllProfiles = function(done){
+Profile.getAllPictures = function(done){
 	db.get(db.READ, function(err, connection){
 		if(err) return done(err);
 
-		connection.query('SELECT * FROM profiles', function(err, result){
+		connection.query('SELECT * FROM pictures', function(err, result){
 			connection.release();
-
 			return done(err, result);
-		});
-	});
+		})
+	})
 }
 
 Profile.upgradeToPremium = function(profileid, done){
