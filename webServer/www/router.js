@@ -215,6 +215,17 @@ router.post('/uploadProfilePic', function(req, res){
 });
 
 
+/************************************************************************
+*							Report Content route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/reportContent', function(req, res){
+	require('./controllers/report-content-controller').post(req, res);
+});
+
+
 router.post('/upload_photo', function(req, res){
 	require('./controllers/upload-image-controller').post(req, res);
 });

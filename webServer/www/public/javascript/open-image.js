@@ -40,16 +40,15 @@ $(document).ready(function(){
 
   // calls uploadcontent and readURL function when user uploads a photo
   $("#uploadPhoto").change(function () {
+    var inputName = this.value;
+    inputName = inputName.replace(/.*[\/\\]/, '');
     uploadContent('uploadPhotoForm');
-    readURL( this.value);
+    readURL(inputName);
   });
 
 
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
-    inputName = inputName.replace(/.*[\/\\]/, '');
-    console.log(inputName);
-
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
 
     $('.sk-folding-cube').css({
@@ -64,15 +63,15 @@ $(document).ready(function(){
   // displays the uploaded profile pic
   function changeProfilePic(inputName) {
     inputName = inputName.replace(/.*[\/\\]/, '');
-
-    document.getElementById('ProfileImage').src = '/profiles/'+ response + '/' + inputName;
-    
+    document.getElementById('ProfileImage').src = '/profiles/'+ response + '/' + inputName;   
   }
     
   // calls changeProfilePic when user chooses to change their profile pic
   $("#changeProfilePicInput").change(function(){
-    uploadProfilePic('uploadProfilePicForm');
-    changeProfilePic(this.value);
+    var inputName = this.value;
+    inputName = inputName.replace(/.*[\/\\]/, '');
+    uploadProfilePic('uploadProfilePicForm', inputName);
+    // changeProfilePic(this.value);
   });
 
   // report content pop up 
@@ -106,7 +105,7 @@ $(document).ready(function(){
     });
 
     // start the loading animation
-    stopAnimation();  
+    // stopAnimation();  
 
 
     var style = $(this).find('img').attr('src');
@@ -116,7 +115,14 @@ $(document).ready(function(){
     console.log(style);
     console.log(content);
     styleContent(content, 'van_gogh_vincent_7.jpg');
-    document.getElementById('uploaded-image').src = '/public/tmp/result.jpg';
+    
+    $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+
+    $('#uploaded-image').css({
+      visibility: 'hidden'
+    });
     
   });
 
@@ -162,6 +168,7 @@ function uploadContent(contentForm) {
     var formData = new FormData(form);
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+
           response = String(this.responseText);
           console.log(response);
        } else {
@@ -179,11 +186,8 @@ function styleContent(content, style) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         response = this.responseText;
-        console.log(response);
-        return (this.responseText);
-     } else {
-      return false;
-     }
+        document.getElementById('uploaded-image').src = '/public/tmp/' + this.responseText;
+     } 
   };
   xhttp.open("POST", "style-content", false);
   xhttp.send(content + " " + style);
@@ -216,17 +220,14 @@ function saveContent(contentPath) {
 }
 
 
-function uploadProfilePic(profilePicForm) {
+function uploadProfilePic(profilePicForm, inputName) {
   var xhttp = new XMLHttpRequest();
   var form = document.getElementById(profilePicForm);
   var formData = new FormData(form);
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        response = String(this.responseText);
-        console.log(response);
-     } else {
-      return false;
-     }
+        document.getElementById('ProfileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
+      } 
   };
   xhttp.open("POST", "uploadProfilePic", false);
   xhttp.send(formData);
