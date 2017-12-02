@@ -28,7 +28,7 @@ exports.post = function(req, res){
       if(err) throw err;
       else {
 
-        Profile.changeProfilePic(userProfile, req.files[0].path, function(err, results)) {
+        Profile.changeProfilePicture(userProfile, req.files[0].path, function(err, results) {
           if (err) throw err;
           res.send(userProfile.profileid);
         });

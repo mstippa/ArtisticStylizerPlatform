@@ -137,24 +137,28 @@ Profile.changeProfilePicture = function(profileId, picturePath, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
-		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?'),
+		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?',
 		[picturePath, profileId],
 		function(err, result){
 			connection.release();
 			return done(err, result);
-		}
+		});
 	});
 }
 
-Profile.getProfilePicture = function(profileId){
+Profile.getProfilePicture = function(profileId, done){
+	console.log("here");
 	db.get(db.READ, function(err, connection){
-		if(err) return done(er);
-		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?'),
+		console.log("here1");
+		if(err) return done(err);
+		console.log("here2");
+		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?',
 		[profileId],
 		function(err, result){
+			console.log("here3");
 			connection.release();
 			return done(err, result.profile_pic_path);
-		}
+		});
 	});
 }
 
