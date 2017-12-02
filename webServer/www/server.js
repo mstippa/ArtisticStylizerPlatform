@@ -29,7 +29,7 @@ app.use(express.static('public', options));
 ***************************************************************/
 var http_IP = '10.10.7.179';
 
-var http_port = 8082;
+var http_port = 8081;
 
 
 /**************************************************************
@@ -122,9 +122,11 @@ db.connect(db.MODE_PRODUCTION, function(err){
                         console.log(message);
 
                         // we finished a style transfer, write the useage to the database
+
                         app.post('style-content', function(req, res){
                             res.send(message);
                         })
+
                 });
 
                 /****************************************************************************

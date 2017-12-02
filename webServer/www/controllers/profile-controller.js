@@ -13,14 +13,19 @@ var Profile = require('../model/profile.js');
 
  exports.get = function(req, res) {
  	sessionUser = req.user;
-/**
+
  	Profile.getProfile(sessionUser.userid, function(err, result){
  		if(err) throw err;
 
- 		var profile = result;
+ 		var userProfile = result;
+
+ 		Profile.getProfilePic(userProfile.profileid, function(err, result) {) 
+ 			if (err) throw err;
+ 			var profilepic = result;
+ 		}
  	});
-**/
-	return res.render("../views/profile.ejs", { user : sessionUser })
+
+	return res.render("../views/profile.ejs", { user : sessionUser , picture: profilePic })
 
 	
 };

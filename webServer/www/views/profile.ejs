@@ -24,8 +24,10 @@
   <div class="container profile-container">
     <div class="row">
       <div class="col-md-2 col-md-offset-1">
-        <img src="/images/pip.png" alt="Profile Picture" width="100%" id="profileImage">
-        <input type='file'  id="changeProfilePicInput" />
+        <img src= "<%= profile %>" alt="Profile Picture" width="100%" id="profileImage">
+        <form action="post" enctype="multipart/form-data" id="changeProfilePicForm">
+          <input type='file'  id="changeProfilePicInput" accept=".png,.jpg" name="profilepic"/>
+        </form>  
         <label for="changeProfilePicInput">Change</label>
       </div>
       <div class="col-md-6 col-md-offset-1">
