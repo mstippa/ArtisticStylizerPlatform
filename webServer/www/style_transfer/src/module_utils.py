@@ -6,8 +6,8 @@ from vgg19 import VGG19
 class Utils:
   def __init__(self, args):
     # constants
-    self.DECODER_T7 = "decoder.t7"
-    self.VGG_T7 = "vgg_normalised.t7"
+    self.DECODER_T7 = "style_transfer/src/decoder.t7"
+    self.VGG_T7 = "style_transfer/src/vgg_normalised.t7"
     self.ALPHA = 1
     self.init_args(args)
   # end
