@@ -62,23 +62,18 @@ $(document).ready(function(){
   }    
   
   // displays the uploaded profile pic
-  function changeProfilePic(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        
-        reader.onload = function (e) {
-            $('#profileImage').attr('src', e.target.result);
-        }
-        
-        reader.readAsDataURL(input.files[0]);
-    }
+  function changeProfilePic(inputName) {
+    inputName = inputName.replace(/.*[\/\\]/, '');
+
+    document.getElementById('ProfileImage').src = '/profiles/'+ response + '/' + inputName;
+    
   }
     
-    // calls changeProfilePic when user chooses to change their profile pic
-    $("#changeProfilePicInput").change(function(){
-        changeProfilePic(this);
-    });
-
+  // calls changeProfilePic when user chooses to change their profile pic
+  $("#changeProfilePicInput").change(function(){
+    uploadProfilePic('uploadProfilePicForm');
+    changeProfilePic(this.value);
+  });
 
   // report content pop up 
   $('#contact').click(function() {
@@ -112,6 +107,7 @@ $(document).ready(function(){
 
     // start the loading animation
     stopAnimation();  
+
 
     var style = $(this).find('img').attr('src');
     style = style.replace(/.*[\/\\]/, '');
@@ -168,7 +164,6 @@ function uploadContent(contentForm) {
         if (this.readyState == 4 && this.status == 200) {
           response = String(this.responseText);
           console.log(response);
-          return (this.responseText);
        } else {
         return false;
        }
@@ -212,14 +207,29 @@ function saveContent(contentPath) {
       if (this.readyState == 4 && this.status == 200) {
         response = String(this.responseText);
         console.log(response);
-        return (this.responseText);
      } else {
       return false;
      }
   };
   xhttp.open("POST", "save-content", false);
   xhttp.send(contentPath); 
+}
 
+
+function uploadProfilePic(profilePicForm) {
+  var xhttp = new XMLHttpRequest();
+  var form = document.getElementById(profilePicForm);
+  var formData = new FormData(form);
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        response = String(this.responseText);
+        console.log(response);
+     } else {
+      return false;
+     }
+  };
+  xhttp.open("POST", "uploadProfilePic", false);
+  xhttp.send(formData);
 }
 
 

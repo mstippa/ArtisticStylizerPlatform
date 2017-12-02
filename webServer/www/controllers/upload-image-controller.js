@@ -51,7 +51,7 @@ exports.post = function(req, res){
                 }
                 // req.files is an ojbect where fieldname is the key and value is the array of files
                 console.log(req.files);
-		console.log('photo uploaded');
+				console.log('photo uploaded');
                 var options = {
                         pythonPath: '/usr/bin/python3',
                         scriptPath: '/home/mike/repos/cmpt475_Nov29/ArtisticStylizerPlatform/webServer/www/scripts',
@@ -66,7 +66,5 @@ exports.post = function(req, res){
                         console.log(err);
                 }
         });
-
-
 
 };
