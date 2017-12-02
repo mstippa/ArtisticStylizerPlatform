@@ -19,13 +19,13 @@ var Profile = require('../model/profile.js');
 
  		var userProfile = result;
 
- 		Profile.getProfilePic(userProfile.profileid, function(err, result) {) 
- 			if (err) throw err;
- 			var profilepic = result;
- 		}
- 	});
-
-	return res.render("../views/profile.ejs", { user : sessionUser , picture: profilePic })
-
-	
+ 		Profile.getProfilePic(userProfile.profileid, 
+ 			function(err, result) { 
+ 				if (err) throw err;
+ 				var profilepic = result;
+ 			}
+ 		});
+ 	}
+ 	
+	return res.render("../views/profile.ejs", { user : sessionUser , picture: profilePic })	
 };

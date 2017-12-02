@@ -29,7 +29,7 @@ app.use(express.static('public', options));
 ***************************************************************/
 var http_IP = '10.10.7.179';
 
-var http_port = 8081;
+var http_port = 8087;
 
 
 /**************************************************************
@@ -111,23 +111,25 @@ db.connect(db.MODE_PRODUCTION, function(err){
                 /**************************************************************
                 *                               Set up the queue for style transfers
                 **************************************************************/
-                // var options = {
-                //         pythonPath: '/usr/bin/python3'
-                // };
-                // var PythonShell = require('python-shell');
-                // var pyshell = new PythonShell('./scripts/processManager.py', options);
-                // // event handler for when a style transfer is completed
-                // pyshell.on('message', function(message){
-                //         // received a message sent from the Python script (a simple "print" statement)
-                //         console.log(message);
 
-                //         // we finished a style transfer, write the useage to the database
+                var options = {
+                        pythonPath: '/usr/bin/python3'
+                };
+             //   var PythonShell = require('python-shell');
+               // var pyshell = new PythonShell('./scripts/processManager.py', options);
+                // event handler for when a style transfer is completed
+                //pyshell.on('message', function(message){
+                        // received a message sent from the Python script (a simple "print" statement)
+                  //      console.log(message);
 
-                //         app.post('style-content', function(req, res){
-                //             res.send(message);
-                //         })
+                        // we finished a style transfer, write the useage to the database
 
-                // });
+                    //    app.post('style-content', function(req, res){
+                      //      res.send(message);
+                        //})
+
+               // });
+
 
                 /****************************************************************************
                 *                       Tell the app to listen to the speicfied port and ip
