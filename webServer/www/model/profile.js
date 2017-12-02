@@ -377,7 +377,7 @@ Profile.getDefaultStyles = function(done){
 
 			return done(err, styles);
 		});
-	})
+	});
 }
 
 Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
@@ -390,7 +390,7 @@ Profile.reportPicture = function(reporterProfileId, pictureId, videoId, descript
 			function(err, result){
 				connection.release();
 				return done(err, result);
-			})
+			});
 	});
 }
 
@@ -401,8 +401,20 @@ Profile.getReports = function(done){
 		connection.query('SELECT * FROM reports', function(err, result){
 			connection.release();
 			return done(err, result);
-		})
-	}
+		});
+	});
+}
+
+Profile.getAllProfiles = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM profiles', function(err, result){
+			connection.release();
+
+			return done(err, result);
+		});
+	});
 }
 
 module.exports = Profile;
