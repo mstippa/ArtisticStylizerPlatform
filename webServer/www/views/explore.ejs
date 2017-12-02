@@ -42,7 +42,7 @@
       </div>
     </div>
   </div>   
-
+  
     <% include partials/explore_grid %>
 
 			<div class="modal fade content-modal" id="exploreModal" role="dialog">
@@ -54,7 +54,7 @@
           		<button type="button" class="close" data-dismiss="modal">&times;</button>
         		</div>
         		<div class="modal-body">
-          		<img id="imagepreview" src="" style="width:100%;"/>
+          		<img id="imagepreview" src="" name="" style="width:100%;"/>
         		</div>
         		<div class="modal-footer">
 
@@ -65,9 +65,9 @@
                 <h1>Report Content</h1>
                 <small></small>
                 
-                <form action="reportContent" method="post">
+                <form method="post" id="reportContentForm">
                   <textarea placeholder="Reason for Report"></textarea>
-                  <input class="formBtn btn btn-primary" type="submit" />
+                  <input class="formBtn btn btn-primary" value="submit" id="reportContentButton" />
                   <input class="formBtn btn btn-primary" type="reset" />
                 </form>
               </div>

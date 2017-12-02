@@ -16,6 +16,7 @@ $(document).ready(function(){
   // dislplays the clicked on image in a modal on the explore page
 	$('.pop').on('click', function() {
 		$('#imagepreview').attr('src', $(this).find('img').attr('src'));
+    $('#imagepreview').attr('name', $(this).find('img').attr('name'));
     $('#imagepreview').css({
       visibility: 'visible'
     });
@@ -159,6 +160,12 @@ $(document).ready(function(){
     }
   });
 
+  $('#reportContentButton').click(function() {
+
+    var pictureId = document.getElementById('imagepreview').name;
+    reportContent(pictureId);
+  })
+
 })
 
 // sends the upload photo form to the content-upload controller
@@ -222,7 +229,7 @@ function saveContent(contentPath) {
 
 function uploadProfilePic(profilePicForm, inputName) {
   var xhttp = new XMLHttpRequest();
-  var form = document.getElementById(profilePicForm);
+  var form = document.getElementById('profilePicForm');
   var formData = new FormData(form);
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -231,6 +238,21 @@ function uploadProfilePic(profilePicForm, inputName) {
   };
   xhttp.open("POST", "uploadProfilePic", false);
   xhttp.send(formData);
+}
+
+
+function reportContent(pictureId) {
+  var xhttp = new XMLHttpRequest();
+  var form = document.getElementById('reportContentForm');
+  var formData = new FormData(form);
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        
+      } 
+  };
+  xhttp.open("POST", "reportContent", false);
+  xhttp.send(pictureId, formData);
+
 }
 
 

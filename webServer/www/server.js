@@ -111,6 +111,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                 /**************************************************************
                 *                               Set up the queue for style transfers
                 **************************************************************/
+
                 var options = {
                         pythonPath: '/usr/bin/python3'
                 };
@@ -128,6 +129,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                         //})
 
                // });
+
 
                 /****************************************************************************
                 *                       Tell the app to listen to the speicfied port and ip

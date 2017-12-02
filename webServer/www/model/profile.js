@@ -403,6 +403,7 @@ Profile.getDefaultStyles = function(done){
 			return done(err, styles);
 		});
 	});
+
 }
 
 Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
@@ -456,6 +457,7 @@ Profile.upgradeToPremium = function(profileid, done){
 }
 
 
+
 Profile.downgradeToFree = function(profileid, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
@@ -467,6 +469,7 @@ Profile.downgradeToFree = function(profileid, done){
 
 				return done(err, result);
 			});
+
 	});
 }
 
