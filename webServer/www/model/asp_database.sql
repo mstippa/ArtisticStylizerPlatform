@@ -174,12 +174,11 @@ CREATE TABLE IF NOT EXISTS `videos` (
 );
 
 -- Reported_Content table structure
-CREATE TABLE IF NOT EXISTS `reported_content` (
+CREATE TABLE IF NOT EXISTS `reports` (
 	`report_id`				int(11)			NOT NULL		AUTO_INCREMENT,
-	`reported_profile_id`	int(11)			NOT NULL,
 	`reporter_profile_id`	int(11)			NOT NULL,
-	`video_id`				int(11)			NOT NULL,
-	`picture_id`			int(11)			NOT NULL,
+	`video_id`				int(11),
+	`picture_id`			int(11),
 	`date_reported`			TIMESTAMP 		DEFAULT CURRENT_TIMESTAMP,
 	`description`			varchar(255),
 
