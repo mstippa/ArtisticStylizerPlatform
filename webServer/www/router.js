@@ -182,3 +182,14 @@ function routeToHome(req, res, next){
 	//if not redirect to home page
 	res.redirect('/about');	
 }
+
+
+/************************************************************************
+*			IMAGE-UPLOAD-ROUTES
+*
+*			
+*
+************************************************************************/
+router.post('/upload_photo', function(req, res){
+	    require('./controllers/upload-image-controller').post(req, res);
+});
