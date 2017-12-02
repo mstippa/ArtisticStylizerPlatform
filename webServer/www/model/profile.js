@@ -377,8 +377,44 @@ Profile.getDefaultStyles = function(done){
 
 			return done(err, styles);
 		});
-	})
+	});
 }
 
+Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		//lets write a report to the database
+		connection.query('INSERT INTO reports(reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?)',
+			[reporterProfileId, videoId, pictureId, description],
+			function(err, result){
+				connection.release();
+				return done(err, result);
+			});
+	});
+}
+
+Profile.getReports = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM reports', function(err, result){
+			connection.release();
+			return done(err, result);
+		});
+	});
+}
+
+Profile.getAllProfiles = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM profiles', function(err, result){
+			connection.release();
+
+			return done(err, result);
+		});
+	});
+}
 
 module.exports = Profile;
