@@ -3,14 +3,11 @@
     <div class="grid-sizer"></div>
 
 <% var i = 0; %>
-<% while (i < profiles.length) { %>
-  <% console.log(profiles[i].pictures); %>
-  <% if(profiles[i].pictures !== undefined) { %>
+<% while (i < pictures.length) { %>
     <% console.log("poop") %>
     <div class="grid-item">
-      <a href="#" class="pop"><img src="<%= "/profiles/"+ profiles[i].profileid + "/" + profiles[i].pictures[0].picturePath %>" name="<% profiles[i].pictures[0].pictureid %>" </a>
-    </div>
-  <% } %>  
+      <a href="#" class="pop"><img src="<%= pictures[i].picture_path %>" name="<%= pictures[i].picture_id %>"/> </a>
+    </div> 
 <% i++; %>    
 <% } %>   
   </div>

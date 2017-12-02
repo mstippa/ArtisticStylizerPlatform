@@ -88,10 +88,12 @@ Profile.getUserStatus = function(profileid, done){
 		db.get(db.READ, function(err, connection){
 		if(err) return done(err);
 
+
 		connection.query(' SELECT subscription_id FROM users where user_id = (SELECT user_id from profiles WHERE profile_id=?)',
 			[profileid],
 			function(err, result){
 				connection.release();
+
 
 				return done(err, result.subscription_id);
 			});

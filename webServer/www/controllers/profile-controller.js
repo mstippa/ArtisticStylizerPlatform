@@ -19,6 +19,7 @@ var Profile = require('../model/profile.js');
 
  		var userProfile = result;
 
+
  		Profile.getProfilePicture(userProfile.profileid, 
  			function(err, result) { 
  				if (err) throw err;
@@ -30,3 +31,4 @@ var Profile = require('../model/profile.js');
  		});
  	});
 }
+

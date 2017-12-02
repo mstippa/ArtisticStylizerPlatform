@@ -13,16 +13,16 @@ var Profile = require('../model/profile');
 
 exports.get = function(req, res) {
 
-	var userProfiles;
-	Profile.getAllProfiles(function(err, result) {
+	var allPictures;
+	Profile.getAllPictures(function(err, result) {
 		console.log(result);
 		if (err) throw err;
-		userProfiles = result;
-		displayPage(userProfiles);
+		allPictures = result;
+		displayPage(allPictures);
 	})
 
-	function displayPage(userProfiles) {
-		return res.render("../views/explore.ejs", { user : req.user, profiles: userProfiles });
+	function displayPage(allPictures) {
+		return res.render("../views/explore.ejs", { user : req.user, pictures: allPictures });
 	}	
 };
 

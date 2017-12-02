@@ -17,6 +17,7 @@ $(document).ready(function(){
 	$('.pop').on('click', function() {
 		$('#imagepreview').attr('src', $(this).find('img').attr('src'));
     $('#imagepreview').attr('name', $(this).find('img').attr('name'));
+    console.log($('#imagepreview').attr('name'));
     $('#imagepreview').css({
       visibility: 'visible'
     });
@@ -163,7 +164,11 @@ $(document).ready(function(){
   $('#reportContentButton').click(function() {
 
     var pictureId = document.getElementById('imagepreview').name;
-    reportContent(pictureId);
+    var reportDescription = document.getElementById('report-description').value;
+    console.log(reportDescription);
+    reportContent(pictureId, reportDescription);
+
+    $('#exploreModal').modal('hide');
   })
 
 })
@@ -241,17 +246,17 @@ function uploadProfilePic(profilePicForm, inputName) {
 }
 
 
-function reportContent(pictureId) {
+function reportContent(pictureId, reportDescription) {
   var xhttp = new XMLHttpRequest();
   var form = document.getElementById('reportContentForm');
   var formData = new FormData(form);
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        
+        console.log(this.responseText);
       } 
   };
   xhttp.open("POST", "reportContent", false);
-  xhttp.send(pictureId, formData);
+  xhttp.send(pictureId + " " + reportDescription);
 
 }
 
