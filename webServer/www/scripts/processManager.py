@@ -32,13 +32,10 @@ def get_tf_status(filename="inference_master.log"):
   return tf_free
 # end
 
-def load_json(file, orient=True):
+def load_json(file):
   logger.info("load_json")
   logger.info(file)
-  if orient:
-    persisted_processes = pd.read_json(file, orient="records")
-  else:
-    persisted_processes = pd.read_json(file)
+  persisted_processes = pd.read_json(file, orient="records")
   logger.info(persisted_processes)
   return persisted_processes
 # end
@@ -106,12 +103,11 @@ while True:
   # check if queue exits 
   queue_file = "process_queue.json"
   if queue_file in os.listdir(os.getcwd()):
-    if "inference_master.log" in os.listdir(os.getcwd()):
-      tf_free = get_tf_status()
-      if tf_free:
-        logger.info("tf is free")
+    if os.stat(queue_file).st_size != 0:
+      if "inference_master.log" in os.listdir(os.getcwd()):
+        tf_free = get_tf_status()
+        if tf_free:
+          logger.info("tf is free")
+          run(queue_file=queue_file)
+      else:
         run(queue_file=queue_file)
-    else:
-      run(queue_file=queue_file)
-  else: 
-    continue
