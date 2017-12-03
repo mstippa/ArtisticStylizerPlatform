@@ -28,7 +28,7 @@ app.use(express.static('public', options));
 *						Server information
 ***************************************************************/
 var http_IP = '10.10.7.179';
-var http_port = 8087;
+var http_port = 8082;
 
 
 /**************************************************************
@@ -114,20 +114,20 @@ db.connect(db.MODE_PRODUCTION, function(err){
                 var options = {
                         pythonPath: '/usr/bin/python3'
                 };
-             //   var PythonShell = require('python-shell');
-               // var pyshell = new PythonShell('./scripts/processManager.py', options);
+               var PythonShell = require('python-shell');
+               var pyshell = new PythonShell('./scripts/processManager.py', options);
                 // event handler for when a style transfer is completed
-                //pyshell.on('message', function(message){
+                pyshell.on('message', function(message){
                         // received a message sent from the Python script (a simple "print" statement)
-                  //      console.log(message);
+                  console.log(message);
 
                         // we finished a style transfer, write the useage to the database
 
-                    //    app.post('style-content', function(req, res){
-                      //      res.send(message);
-                        //})
+                    app.post('style-content', function(req, res){
+                    	res.send(message);
+                        })
 
-               // });
+               });
 
 
 
