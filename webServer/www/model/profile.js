@@ -349,11 +349,22 @@ Profile.savePicture = function(profileid, picturePath, size, resolution, styleid
 
 				// return the saved picture to the callback
 				return done(err, picture);
-			}
-		);
+		});
 	});	
 }
 
+Profile.removePicture = function(pictureid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('DELETE FROM pictures WHERE picture_id=?',
+			[pictureid],
+			function(err, result){
+				connection.release();
+				return done(err, result);
+		});
+	});
+}
 
 // save a video to the asp database
 Profile.saveVideo = function(profileid, videoPath, videoLength, styleid, psid, dateCreated, done){
