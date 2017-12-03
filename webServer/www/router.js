@@ -159,8 +159,6 @@ router.get('/account', function(req, res){
 	require('./controllers/account-controller').get(req, res);
 });
 
-
-
 /************************************************************************
 *							Content Upload Route
 *
@@ -230,8 +228,6 @@ router.post('/reportContent', function(req, res){
 router.post('/upload_photo', function(req, res){
 	require('./controllers/upload-image-controller').post(req, res);
 });
-
-
 
 //export the router to our application
 module.exports = router;

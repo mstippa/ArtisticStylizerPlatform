@@ -23,33 +23,20 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage}).single('profilepic');
 
 exports.post = function(req, res){
-
-  
-    
   Profile.getProfile(req.user.userid, function(err, result) {
     if (err) throw err;
     var userProfile = result;
 
-    console.log("-------------------");
     upload(req, res, function(err){
-      console.log(req);
       if(err) throw err;
       else {
         Profile.changeProfilePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/'+req.file.originalname, function(err, results) {
-
           if (err) throw err;
           res.send(userProfile.profileid);
         });
-
       }
-              
-
     });
-
   });
-
- 
-
 };
 
 

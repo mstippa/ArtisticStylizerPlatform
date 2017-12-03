@@ -18,43 +18,27 @@ exports.post = function(req, res){
     // get the user's profile
     Profile.getProfile(req.user.userid, function(err, result) {
       if (err) throw err;
-
       userProfile = result;
-      
+  
       // move the file from /public/tmp to the user's profile directory 
       mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
         if (err) throw err;
-
           
         //send picture to the database
         saveToDatabase(userProfile);  
-
       });
-
+      
       // saves the picture to the database
       function saveToDatabase(userProfile) {
         Profile.savePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/pictures/'+contentPath, null, null, null, null, null, function (err, result) {
-
           if (err) throw err;
           else {
             // yay we saved 
           }
         });
       }
-
-
-
-    
     });
-
       res.send("saved");
-
   });
-  
   res.send("saved");
-
-
 };
-
-
-

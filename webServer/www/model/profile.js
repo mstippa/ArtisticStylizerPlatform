@@ -139,32 +139,26 @@ Profile.changeProfilePicture = function(profileId, picturePath, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
-
 		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?',
-
 		[picturePath, profileId],
 		function(err, result){
 			connection.release();
 			return done(err, result);
-
 		});
 	});
 }
 
-Profile.getProfilePicture = function(profileId, done){
-	
+Profile.getProfilePicture = function(profileId, done){	
 	db.get(db.READ, function(err, connection){
-	
 		if(err) return done(err);
 		
 		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?',
 		[profileId],
 		function(err, result){
-			
 			connection.release();
+      
 			return done(err, result[0]);
 		});
-
 	});
 }
 
@@ -420,7 +414,6 @@ Profile.getDefaultStyles = function(done){
 			return done(err, styles);
 		});
 	});
-
 }
 
 Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
@@ -501,7 +494,7 @@ Profile.reportPicture = function(reporterProfileId, pictureId, videoId, descript
 			function(err, result){
 				connection.release();
 				return done(err, result);
-			})
+			});
 	});
 }
 
@@ -512,9 +505,47 @@ Profile.getReports = function(done){
 		connection.query('SELECT * FROM reports', function(err, result){
 			connection.release();
 			return done(err, result);
+		});
+	});
+}
+
+Profile.getAllPictures = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM pictures', function(err, result){
+			connection.release();
+			return done(err, result);
 		})
 	})
 }
 
+Profile.upgradeToPremium = function(profileid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
 
+		connection.query('UPDATE users SET subscription_id=1 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+				return done(err, result);
+			});
+	});
+}
+
+Profile.downgradeToFree = function(profileid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE users SET subscription_id=0 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+				return done(err, result);
+			});
+
+	});
+}
 module.exports = Profile;
