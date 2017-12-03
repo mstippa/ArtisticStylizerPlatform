@@ -6,9 +6,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 import tensorflow as tf
 from tensorflow.python.client import device_lib
 import argparse
-
 import logging
-
 from inference_ops import Ops
 
 logger = logging.getLogger("inference_master")
@@ -19,11 +17,9 @@ fileHandler.setFormatter(formatter)
 
 logger.addHandler(fileHandler)
 
-
 logger.info("in inference_master script")
 
 parser = argparse.ArgumentParser()
-
 
 # image paths 
 parser.add_argument("content_img_path", type=str, help="full path to content image")
@@ -41,9 +37,7 @@ with tf.Graph().as_default() as graph:
   devices=device_lib.list_local_devices()
   gpuPresent = [True for device in devices if device.device_type == "GPU"]
 
-
   logger.info('inside graph')
-
   if gpuPresent:
     # TODO must read this flag
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=args.per_process_gpu_memory_fraction)
