@@ -403,6 +403,6 @@ Profile.getReports = function(done){
 			return done(err, result);
 		})
 	}
-}
+)}
 
 module.exports = Profile;
