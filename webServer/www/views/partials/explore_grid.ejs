@@ -1,0 +1,16 @@
+<div class="content">
+  <div class="grid">
+    <div class="grid-sizer"></div>
+
+<% var i = 0; %>
+<% while (i < pictures.length) { %>
+    <% console.log("poop") %>
+    <div class="grid-item">
+      <a href="#" class="pop"><img src="<%= pictures[i].picture_path %>" name="<%= pictures[i].picture_id %>"/> </a>
+    </div> 
+<% i++; %>    
+<% } %>   
+  </div>
+</div>     
+
+   

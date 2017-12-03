@@ -29,7 +29,11 @@ app.use(express.static('public', options));
 ***************************************************************/
 var http_IP = '10.10.7.179';
 
-var http_port = 8082;
+
+
+var http_port = 8087;
+
+
 
 
 /**************************************************************
@@ -111,6 +115,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                 /**************************************************************
                 *                               Set up the queue for style transfers
                 **************************************************************/
+
                 var options = {
                         pythonPath: '/usr/bin/python3'
                 };
@@ -126,6 +131,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                             res.send(message);
                         })
                 });
+
 
                 /****************************************************************************
                 *                       Tell the app to listen to the speicfied port and ip

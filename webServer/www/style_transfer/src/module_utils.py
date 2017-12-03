@@ -6,8 +6,10 @@ from vgg19 import VGG19
 class Utils:
   def __init__(self, args):
     # constants
+
     self.DECODER_T7 = "style_transfer/src/decoder.t7"
     self.VGG_T7 = "style_transfer/src/vgg_normalised.t7"
+
     self.ALPHA = 1
     self.init_args(args)
   # end
@@ -54,7 +56,9 @@ class Utils:
   # end
   
   def write_img_to_file(self, img, size):
+
     files_in_results_dir = os.listdir(self.RESULT_IMG_PATH)
+
     image.imsave(os.path.join(self.RESULT_IMG_PATH, "results.jpg"), img)
     #img = tf.image.resize_images(img, size=size)
     #filewritten = tf.write_file(self.RESULT_IMG_PATH, tf.image.encode_jpeg(tf.cast(img, dtype=tf.uint8)))

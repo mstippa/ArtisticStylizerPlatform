@@ -160,6 +160,79 @@ router.get('/account', function(req, res){
 });
 
 
+
+/************************************************************************
+*							Content Upload Route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/contentUpload', function(req, res){
+	require('./controllers/content-upload-controller').post(req, res);
+});
+
+
+/************************************************************************
+*							Style content route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/style-content', function(req, res){
+	require('./controllers/style-content-controller').post(req, res);
+});
+
+
+/************************************************************************
+*							Style upload route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/styleUpload', function(req, res){
+	require('./controllers/style-upload-controller').post(req, res);
+});
+
+
+/************************************************************************
+*							Save content route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/save-content', function(req, res){
+	require('./controllers/save-content-controller').post(req, res);
+});
+
+
+/************************************************************************
+*							Change Profile Pic route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/uploadProfilePic', function(req, res){
+	require('./controllers/profile-pic-controller').post(req, res);
+});
+
+
+/************************************************************************
+*							Report Content route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/reportContent', function(req, res){
+	require('./controllers/report-content-controller').post(req, res);
+});
+
+
+router.post('/upload_photo', function(req, res){
+	require('./controllers/upload-image-controller').post(req, res);
+});
+
+
+
 //export the router to our application
 module.exports = router;
 
@@ -181,15 +254,6 @@ function routeToHome(req, res, next){
 
 	//if not redirect to home page
 	res.redirect('/about');	
+
 }
 
-
-/************************************************************************
-*			IMAGE-UPLOAD-ROUTES
-*
-*			
-*
-************************************************************************/
-router.post('/upload_photo', function(req, res){
-	    require('./controllers/upload-image-controller').post(req, res);
-});

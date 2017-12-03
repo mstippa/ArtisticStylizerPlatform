@@ -16,6 +16,8 @@ $(document).ready(function(){
   // dislplays the clicked on image in a modal on the explore page
 	$('.pop').on('click', function() {
 		$('#imagepreview').attr('src', $(this).find('img').attr('src'));
+    $('#imagepreview').attr('name', $(this).find('img').attr('name'));
+    console.log($('#imagepreview').attr('name'));
     $('#imagepreview').css({
       visibility: 'visible'
     });
@@ -40,20 +42,15 @@ $(document).ready(function(){
 
   // calls uploadcontent and readURL function when user uploads a photo
   $("#uploadPhoto").change(function () {
+    var inputName = this.value;
+    inputName = inputName.replace(/.*[\/\\]/, '');
     uploadContent('uploadPhotoForm');
-    readURL( this.value);
+    readURL(inputName);
   });
 
-  // calls uploadcontent and readURL function when user uploads a video
-  $("#uploadVideo").change(function () {
-      uploadContent('uploadVideoForm');
-      readURL(this.value);
-  });
 
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
-    inputName = inputName.replace(/.*[\/\\]/, '');
-
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
 
     $('.sk-folding-cube').css({
@@ -66,23 +63,18 @@ $(document).ready(function(){
   }    
   
   // displays the uploaded profile pic
-  function changeProfilePic(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        
-        reader.onload = function (e) {
-            $('#profileImage').attr('src', e.target.result);
-        }
-        
-        reader.readAsDataURL(input.files[0]);
-    }
+  function changeProfilePic(inputName) {
+    inputName = inputName.replace(/.*[\/\\]/, '');
+    document.getElementById('ProfileImage').src = '/profiles/'+ response + '/' + inputName;   
   }
     
-    // calls changeProfilePic when user chooses to change their profile pic
-    $("#changeProfilePicInput").change(function(){
-        changeProfilePic(this);
-    });
-
+  // calls changeProfilePic when user chooses to change their profile pic
+  $("#changeProfilePicInput").change(function(){
+    var inputName = this.value;
+    inputName = inputName.replace(/.*[\/\\]/, '');
+    uploadProfilePic('uploadProfilePicForm', inputName);
+    // changeProfilePic(this.value);
+  });
 
   // report content pop up 
   $('#contact').click(function() {
@@ -115,7 +107,8 @@ $(document).ready(function(){
     });
 
     // start the loading animation
-    stopAnimation();  
+    // stopAnimation();  
+
 
     var style = $(this).find('img').attr('src');
     style = style.replace(/.*[\/\\]/, '');
@@ -124,7 +117,14 @@ $(document).ready(function(){
     console.log(style);
     console.log(content);
     styleContent(content, 'van_gogh_vincent_7.jpg');
-    document.getElementById('uploaded-image').src = '/public/tmp/result.jpg';
+    
+    $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+
+    $('#uploaded-image').css({
+      visibility: 'hidden'
+    });
     
   });
 
@@ -153,13 +153,23 @@ $(document).ready(function(){
     var contentToSave = document.getElementById('uploaded-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
     saveContent(contentToSave);
-    console.log("poop");
+    console.log(response);
     if (response === "saved") {
       $('#uploaded-image').css({
       visibility: 'hidden'
     });
     }
   });
+
+  $('#reportContentButton').click(function() {
+
+    var pictureId = document.getElementById('imagepreview').name;
+    var reportDescription = document.getElementById('report-description').value;
+    console.log(reportDescription);
+    reportContent(pictureId, reportDescription);
+
+    $('#exploreModal').modal('hide');
+  })
 
 })
 
@@ -170,16 +180,15 @@ function uploadContent(contentForm) {
     var formData = new FormData(form);
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+
           response = String(this.responseText);
           console.log(response);
-          return (this.responseText);
        } else {
         return false;
        }
     };
     xhttp.open("POST", "contentUpload", false);
-    xhttp.send(formData); 
-
+    xhttp.send(formData);
 }
 
 // sends the content path and style path to the sytle-content-controller
@@ -189,11 +198,8 @@ function styleContent(content, style) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         response = this.responseText;
-        console.log(response);
-        return (this.responseText);
-     } else {
-      return false;
-     }
+        document.getElementById('uploaded-image').src = '/public/tmp/' + this.responseText;
+     } 
   };
   xhttp.open("POST", "style-content", false);
   xhttp.send(content + " " + style);
@@ -217,13 +223,40 @@ function saveContent(contentPath) {
       if (this.readyState == 4 && this.status == 200) {
         response = String(this.responseText);
         console.log(response);
-        return (this.responseText);
      } else {
       return false;
      }
   };
   xhttp.open("POST", "save-content", false);
   xhttp.send(contentPath); 
+}
+
+
+function uploadProfilePic(profilePicForm, inputName) {
+  var xhttp = new XMLHttpRequest();
+  var form = document.getElementById('changeProfilePicForm');
+  var formData = new FormData(form);
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById('ProfileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
+      } 
+  };
+  xhttp.open("POST", "uploadProfilePic", false);
+  xhttp.send(formData);
+}
+
+
+function reportContent(pictureId, reportDescription) {
+  var xhttp = new XMLHttpRequest();
+  var form = document.getElementById('reportContentForm');
+  var formData = new FormData(form);
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      } 
+  };
+  xhttp.open("POST", "reportContent", false);
+  xhttp.send(pictureId + " " + reportDescription);
 
 }
 

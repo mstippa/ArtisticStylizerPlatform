@@ -10,6 +10,8 @@ var fs      = require('fs'); // for writing to the file system
 
 // default path for all profiles
 var PATH    = 'public/profiles/'
+var FREE    = 0;
+var PAID    = 1; 
 
 // constructor
 function Profile(userId, profileId){
@@ -43,7 +45,7 @@ Profile.getProfile = function(userId, done){
 					
 					// we'll be returning this profile object later
 					profile = new Profile(result[0].user_id, result[0].profile_id);
-					
+
 					// get the array of style objects, which is our first async call
 					Profile.getStyles(profile.profileid, function(err, styles){
 						if (err) return done(err);
@@ -65,8 +67,15 @@ Profile.getProfile = function(userId, done){
 								
 								profile.pictures = pictures; // move the pictures to our picture array
 
-								// return the completed profile to the callback
-								return done(null, profile);
+								//now we get our subscription status
+								Profile.getUserStatus(profile.profileid, function(err, status){
+									if(err) return done(err);
+
+									profile.subscription = status;
+
+									// return the completed profile to the callback
+									return done(null, profile);
+								});
 							});
 						});
 					});
@@ -75,7 +84,21 @@ Profile.getProfile = function(userId, done){
 	});
 }
 
+Profile.getUserStatus = function(profileid, done){
+		db.get(db.READ, function(err, connection){
+		if(err) return done(err);
 
+
+		connection.query(' SELECT subscription_id FROM users where user_id = (SELECT user_id from profiles WHERE profile_id=?)',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+
+				return done(err, result.subscription_id);
+			});
+	});
+}
 // create a new profile related to a user by the userid
 Profile.createProfile = function(userId, done){
 	db.get(db.WRITE, function(err, connection){
@@ -116,24 +139,32 @@ Profile.changeProfilePicture = function(profileId, picturePath, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
-		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?'),
+
+		connection.query('UPDATE profiles SET profile_pic_path=? WHERE profile_id=?',
+
 		[picturePath, profileId],
 		function(err, result){
 			connection.release();
 			return done(err, result);
-		}
+
+		});
 	});
 }
 
-Profile.getProfilePicture = function(profileId){
+Profile.getProfilePicture = function(profileId, done){
+	
 	db.get(db.READ, function(err, connection){
-		if(err) return done(er);
-		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?'),
+	
+		if(err) return done(err);
+		
+		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?',
 		[profileId],
 		function(err, result){
+			
 			connection.release();
-			return done(err, result.profile_pic_path);
-		}
+			return done(err, result[0]);
+		});
+
 	});
 }
 
@@ -377,7 +408,76 @@ Profile.getDefaultStyles = function(done){
 
 			return done(err, styles);
 		});
+	});
+
+}
+
+Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		//lets write a report to the database
+		connection.query('INSERT INTO reports(reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?)',
+			[reporterProfileId, videoId, pictureId, description],
+			function(err, result){
+				connection.release();
+				return done(err, result);
+			});
+	});
+}
+
+Profile.getReports = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM reports', function(err, result){
+			connection.release();
+			return done(err, result);
+		});
+	});
+}
+
+Profile.getAllPictures = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM pictures', function(err, result){
+			connection.release();
+			return done(err, result);
+		})
 	})
+}
+
+
+Profile.upgradeToPremium = function(profileid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE users SET subscription_id=1 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+				return done(err, result);
+			});
+	});
+}
+
+
+
+Profile.downgradeToFree = function(profileid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE users SET subscription_id=0 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+				return done(err, result);
+			});
+
+	});
 }
 
 Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
@@ -402,7 +502,8 @@ Profile.getReports = function(done){
 			connection.release();
 			return done(err, result);
 		})
-	}
-)}
+	})
+}
+
 
 module.exports = Profile;
