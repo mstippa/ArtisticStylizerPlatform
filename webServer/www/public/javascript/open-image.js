@@ -238,7 +238,8 @@ function uploadProfilePic(profilePicForm, inputName) {
   var formData = new FormData(form);
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById('ProfileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
+        console.log(this.responseText);
+        document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
       } 
   };
   xhttp.open("POST", "uploadProfilePic", false);
