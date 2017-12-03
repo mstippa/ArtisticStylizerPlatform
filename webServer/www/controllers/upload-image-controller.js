@@ -53,7 +53,7 @@ exports.post = function(req, res){
                 var options = {
                         pythonPath: '/usr/bin/python3',
                        // scriptPath: '/home/mike/test/ArtisticStylizerPlatform/webServer/www/scripts',
-                        args: [req.files[0].path, req.files[1].path, '/home/mike/results', 256, 512]
+                        args: [req.files[0].path, req.files[1].path, '/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 256, 512]
                 };
                 try{
                         PythonShell.run('./scripts/addToQueue.py', options, function(err){
