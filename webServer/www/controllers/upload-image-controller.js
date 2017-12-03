@@ -29,38 +29,32 @@ exports.post = function(req, res){
 */
 
 var storage = multer.diskStorage({
-
 	destination: function(req, res, callback){
 		callback(null, 'public/tmp/');
 	},
-
-        filename: function(req, file, callback){
-                console.log(file);
-                callback(null, file.originalname)
+  filename: function(req, file, callback){
+    console.log(file);
+     callback(null, file.originalname)
         }
 });
 
 var upload = multer({storage: storage}).array('photo', 2);
 
 exports.post = function(req, res){
-
-        upload(req, res, function(err){
-                if(err){
-                        console.log('error occured');
-                        return;
-                }
-                // req.files is an ojbect where fieldname is the key and value is the array of files
-                console.log(req.files);
-
+  upload(req, res, function(err){
+    if(err){
+      console.log('error occured');
+      return;
+    }
+    // req.files is an ojbect where fieldname is the key and value is the array of files
+    console.log(req.files);
 		console.log('photo uploaded');
-
                 var options = {
                         pythonPath: '/usr/bin/python3',
-                        scriptPath: '/home/mike/repos/cmpt475_Nov29/ArtisticStylizerPlatform/webServer/www/scripts',
-                        args: [req.files[0].path, req.files[1].path, '/home/mike/results', 256, 512]
+                        args: [req.files[0].path, req.files[1].path, '/public/tmp/', 256, 512]
                 };
                 try{
-                        PythonShell.run('addToQueue.py', options, function(err){
+                        PythonShell.run('./scripts/addToQueue.py', options, function(err){
                         if (err) throw err;
                         });
                 }
@@ -68,6 +62,4 @@ exports.post = function(req, res){
                         console.log(err);
                 }
         });
-
-
 };

@@ -148,18 +148,16 @@ Profile.changeProfilePicture = function(profileId, picturePath, done){
 	});
 }
 
-Profile.getProfilePicture = function(profileId, done){
-	console.log("here");
+Profile.getProfilePicture = function(profileId, done){	
 	db.get(db.READ, function(err, connection){
-		console.log("here1");
 		if(err) return done(err);
-		console.log("here2");
+		
 		connection.query('SELECT profile_pic_path FROM profiles WHERE profile_id=?',
 		[profileId],
 		function(err, result){
-			console.log("here3");
 			connection.release();
-			return done(err, result.profile_pic_path);
+      
+			return done(err, result[0]);
 		});
 	});
 }
@@ -345,11 +343,22 @@ Profile.savePicture = function(profileid, picturePath, size, resolution, styleid
 
 				// return the saved picture to the callback
 				return done(err, picture);
-			}
-		);
+		});
 	});	
 }
 
+Profile.removePicture = function(pictureid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('DELETE FROM pictures WHERE picture_id=?',
+			[pictureid],
+			function(err, result){
+				connection.release();
+				return done(err, result);
+		});
+	});
+}
 
 // save a video to the asp database
 Profile.saveVideo = function(profileid, videoPath, videoLength, styleid, psid, dateCreated, done){
@@ -405,7 +414,74 @@ Profile.getDefaultStyles = function(done){
 			return done(err, styles);
 		});
 	});
+}
 
+Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		//lets write a report to the database
+		connection.query('INSERT INTO reports(reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?)',
+			[reporterProfileId, videoId, pictureId, description],
+			function(err, result){
+				connection.release();
+				return done(err, result);
+			});
+	});
+}
+
+Profile.getReports = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM reports', function(err, result){
+			connection.release();
+			return done(err, result);
+		});
+	});
+}
+
+Profile.getAllPictures = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM pictures', function(err, result){
+			connection.release();
+			return done(err, result);
+		})
+	})
+}
+
+
+Profile.upgradeToPremium = function(profileid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE users SET subscription_id=1 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+				return done(err, result);
+			});
+	});
+}
+
+
+
+Profile.downgradeToFree = function(profileid, done){
+	db.get(db.WRITE, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('UPDATE users SET subscription_id=0 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
+			[profileid],
+			function(err, result){
+				connection.release();
+
+				return done(err, result);
+			});
+
+	});
 }
 
 Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
@@ -458,8 +534,6 @@ Profile.upgradeToPremium = function(profileid, done){
 	});
 }
 
-
-
 Profile.downgradeToFree = function(profileid, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
@@ -474,5 +548,4 @@ Profile.downgradeToFree = function(profileid, done){
 
 	});
 }
-
 module.exports = Profile;

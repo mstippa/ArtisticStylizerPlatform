@@ -6,8 +6,10 @@ from vgg19 import VGG19
 class Utils:
   def __init__(self, args):
     # constants
-    self.DECODER_T7 = "decoder.t7"
-    self.VGG_T7 = "vgg_normalised.t7"
+
+    self.DECODER_T7 = "style_transfer/src/decoder.t7"
+    self.VGG_T7 = "style_transfer/src/vgg_normalised.t7"
+
     self.ALPHA = 1
     self.init_args(args)
   # end
@@ -52,12 +54,18 @@ class Utils:
     img = tf.image.resize_images(img, size=[512, 512])
     return img 
   # end
-  
+
   def write_img_to_file(self, img, size):
-    image.imsave(os.path.join(self.RESULT_IMG_PATH, "results.jpg"), img)
+    results_dir_files = os.listdir(self.RESULT_IMG_PATH)
+    while True:
+      unq_filename = "{}_results.jpg".format(str(uuid.uuid1()))
+      if unq_filename not in results_dir_files:
+        break
+    image.imsave(os.path.join(self.RESULT_IMG_PATH, unq_filename), img)
     #img = tf.image.resize_images(img, size=size)
     #filewritten = tf.write_file(self.RESULT_IMG_PATH, tf.image.encode_jpeg(tf.cast(img, dtype=tf.uint8)))
     #return filewritten
+  # end  
 
   def process_img(self, type, img):
     assert(type=="pre" or "post"), "type of image processing not specified"

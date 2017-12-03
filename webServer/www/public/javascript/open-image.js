@@ -234,7 +234,7 @@ function saveContent(contentPath) {
 
 function uploadProfilePic(profilePicForm, inputName) {
   var xhttp = new XMLHttpRequest();
-  var form = document.getElementById('profilePicForm');
+  var form = document.getElementById('changeProfilePicForm');
   var formData = new FormData(form);
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
