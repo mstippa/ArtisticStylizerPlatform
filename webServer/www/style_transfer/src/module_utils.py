@@ -2,14 +2,13 @@ import tensorflow as tf
 import os
 from matplotlib import image
 from vgg19 import VGG19
+import uuid
 
 class Utils:
   def __init__(self, args):
     # constants
-
     self.DECODER_T7 = "style_transfer/src/decoder.t7"
     self.VGG_T7 = "style_transfer/src/vgg_normalised.t7"
-
     self.ALPHA = 1
     self.init_args(args)
   # end
@@ -54,7 +53,7 @@ class Utils:
     img = tf.image.resize_images(img, size=[512, 512])
     return img 
   # end
-
+  
   def write_img_to_file(self, img, size):
     results_dir_files = os.listdir(self.RESULT_IMG_PATH)
     while True:
@@ -65,7 +64,7 @@ class Utils:
     #img = tf.image.resize_images(img, size=size)
     #filewritten = tf.write_file(self.RESULT_IMG_PATH, tf.image.encode_jpeg(tf.cast(img, dtype=tf.uint8)))
     #return filewritten
-  # end  
+  # end
 
   def process_img(self, type, img):
     assert(type=="pre" or "post"), "type of image processing not specified"
