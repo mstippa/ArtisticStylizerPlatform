@@ -54,15 +54,18 @@ class Utils:
     img = tf.image.resize_images(img, size=[512, 512])
     return img 
   # end
-  
+
   def write_img_to_file(self, img, size):
-
-    files_in_results_dir = os.listdir(self.RESULT_IMG_PATH)
-
-    image.imsave(os.path.join(self.RESULT_IMG_PATH, "results.jpg"), img)
+    results_dir_files = os.listdir(self.RESULT_IMG_PATH)
+    while True:
+      unq_filename = "{}_results.jpg".format(str(uuid.uuid1()))
+      if unq_filename not in results_dir_files:
+        break
+    image.imsave(os.path.join(self.RESULT_IMG_PATH, unq_filename), img)
     #img = tf.image.resize_images(img, size=size)
     #filewritten = tf.write_file(self.RESULT_IMG_PATH, tf.image.encode_jpeg(tf.cast(img, dtype=tf.uint8)))
     #return filewritten
+  # end  
 
   def process_img(self, type, img):
     assert(type=="pre" or "post"), "type of image processing not specified"
