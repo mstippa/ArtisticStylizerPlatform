@@ -23,6 +23,7 @@ var options = {
 	}
 }
 
+app.use('/tmp',express.static(path.join(__dirname, 'public/tmp')));
 app.use(express.static('public', options));
 
 /**************************************************************
@@ -117,7 +118,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                var scriptExecution = spawn("python3", ['./scripts/processManager.py']);
                scriptExecution.stdout.on('data', function(data) {
                 var usage = String(data).split(",");
-                
+                console.log("Usage: ", usage);
                 var xhttp = new XMLHttpRequest();
                 
                 xhttp.open("POST", "style-content", true);

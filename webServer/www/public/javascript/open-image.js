@@ -44,23 +44,8 @@ $(document).ready(function(){
   $("#uploadPhoto").change(function () {
     var inputName = this.value;
     inputName = inputName.replace(/.*[\/\\]/, '');
-    uploadContent('uploadPhotoForm');
-    readURL(inputName);
+    uploadContent('uploadPhotoForm', inputName);
   });
-
-
-  // displays the uploaded image or video in a modal
-  function readURL(inputName) {
-    document.getElementById('uploaded-image').src = '/tmp/'+inputName;
-
-    $('.sk-folding-cube').css({
-      visibility: 'hidden'
-    });
-    $('#uploaded-image').css({
-      visibility: 'visible'
-    })
-    $('#uploadModal').modal('show');
-  }    
   
   // displays the uploaded profile pic
   function changeProfilePic(inputName) {
@@ -80,6 +65,8 @@ $(document).ready(function(){
   $('#contact').click(function() {
     $('#contactForm').fadeToggle();
   });
+
+  
   $(document).mouseup(function (e) {
     var container = $("#contactForm");
 
@@ -112,7 +99,7 @@ $(document).ready(function(){
 
     var style = $(this).find('img').attr('src');
     style = style.replace(/.*[\/\\]/, '');
-    var content = document.getElementById('uploaded-image').src;
+    var content = document.getElementByd('uploaded-image').src;
     content = content.replace(/.*[\/\\]/, '');
     console.log(style);
     console.log(content);
@@ -174,20 +161,25 @@ $(document).ready(function(){
 })
 
 // sends the upload photo form to the content-upload controller
-function uploadContent(contentForm) {
+function uploadContent(contentForm, inputName) {
     var xhttp = new XMLHttpRequest();
     var form = document.getElementById(contentForm);
     var formData = new FormData(form);
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
 
-          response = String(this.responseText);
-          console.log(response);
-       } else {
-        return false;
-       }
+    xhttp.open("POST", "contentUpload", true);
+    
+    xhttp.upload.onprogress = function(e){
+      if(e.lengthComputable){
+        var percentage = (e.loaded / e.total)*100;
+        console.log(percentage+"%");
+      }
     };
-    xhttp.open("POST", "contentUpload", false);
+    xhttp.onerror = function(e){
+      console.log('Error: ', e);
+    };
+    xhttp.onload = function(e){
+      readURL(xhttp.responseText);
+    }
     xhttp.send(formData);
 }
 
@@ -227,7 +219,7 @@ function saveContent(contentPath) {
       return false;
      }
   };
-  xhttp.open("POST", "save-content", false);
+  xhttp.open("POST", "save-content", true);
   xhttp.send(contentPath); 
 }
 
@@ -242,7 +234,7 @@ function uploadProfilePic(profilePicForm, inputName) {
         document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
       } 
   };
-  xhttp.open("POST", "uploadProfilePic", false);
+  xhttp.open("POST", "uploadProfilePic", true);
   xhttp.send(formData);
 }
 
@@ -256,9 +248,21 @@ function reportContent(pictureId, reportDescription) {
         console.log(this.responseText);
       } 
   };
-  xhttp.open("POST", "reportContent", false);
+  xhttp.open("POST", "reportContent", true);
   xhttp.send(pictureId + " " + reportDescription);
 
 }
 
+  // displays the uploaded image or video in a modal
+  function readURL(inputName) {
+    document.getElementById('uploaded-image').src = '/tmp/'+inputName;
+
+    $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+    $('#uploaded-image').css({
+      visibility: 'visible'
+    })
+    $('#uploadModal').modal('show');
+  }    
 

@@ -21,7 +21,7 @@ exports.post = function(req, res){
       userProfile = result;
   
       // move the file from /public/tmp to the user's profile directory 
-      mv('/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp/'+contentPath, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
+      mv('./public/tmp/'+contentPath, './public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
         if (err) throw err;
           
         //send picture to the database
@@ -40,5 +40,5 @@ exports.post = function(req, res){
     });
       res.send("saved");
   });
-  res.send("saved");
+ // res.send("saved");
 };
