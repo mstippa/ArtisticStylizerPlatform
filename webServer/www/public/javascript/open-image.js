@@ -111,9 +111,10 @@ $(document).ready(function(){
 
 
     var style = $(this).find('img').attr('src');
-    style = style.replace(/.*[\/\\]/, '');
+    // style = style.replace(/.*[\/\\]/, '');
     var content = document.getElementById('uploaded-image').src;
-    content = content.replace(/.*[\/\\]/, '');
+    console.log(content);
+    content = content.replace(/^(?:\/\/|[^\/]+)*\//, "");
     console.log(style);
     console.log(content);
     styleContent(content, style);

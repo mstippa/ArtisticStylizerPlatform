@@ -7,65 +7,70 @@ var multer = require('multer');
 var PythonShell = require('python-shell');
 var spawn = require('child_process').spawn;
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
+var spawn = require('child_process').spawn;
 
 exports.post = function(req, res){
 
-	console.log("here");
+	
 
-	req.on("data", function(data) {
-	    // turn the request into a string which is the path of the content image
+		req.on("data", function(data) {
+		    // turn the request into a string which is the path of the content image
 
-	    var dataString = String(data);
+		    var dataString = String(data);
 
-	    var dataArray = dataString.split(" ");
-	    console.log(dataArray)
-		var content = dataString.substr(0, dataString.indexOf(" "));
-		var style = dataString.substr(dataString.indexOf(" ") + 1, dataString.length-1);
+		    var dataArray = dataString.split(" ");
+		    console.log(dataArray)
+			var content = dataString.substr(0, dataString.indexOf(" "));
+			var style = dataString.substr(dataString.indexOf(" ") + 1, dataString.length-1);
 
-	    console.log(content);
-	    console.log(style);
-	    Profile.getProfile(req.user.userid, function(err, result){
-	    	var profile = result;
-	    	var options = {
-				pythonPath: '/usr/bin/python3',
-		   		args: [ 'public/tmp/'+content, 
-		   				'public/default_styles/'+style,
-		   				'/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 
-		   				256, 
-		   				512, 
-		   				profile.profileid, 
-		   				"test",
-		   				"test"]
-			};
+		    console.log(content);
+		    console.log(style);
+		    Profile.getProfile(req.user.userid, function(err, result){
+		    	var profile = result;
+		    	var options = {
+					pythonPath: '/usr/bin/python3',
+			   		args: [ 'public/'+content, 
+			   				'public'+style,
+			   				'/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 
+			   				256, 
+			   				512, 
+			   				profile.profileid, 
+			   				"test",
+			   				"test"]
+				};
 
-        	try{
-                PythonShell.run('./scripts/addToQueue.py', options, function(err){
-                	if (err) throw err;
-                	var xhttp = new XMLHttpRequest();
-                	xhttp.onreadystatechange = function () {
-	                	if (this.readyState == 4 && this.status == 200) {
-					        var response = this.responseText;
-					        display(response)
-	                
-					    }
-					};    
-				    xhttp.open("POST", "style-content", true);
-				  	xhttp.send(); 
-				  
-                });
-        	}
-        	catch(err){
-                console.log(err);
-        	}
-	    });
-	    
-	function display(data) {
-		res.send(data);
-	}
+	        	try{
 
-	});
+	        		// var scriptExecution = spawn(options, ['./scripts/addToQueue.py']);
+           //     		scriptExecution.stdout.on('data', function(data) {
+           //     			res.send("poop");
+           //     		});	
+	                PythonShell.run('./scripts/addToQueue.py', options, function(err){
+	                	if (err) throw err;
+	                	var xhttp = new XMLHttpRequest();
+	                	xhttp.onreadystatechange = function () {
+		                	if (this.readyState == 4 && this.status == 200) {
+						        var response = this.responseText;
+						        display(response)
+		                
+						    }
+						};    
+					    xhttp.open("POST", "style-content", true);
+					  	xhttp.send(); 
+					  
+	                });
+	        	}
+	        	catch(err){
+	                console.log(err);
+	        	}
+		    });
+		    
+		function display(data) {
+			res.send(data);
+		}
 
+		});
+	
 
 };
 
