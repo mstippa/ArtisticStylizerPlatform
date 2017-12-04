@@ -35,8 +35,8 @@ exports.post = function(req, res){
 	    	var profile = result;
 	    	var options = {
 				pythonPath: '/usr/bin/python3',
-		   		args: [ 'public/tmp/'+content, 
-		   				'public/default_styles/'+style,
+		   		args: [ 'public/'+content, 
+		   				'public'+style,
 		   				'./public/tmp', 
 		   				256, 
 		   				512, 
