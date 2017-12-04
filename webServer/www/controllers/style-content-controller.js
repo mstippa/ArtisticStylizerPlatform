@@ -7,9 +7,15 @@ var multer = require('multer');
 var PythonShell = require('python-shell');
 var spawn = require('child_process').spawn;
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
+var spawn = require('child_process').spawn;
 
 exports.post = function(req, res){
+
+
+
+	       
+
+	        			
 
 	console.log("here");
 
@@ -40,6 +46,11 @@ exports.post = function(req, res){
 			};
 
         	try{
+            
+                // var scriptExecution = spawn(options, ['./scripts/addToQueue.py']);
+           //     		scriptExecution.stdout.on('data', function(data) {
+           //     			res.send("poop");
+           //     		});
                 PythonShell.run('./scripts/addToQueue.py', options, function(err){
                 	if (err) throw err;
                 	var xhttp = new XMLHttpRequest();
@@ -65,6 +76,7 @@ exports.post = function(req, res){
 	}
 
 	});
+
 
 
 };
