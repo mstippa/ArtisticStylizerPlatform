@@ -201,7 +201,7 @@ function styleContent(content, style) {
         // document.getElementById('uploaded-image').src = '/tmp/' + this.responseText;
      } 
   };
-  xhttp.open("POST", "style-content", false);
+  xhttp.open("POST", "style-content", true);
   xhttp.send(content + " " + style);
 }
 
