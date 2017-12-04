@@ -22,8 +22,6 @@ def write_to_json(file, df):
   logger.info(file)
   logger.info(df)
   df.to_json(file, orient="records")
-  #with open(file, "a") as json_file:
-  #  json.dump(data, json_file)
 # end
 
 def create_df(data_dict):
@@ -71,6 +69,10 @@ parser.add_argument("style_img_path", type=str, help="full path to style image")
 parser.add_argument("result_img_path", type=str, help="full path to results directory where stylized content image is written")
 parser.add_argument("final_size", default=256, type=int, help="final dimensions of the stylized content image")
 parser.add_argument("transient_size", default=512, type=int, help="size images before cropping")
+parser.add_argument("profile_id", type=str, help="profile id")
+parser.add_argument("style_id", type=str, help="style id")
+parser.add_argument("ps_id", type=str, help="ps id")
+
 args = parser.parse_args()
 
 current_process_data = {
@@ -79,6 +81,9 @@ current_process_data = {
   "result_img_path":args.result_img_path,
   "final_size":args.final_size,
   "transient_size":args.transient_size,
+  "profile_id":args.profile_id,
+  "style_id":args.style_id,
+  "ps_id":args.ps_id,
   "queue_rank":0
 }
 

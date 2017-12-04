@@ -116,7 +116,7 @@ $(document).ready(function(){
     content = content.replace(/.*[\/\\]/, '');
     console.log(style);
     console.log(content);
-    styleContent(content, 'van_gogh_vincent_7.jpg');
+    styleContent(content, style);
     
     $('.sk-folding-cube').css({
       visibility: 'hidden'
@@ -198,10 +198,10 @@ function styleContent(content, style) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         response = this.responseText;
-        document.getElementById('uploaded-image').src = '/public/tmp/' + this.responseText;
+        // document.getElementById('uploaded-image').src = '/tmp/' + this.responseText;
      } 
   };
-  xhttp.open("POST", "style-content", false);
+  xhttp.open("POST", "style-content", true);
   xhttp.send(content + " " + style);
 }
 
