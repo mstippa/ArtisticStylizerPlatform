@@ -21,8 +21,8 @@ var upload = multer({storage: storage}).single('content');
 exports.post = function(req, res){
   upload(req, res, function(err){
     if(err) throw err;
-      // req.files is an ojbect where fieldname is the key and value is the array of files
-      res.send("success");
+      console.log(req.file);
+      res.send(req.file.originalname);
     
 
   });

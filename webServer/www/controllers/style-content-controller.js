@@ -31,7 +31,7 @@ exports.post = function(req, res){
 				pythonPath: '/usr/bin/python3',
 		   		args: [ 'public/tmp/'+content, 
 		   				'public/default_styles/'+style,
-		   				'/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 
+		   				'./public/tmp', 
 		   				256, 
 		   				512, 
 		   				profile.profileid, 
