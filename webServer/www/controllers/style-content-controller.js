@@ -9,6 +9,8 @@ var PythonShell = require('python-shell');
 
 exports.post = function(req, res){
 
+
+
 	req.on("data", function(data) {
 	    // turn the request into a string which is the path of the content image
 
@@ -21,25 +23,54 @@ exports.post = function(req, res){
 	    
 	    var options = {
 			pythonPath: '/usr/bin/python3',
-		    scriptPath: '/home/mike/repos/cmpt475_Nov28/ArtisticStylizerPlatform/gpuServer/AS/src/',
-		    args: ['/public/tmp/'+content, '/public/default_styles/'+style, '/home/morgan/MorgansParty/ArtisticStylizerPlatform/webServer/www/public/tmp', 256, 512]
-		}; 
-
-		PythonShell.run('inference_master.py', options, function(err){
-			if (err) throw err;
-			else {
-				console.log("success");
-				res.send();
-			}	
-				
-
-		});
-
+		   	args: ['public/tmp/'+content, 'public/default_styles/'+style, '/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 256, 512]
+		};
+        try{
+                PythonShell.run('./scripts/addToQueue.py', options, function(err){
+                	if (err) throw err;
+                	display()
+                });
+        }
+        catch(err){
+                console.log(err);
+        }
+	function display() {
+		res.send();
+	}
 
 	});
 
 
 };
+
+
+// var upload = multer({storage: storage}).array('photo', 2);
+
+// exports.post = function(req, res){
+//         upload(req, res, function(err){
+//                 if(err){
+//                         console.log('error occured');
+//                         return;
+//                 }
+//                 // req.files is an ojbect where fieldname is the key and value is the array of files
+//                 console.log(req.files);
+// 		console.log('photo uploaded');
+//                 var options = {
+//                         pythonPath: '/usr/bin/python3',
+//                        // scriptPath: '/home/mike/test/ArtisticStylizerPlatform/webServer/www/scripts',
+//                         args: [req.files[0].path, req.files[1].path, '/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 256, 512]
+//                 };
+//                 try{
+//                         PythonShell.run('./scripts/addToQueue.py', options, function(err){
+//                         if (err) throw err;
+//                         });
+//                 }
+//                 catch(err){
+//                         console.log(err);
+//                 }
+//         });
+// };
+
 
 
 

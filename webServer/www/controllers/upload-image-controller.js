@@ -48,7 +48,7 @@ exports.post = function(req, res){
                         return;
                 }
                 // req.files is an ojbect where fieldname is the key and value is the array of files
-                console.log(req.files);
+                console.log(req.files[0].path);
 		console.log('photo uploaded');
                 var options = {
                         pythonPath: '/usr/bin/python3',
