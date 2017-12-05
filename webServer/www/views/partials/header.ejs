@@ -20,8 +20,13 @@
 	    		<!-- only display the dropdown if the user is logged in -->
 				<% if(user){ %>
 					<li class="dropdown">
-						<% console.log(profile); %>  
+						<% console.log(profile); %> 
+						<% if (profile.profilePath === null) {  %>
+						<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="/images/default-profile.png" width="45px" 
+						height="45px"><span class="caret"></span></a>
+	          			<% } else { %>
 	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="<% profile.profilepath %>" width="45px" height="45px"><span class="caret"></span></a>
+	          			<% } %>
 	          			<ul class="dropdown-menu">
 	            			<li>
 	            				<a href="/profile">Profile</a>

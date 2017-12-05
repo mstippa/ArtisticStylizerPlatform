@@ -52,7 +52,6 @@ User.findByUsername = function(username, done){
 				, [username]
 				, function(err, result){
 					connection.release();
-
 					if (err) return done(err); //just return the error if there is one	
 					
 					if (result.length === 0) return done(null, false, 'invalid username');

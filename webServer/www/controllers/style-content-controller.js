@@ -11,10 +11,7 @@ var spawn = require('child_process').spawn;
 
 exports.post = function(req, res){
 
-
-
-	       
-
+      
 	        			
 
 	console.log("here");
@@ -36,8 +33,8 @@ exports.post = function(req, res){
 	    	var options = {
 				pythonPath: '/usr/bin/python3',
 		   		args: [ 'public/'+content, 
-		   				'public'+style,
-		   				'./public/tmp', 
+		   				'public/'+style,
+		   				'/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/webServer/public/tmp/', 
 		   				256, 
 		   				512, 
 		   				profile.profileid, 
@@ -47,10 +44,10 @@ exports.post = function(req, res){
 
         	try{
             
-                var scriptExecution = spawn(options, ['./scripts/addToQueue.py']);
-               		scriptExecution.stdout.on('data', function(data) {
-               			res.send("poop");
-               		});
+                // var scriptExecution = spawn(options, ['./scripts/addToQueue.py']);
+               	// 	scriptExecution.stdout.on('data', function(data) {
+               	// 		res.send("poop");
+               	// 	});
                 PythonShell.run('./scripts/addToQueue.py', options, function(err){
                 	if (err) throw err;
                 	var xhttp = new XMLHttpRequest();
