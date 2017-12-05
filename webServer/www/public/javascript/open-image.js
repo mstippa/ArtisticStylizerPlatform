@@ -13,6 +13,10 @@ $(document).ready(function(){
     interval: false
   }); 
 
+  $('#failMessage').css({
+    visibility: 'hidden'
+  });
+
   // dislplays the clicked on image in a modal on the explore page
 	$('.pop').on('click', function() {
 		$('#imagepreview').attr('src', $(this).find('img').attr('src'));
@@ -37,7 +41,7 @@ $(document).ready(function(){
   // facebook share button
   $('.fb-share-button').on('click', function() {
     $(this).attr('data-href', contentURL);
-  })
+  });
 
 
   // calls uploadcontent and readURL function when user uploads a photo
@@ -122,7 +126,7 @@ $(document).ready(function(){
   $('#stylePhoto').change(function() {
     var content = $('#uploaded-image').attr('src');
     uploadStyle(content);
-  })
+  });
 
   // function will hide the animation and display the stylized image in the modal after 4 seconds
   function stopAnimation() {
@@ -142,13 +146,13 @@ $(document).ready(function(){
 
     var contentToSave = document.getElementById('uploaded-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
-    saveContent(contentToSave);
-    console.log(response);
-    if (response === "saved") {
-      $('#uploaded-image').css({
-      visibility: 'hidden'
-    });
-    }
+    saveContent(contentToSave);    
+  });
+
+  $('#deleteButton').click(function() {
+    var contentToDelete = $(this).parent().find('img').attr('src');
+    contentToDelete = contentToDelete.replace(/.*[\/\\]/, '');
+    deleteContent(contentToDelete);
   });
 
   $('#reportContentButton').click(function() {
@@ -159,9 +163,17 @@ $(document).ready(function(){
     reportContent(pictureId, reportDescription);
 
     $('#exploreModal').modal('hide');
-  })
+  });
 
 })
+
+////////////////////////////////////////////////
+
+//      All Our Ajax Requests for the modal
+  
+//////////////////////////////////////////////
+
+
 
 // sends the upload photo form to the content-upload controller
 function uploadContent(contentForm, inputName) {
@@ -217,12 +229,35 @@ function saveContent(contentPath) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         response = String(this.responseText);
-        console.log(response);
-     } else {
-      return false;
-     }
+        console.log(xhttp.responseText);
+        if (xhttp.responseText !== "fail") {
+          window.location.replace("http://10.10.7.179:8086/home");
+        } else { 
+          $('#failMessage').css({
+            visibility: 'visible'
+          });
+        }
+      }  
   };
-  xhttp.open("POST", "save-content", true);
+  xhttp.open("POST", "save-content", false);
+  xhttp.send(contentPath); 
+}
+
+
+function deleteContent(contentPath) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        response = String(this.responseText);
+        console.log(xhttp.responseText);
+        if (xhttp.responseText === "deleted") {
+          window.location.replace("http://10.10.7.179:8086/home");
+        } else { 
+          
+        }
+      } 
+  };
+  xhttp.open("POST", "delete-content", true);
   xhttp.send(contentPath); 
 }
 
@@ -234,7 +269,8 @@ function uploadProfilePic(profilePicForm, inputName) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         console.log(this.responseText);
-        document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
+        document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/profilePic.jpg';
+        document.getElementById('profilePic').src = '/profiles/'+ this.responseText + '/profilePic.jpg';
       } 
   };
   xhttp.open("POST", "uploadProfilePic", true);
@@ -265,7 +301,7 @@ function reportContent(pictureId, reportDescription) {
     });
     $('#uploaded-image').css({
       visibility: 'visible'
-    })
+    });
     $('#uploadModal').modal('show');
   }    
 

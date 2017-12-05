@@ -47,10 +47,10 @@ exports.post = function(req, res){
 
         	try{
             
-                // var scriptExecution = spawn(options, ['./scripts/addToQueue.py']);
-           //     		scriptExecution.stdout.on('data', function(data) {
-           //     			res.send("poop");
-           //     		});
+                var scriptExecution = spawn(options, ['./scripts/addToQueue.py']);
+               		scriptExecution.stdout.on('data', function(data) {
+               			res.send("poop");
+               		});
                 PythonShell.run('./scripts/addToQueue.py', options, function(err){
                 	if (err) throw err;
                 	var xhttp = new XMLHttpRequest();

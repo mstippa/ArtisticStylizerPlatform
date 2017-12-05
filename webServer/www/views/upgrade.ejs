@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
+  <script type="text/javascript" src="/javascript/helper.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
@@ -22,22 +23,6 @@
   <% include partials/header %>
 
   <div class="container upgrade-container">
-    <!-- <div class="row">
-      <div class="col-sm-6 col-sm-offset-3" align="center"><h2>Choose a Subscripition</h2></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2 col-md-offset-5 subscripitions">
-        <h4 align="center" class="subscripitions-title">Premium</h4>
-        <h5 align="center" class="subscripitions-amount align-middle">$4.95/mo<h5>
-        <ul class="subscripitions-footer list-unstyled" align="center">
-          <li class="subscripitions-descrip">Upgraded Storage</li>
-          <li class="subscripitions-descrip">Explore other user's profiles</li>
-        </ul>
-      </div>
-    </div>
-		<div class="row">
-			<div class="col-sm-2 col-md-offset-5 free-subscription">Free<i class="material-icons" id="play-arrow">play_arrow</i></div>
-		</div> -->
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3" style="margin-bottom: 25px;">
         <h2>Payment Information
@@ -401,7 +386,7 @@
     </div>
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<button type="button" class="btn btn-primary btn-lg btn-block button">Upgrade</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block button" id="upgradeButton">Upgrade</button>
 			</div>
 		</div>
 

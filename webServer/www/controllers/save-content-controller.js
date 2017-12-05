@@ -13,32 +13,37 @@ exports.post = function(req, res){
   req.on("data", function(data) {
     // turn the request into a string which is the path of the content image
     var contentPath = String(data);
-    var userProfile;
 
+    var userProfile;
     // get the user's profile
     Profile.getProfile(req.user.userid, function(err, result) {
       if (err) throw err;
       userProfile = result;
-  
-      // move the file from /public/tmp to the user's profile directory 
-      mv('./public/tmp/'+contentPath, './public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
-        if (err) throw err;
-          
-        //send picture to the database
-        saveToDatabase(userProfile);  
-      });
-      
-      // saves the picture to the database
-      function saveToDatabase(userProfile) {
-        Profile.savePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/pictures/'+contentPath, null, null, null, null, null, function (err, result) {
+      console.log();
+      if (userProfile.subscription === 2 || (userProfile.subscription === 1 && userProfile.pictures.length < 2)) {
+
+        // move the file from /public/tmp to the user's profile directory 
+        mv('./public/tmp/'+contentPath, './public/profiles/'+userProfile.profileid+'/pictures/'+contentPath, function(err) {
           if (err) throw err;
-          else {
-            // yay we saved 
-          }
+            
+          //send picture to the database
+          saveToDatabase(userProfile);  
         });
-      }
+        
+        // saves the picture to the database
+        function saveToDatabase(userProfile) {
+          Profile.savePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/pictures/'+contentPath, null, null, null, null, null, function (err, result) {
+            if (err) throw err;
+            else {
+              res.send('/profiles/'+userProfile.profileid+'/pictures/'+contentPath);
+            }
+          });
+        }
+      } else {
+        res.send("fail");
+      } 
     });
-      res.send("saved");
+      
   });
  // res.send("saved");
 };

@@ -88,18 +88,18 @@ User.prototype.save = function(done){
 		this.dob,
 		this.firstname,
 		this.lastname,
-		this.subId
+		1
 	];
 
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
-
+		
 		connection.query('INSERT INTO users (username, email_address, password, dob, fname, lname, subscription_id)'
 			+' VALUES (?,?,?,?,?,?,?)',
 			userOptions,
 			function(err, result){
 				if(err) return done(err);
-
+				console.log(result.insertId);
 				//make sure to create the profile
 				Profile.createProfile(result.insertId, function(err){
 					connection.release();
