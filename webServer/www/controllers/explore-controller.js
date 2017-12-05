@@ -16,15 +16,14 @@ exports.get = function(req, res) {
 	var allPictures;
 	var userProfile;
 	Profile.getAllPictures(function(err, result) {
-		console.log(result);
 		if (err) throw err;
 		allPictures = result;
 		Profile.getProfile(req.user.userid, function(err, result) {
 			userProfile = result;
 			displayPage(allPictures, userProfile)
-		})
-		displayPage(allPictures);
-	})
+		});
+
+	});
 
 	function displayPage(allPictures, userProfile) {
 		return res.render("../views/explore.ejs", { user : req.user, pictures: allPictures, profile: userProfile });

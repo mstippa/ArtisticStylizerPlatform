@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-inverse navbar-toggleable-sm">
   	<div class="container-fluid">
     	<div class="navbar-header">
@@ -19,13 +20,16 @@
 	    		<% } %>
 	    		<!-- only display the dropdown if the user is logged in -->
 				<% if(user){ %>
+				<% if(profile.subscription === 1) { %>
+					<li><a href="/upgradeAccount"><span class="sign-up">Upgrade</span></a></li>
+				<% } %>	
 					<li class="dropdown">
 						<% console.log(profile); %> 
 						<% if (profile.profilePath === null) {  %>
 						<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="/images/default-profile.png" width="45px" 
 						height="45px"><span class="caret"></span></a>
 	          			<% } else { %>
-	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="<% profile.profilepath %>" width="45px" height="45px"><span class="caret"></span></a>
+	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="<%= profile.profilePath %>" width="45px" height="45px"><span class="caret"></span></a>
 	          			<% } %>
 	          			<ul class="dropdown-menu">
 	            			<li>

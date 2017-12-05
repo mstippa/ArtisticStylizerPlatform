@@ -1,19 +1,26 @@
-
+<% if (profile.subscription === 1) { %>
 	<div class="col-md-8 col-md-offset-2" style="margin-top: 120px; font-size: 35px;" id="explore_message">Upgrade to Premium to see others Artwork</div>
+<% } else { %>
 
 <div class="content">
   <div class="grid">
     <div class="grid-sizer"></div>
 
 <% var i = 0; %>
+<% var pictureProfileId = 0; %>
+<% console.log(pictures[0].profile_id) %>
 <% while (i < pictures.length) { %>
-    <% console.log("poop") %>
+	<% if (pictures[i].profile_id !== pictureProfileId && pictures[i].profile_id !== profile.profileid) { %>
     <div class="grid-item">
       <a href="#" class="pop"><img src="<%= pictures[i].picture_path %>" name="<%= pictures[i].picture_id %>"/> </a>
     </div> 
+    <% pictureProfileId = pictures[i].profile_id; %>
+    <% } %>
 <% i++; %>    
 <% } %>   
   </div>
-</div>     
+</div> 
+
+<% } %>    
 
    

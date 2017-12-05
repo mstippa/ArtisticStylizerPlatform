@@ -13,9 +13,17 @@ $(document).ready(function(){
     interval: false
   }); 
 
+  // hide the fail message
   $('#failMessage').css({
     visibility: 'hidden'
   });
+
+  $('#closeButton').on('click', function() {
+    $('#uploaded-image').attr('src', '');
+    $('#failMessage').css({
+      visibility: 'hidden'
+    });
+  })
 
   // dislplays the clicked on image in a modal on the explore page
 	$('.pop').on('click', function() {
@@ -33,6 +41,9 @@ $(document).ready(function(){
     contentURL = $(this).find('img').attr('src');
     $('#uploaded-image').attr('src', contentURL);
     $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+    $('#failMessage').css({
       visibility: 'hidden'
     });
     $('#uploadModal').modal('show');
@@ -297,6 +308,10 @@ function reportContent(pictureId, reportDescription) {
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
 
     $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+
+    $('#failMessage').css({
       visibility: 'hidden'
     });
     $('#uploaded-image').css({
