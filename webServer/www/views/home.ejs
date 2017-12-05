@@ -15,7 +15,6 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <script type="text/javascript" src="/javascript/home-grid.js"></script>
 <script type="text/javascript" src="/javascript/open-image.js"></script>
-<meta property="og:url"           content="/images/rowing.jpg" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -44,7 +43,7 @@
 		      	<div class="file-upload" data-toggle="modal" data-target="#uploadModal">
 		        	<div class="file-select">	
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon" style="font-size: 30px">camera_alt</i></div>
-		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Photo</div>
+		          		<div class="file-select-name" id="noFile" style="font-size:20px">Upload Photo</div>
 		          		<form method="post" id="uploadPhotoForm" enctype="multipart/form-data">
 		          			<input id="uploadPhoto" type="file" class="upload" accept=".png,.jpg" name="content"   />
 		          		</form>	
@@ -97,7 +96,7 @@
         				<div class="fb-share-button" data-href="http://10.10.7.179:8085/public/images/pip.png" data-layout="button" data-size="small" data-mobile-iframe="true"><a style="float:left; width: 50px; height: 50px; margin-right: 10px;" class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F10.10.7.179%2Fpublic%2Fimages%2Fpip.png&amp;src=sdkpreparse"><img src="/images/facebook.png"/></a></div>
         				<img src="/images/twitter.png" style="float:left; width: 50px; height: 50px"/>
 						<button type="button" class="btn btn-primary modal-button" id="saveButton" >Save content</button>
-          				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          				<button type="button" class="btn btn-default" data-dismiss="modal" id="closeButton">Close</button>
         			</div>
       			</div>
     		</div>

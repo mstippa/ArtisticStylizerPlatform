@@ -15,6 +15,10 @@ exports.get = function(req, res) {
 	// response.writeHead(200, {
 	// 		'Content-Type':'text/html'
 	// });
+	
 
-	return res.render("../views/admin.ejs", { user : req.user });
+	
+		return res.render("../views/admin.ejs", { user : req.user });
+	
+	
 };

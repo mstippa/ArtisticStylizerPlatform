@@ -14,16 +14,11 @@ var User = require('../model/user');
 
 exports.get = function(req, res) {
 
-	//put in the headers that we were successful
-	// response.writeHead(200, {
-	// 		'Content-Type':'text/html'
-	// });
 
+
+	
 	// response.render("../views/login.ejs");
-	return res.render("../views/login.ejs",  { 
-		message : req.flash('loginMessage'), 
-		user    : req.user
-	});
+	return res.render("../views/login.ejs",  { message : req.flash('loginMessage'), user : req.user, admin: false});
 };
 
 exports.post = function(req, res){
@@ -31,8 +26,3 @@ exports.post = function(req, res){
 	return res.render('../views/login.ejs', { message : req.flash('loginMessage') });
 }
 
-//this is for updating the page when they hit the login button
-// exports.post = function(request, response){
-// 	request.render()
-// 	response.end();
-// };

@@ -19,7 +19,7 @@
 	    			<li><a href="/create-account"><span class="sign-up">Sign Up</span></a></li>
 	    		<% } %>
 	    		<!-- only display the dropdown if the user is logged in -->
-				<% if(user){ %>
+				<% if(user && admin === false){ %>
 				<% if(profile.subscription === 1) { %>
 					<li><a href="/upgradeAccount"><span class="sign-up">Upgrade</span></a></li>
 				<% } %>	
@@ -41,6 +41,11 @@
 	          			</ul>
 	        		</li>
 	        	<% } %> <!-- end if -->
+	        	<% if (admin === true) { %>
+	        		<li><a href="/admin"><span class="navbar-tab">Statistics</span></a></li>
+	        		<li><a href="/logout">Logout</a></li>
+	        	<% } %>
+
 	  		</ul>
 	  	</div>
 	</div>

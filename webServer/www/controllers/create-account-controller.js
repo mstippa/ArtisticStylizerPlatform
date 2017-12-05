@@ -16,10 +16,7 @@ exports.get = function(req, res) {
 	// 		'Content-Type':'text/html'
 	// });
 
-	return res.render("../views/create-account.ejs", { 
-		message : req.flash('signupMessage'),
-		user 	: req.user 
-	});
+	return res.render("../views/create-account.ejs", { message : req.flash('signupMessage'),user : req.user, admin: false });
 
 };
 

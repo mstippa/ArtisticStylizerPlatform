@@ -20,19 +20,26 @@ exports.get = function(req, res) {
 		return res.render("../views/home.ejs", { user: req.user});
 	} else {
 		var userProfile;
+		var styles;
+		var adminBoolean;
 		Profile.getProfile(req.user.userid, function(err, res) {
 			if (err) throw err;
 			userProfile = res;
 			Profile.getDefaultStyles(function(err, res) {
 				if (err) throw err;
-				var styles = res;
-				profileReturn(userProfile, styles);
+				styles = res;
+				User.isAdmin(req.user.userid, function(err, result) {
+					if (err) throw err;
+					adminBoolean = result;
+					profileReturn(userProfile, styles, adminBoolean);
+				});
+
 			});
 			
 		});
 
-		function profileReturn(userProfile, defaultStyles) {
-			res.render("../views/home.ejs" , {user: req.user, profile: userProfile, style: defaultStyles});
+		function profileReturn(userProfile, defaultStyles, adminBoolean) {
+			res.render("../views/home.ejs" , {user: req.user, profile: userProfile, style: defaultStyles, admin: adminBoolean});
 		}
 			
 	}

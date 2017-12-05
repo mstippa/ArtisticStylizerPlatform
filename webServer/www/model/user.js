@@ -76,6 +76,23 @@ User.prototype.setUsername = function(username){
 	this.username = username;
 }
 
+
+User.isAdmin = function(userid, done){
+	db.get(db.READ, function(err,connection) {
+		if (err) return done(err);
+
+		connection.query('SELECT * FROM admins WHERE user_id = ?'
+			, [userid]
+			, function(err, result){
+				connection.release();
+				if (err) return done(err);
+
+				if (result.length === 0) return done(null, false);
+
+				return done(null, true);
+			});
+	});
+}
 // save the current user to the database
 User.prototype.save = function(done){
 

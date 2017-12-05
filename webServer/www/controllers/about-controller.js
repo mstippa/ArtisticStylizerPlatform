@@ -10,7 +10,22 @@
 **/
 
 exports.get = function(req, res) {
+	var adminBoolean;
+	if (req.user) {
+		User.isAdmin(req.user.userid, function(err, result) {
+			if (err) throw err;
+			adminBoolean = result;
+			console.log(adminBoolean);
+			renderPage();
+		});
+	} else {
+		adminBoolean = false;
+		renderPage();
+	}
 
-	return res.render("../views/about.ejs", { user : req.user });
+	
+	function renderPage(adminBoolean) {
+		return res.render("../views/about.ejs", { user : req.user, admin: adminBoolean });
+	}	
 
 };
