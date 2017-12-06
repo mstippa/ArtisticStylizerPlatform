@@ -3,31 +3,54 @@ import os
 from matplotlib import image
 from vgg19 import VGG19
 import uuid
+import logging
+from PIL import Image 
+#logger = logging.getLogger("mod_utils")
+#logger.setLevel(logging.INFO)
+#formatter = logging.Formatter("%(asctime)s:%(name)s:%(message)s")
+#fileHandler = logging.FileHandler("mod_utils.log")
+#fileHandler.setFormatter(formatter)
+
+#logger.addHandler(fileHandler)
+
 
 class Utils:
-  def __init__(self, args):
+  def __init__(self, content_img_path, style_img_path, result_img_path, final_size, transient_size, alpha):
     # constants
     self.DECODER_T7 = "style_transfer/src/decoder.t7"
     self.VGG_T7 = "style_transfer/src/vgg_normalised.t7"
-    self.ALPHA = 1
-    self.init_args(args)
-  # end
+    self.ALPHA = alpha
 
-  def init_args(self, args):
-    # TODO determine if other flags are needed
+    style_img_path = self._check_ext(img_path=style_img_path)
+    content_img_path = self._check_ext(img_path=content_img_path)
+
     # image paths 
-    self.STYLE_IMG_PATH = args.style_img_path
-    self.CONTENT_IMG_PATH = args.content_img_path
-    self.RESULT_IMG_PATH = args.result_img_path
+    self.STYLE_IMG_PATH = style_img_path
+    self.CONTENT_IMG_PATH = content_img_path
+    self.RESULT_IMG_PATH = result_img_path
 
-    self.STYLE_EXT_TYPE = self._get_ext(img_path=args.style_img_path)
-    self.CONTENT_EXT_TYPE = self._get_ext(img_path=args.content_img_path)
+    #logger.info(self.STYLE_IMG_PATH)
+    #logger.info(self.CONTENT_IMG_PATH)
+    #logger.info(self.RESULT_IMG_PATH)
   # end
 
-  def _get_ext(self, img_path):
-    # TODO this is currently not being used
-    _, ext = os.path.splitext(img_path)
-    return ext
+  def _check_ext(self, img_path):
+    path_no_ext, ext = os.path.splitext(img_path)
+    if ".jpg" == str(ext).lower():
+      ext = "jpg"
+    elif ".png" == str(ext).lower(): 
+      ext = "png"
+    assert(ext == "jpg" or ext == "png"), "unsupported image file type"
+    def _convert_png_to_jpg(img_path, path_no_ext):
+      new_jpg_path = "{}.jpg".format(path_no_ext)
+      im = Image.open(img_path)
+      im = im.convert("RGB")
+      im.save(new_jpg_path)
+      return new_jpg_path
+    # end
+    if ext == "png":
+     img_path =  _convert_png_to_jpg(img_path=img_path, path_no_ext=path_no_ext)
+    return img_path
   # end
 
   def get_placeholder_inputs(self):
@@ -48,7 +71,6 @@ class Utils:
   # end
 
   def load_img_from_file(self, img_path):
-    #img = tf.image.decode_png(tf.read_file(img_path))
     img = tf.image.decode_jpeg(tf.read_file(img_path))
     img = tf.image.resize_images(img, size=[512, 512])
     return img 
@@ -58,12 +80,15 @@ class Utils:
     results_dir_files = os.listdir(self.RESULT_IMG_PATH)
     while True:
       unq_filename = "{}_results.jpg".format(str(uuid.uuid1()))
+      # unq_filename = "results.jpg"
       if unq_filename not in results_dir_files:
         break
-    image.imsave(os.path.join(self.RESULT_IMG_PATH, unq_filename), img)
-    #img = tf.image.resize_images(img, size=size)
-    #filewritten = tf.write_file(self.RESULT_IMG_PATH, tf.image.encode_jpeg(tf.cast(img, dtype=tf.uint8)))
-    #return filewritten
+    results_path = os.path.join(self.RESULT_IMG_PATH, unq_filename)
+    #logger.info('start writing result')
+    #logger.info('unq_filename: {}'.format(results_path))
+    image.imsave(results_path, img)
+    #logger.info('done writing result')
+    return results_path
   # end
 
   def process_img(self, type, img):
