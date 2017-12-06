@@ -36,7 +36,7 @@ class Utils:
 
   def _check_ext(self, img_path):
     path_no_ext, ext = os.path.splitext(img_path)
-    if ".jpg" == str(ext).lower():
+    if ".jpg" == str(ext).lower() or ".jpeg" == str(ext).lower():
       ext = "jpg"
     elif ".png" == str(ext).lower(): 
       ext = "png"
@@ -84,6 +84,7 @@ class Utils:
       if unq_filename not in results_dir_files:
         break
     results_path = os.path.join(self.RESULT_IMG_PATH, unq_filename)
+    #print("result_path: {}".format(results_path))
     #logger.info('start writing result')
     #logger.info('unq_filename: {}'.format(results_path))
     image.imsave(results_path, img)
