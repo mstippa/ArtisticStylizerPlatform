@@ -11,7 +11,19 @@ $(document).ready(function(){
   // turn of auto cycle in the carousel
   $('.carousel').carousel({
     interval: false
-  }); 
+  });
+	
+// hide the fail message
+  $('#failMessage').css({
+    visibility: 'hidden'
+  });
+	
+ $('#closeButton').on('click', function() {
+    $('#uploaded-image').attr('src', '');
+    $('#failMessage').css({
+      visibility: 'hidden'
+    });
+  })
 
   // dislplays the clicked on image in a modal on the explore page
 	$('.pop').on('click', function() {
@@ -29,6 +41,9 @@ $(document).ready(function(){
     contentURL = $(this).find('img').attr('src');
     $('#uploaded-image').attr('src', contentURL);
     $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+	$('#failMessage').css({
       visibility: 'hidden'
     });
     $('#uploadModal').modal('show');
@@ -109,7 +124,7 @@ $(document).ready(function(){
     styleContent(content, style);
     
     $('.sk-folding-cube').css({
-      visibility: 'visable'
+      visibility: 'hidden'
     });
 
     $('#uploaded-image').css({
@@ -150,6 +165,11 @@ $(document).ready(function(){
     });
     }
   });
+	$('#deleteButton').click(function() {
+    var contentToDelete = $(this).parent().find('img').attr('src');
+    contentToDelete = contentToDelete.replace(/.*[\/\\]/, '');
+    deleteContent(contentToDelete);
+  });
 
   $('#reportContentButton').click(function() {
 
@@ -159,7 +179,11 @@ $(document).ready(function(){
     reportContent(pictureId, reportDescription);
 
     $('#exploreModal').modal('hide');
-  })
+  });
+	$('#profile-btn').click(function() {
+    var pictureid = document.getElementById('imagepreview').name;
+    exploreProfile(pictureid);
+  });
 
 })
 
@@ -244,11 +268,31 @@ function saveContent(contentPath) {
       if (this.readyState == 4 && this.status == 200) {
         response = String(this.responseText);
         console.log(response);
+	      window.location.replace(window.location.href);
      } else {
-      return false;
+      $('#failMessage').css({
+            visibility: 'visible'
+          });
      }
   };
-  xhttp.open("POST", "save-content", true);
+  xhttp.open("POST", "/save-content", true);
+  xhttp.send(contentPath); 
+}
+
+function deleteContent(contentPath) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        response = String(this.responseText);
+        console.log(xhttp.responseText);
+        if (xhttp.responseText === "deleted") {
+          window.location.replace(window.location.href);
+        } else { 
+          
+        }
+      } 
+  };
+  xhttp.open("POST", "/delete-content", true);
   xhttp.send(contentPath); 
 }
 
@@ -260,7 +304,8 @@ function uploadProfilePic(profilePicForm, inputName) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         console.log(this.responseText);
-        document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/' + inputName;
+        document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/profilePic.jpg';
+        document.getElementById('profilePic').src = '/profiles/'+ this.responseText + '/profilePic.jpg';
       } 
   };
   xhttp.open("POST", "uploadProfilePic", true);
@@ -282,11 +327,24 @@ function reportContent(pictureId, reportDescription) {
 
 }
 
+function exploreProfile(pictureid) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      } 
+  };
+  xhttp.open("POST", "account", true);
+  xhttp.send(pictureId);
+}
+
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
     document.getElementById('styled-image').src = '/tmp/'+inputName;
     $('.sk-folding-cube').css({
+      visibility: 'hidden'
+    });
+    $('#failMessage').css({
       visibility: 'hidden'
     });
     $('#uploaded-image').css({
