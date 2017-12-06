@@ -109,7 +109,7 @@ $(document).ready(function(){
     styleContent(content, style);
     
     $('.sk-folding-cube').css({
-      visibility: 'hidden'
+      visibility: 'visable'
     });
 
     $('#uploaded-image').css({
@@ -175,13 +175,20 @@ function uploadContent(contentForm, inputName) {
       if(e.lengthComputable){
         var percentage = (e.loaded / e.total)*100;
         console.log(percentage+"%");
+        $('.sk-folding-cube').css({
+          visibility: 'visable'
+        });
       }
     };
     xhttp.onerror = function(e){
       console.log('Error: ', e);
     };
     xhttp.onload = function(e){
-      readURL(xhttp.responseText);
+      $('.sk-folding-cube').css({
+        visibility: 'hidden'
+      });
+
+      readURL(xhttp.responseText);    
     }
     xhttp.send(formData);
 }
@@ -190,24 +197,37 @@ function uploadContent(contentForm, inputName) {
 function styleContent(content, style) {
 
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        response = this.responseText;
-        // document.getElementById('uploaded-image').src = '/tmp/' + this.responseText;
-     } 
+  
+  xhttp.open("POST", "/style-content", true);
+  xhttp.onprogress = function () {
+    console.log(xhttp.response); // readyState will be 3
   };
-  xhttp.open("POST", "style-content", true);
+
+  xhttp.onload = function () {
+      $('.sk-folding-cube').css({
+        visibility: 'hidden'
+      });
+     readURL('results.jpg');
+  };
   xhttp.send(content + " " + style);
 }
 
 // sends the content path and upload style form to the style-upload-controller 
 function uploadStyle(contentPath) {
-  var http = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   var form = document.getElementById('uploadStyleForm');
   var formData = new FormData(form);
-  console.log(formData);
-  http.open("POST", "styleUpload", true);
-  // var form = document.getElementById("uploadPhotoForm").value;
+ 
+  xhr.open("POST", "styleUpload", true);
+ 
+  xhr.onprogress = function () {
+    console.log(xhr.response); // readyState will be 3
+  };
+
+  xhr.onload = function () {
+    console.log('DONE', xhr.response); // readyState will be 4
+  };
+  
   http.send(contentPath, formData); 
 }
 

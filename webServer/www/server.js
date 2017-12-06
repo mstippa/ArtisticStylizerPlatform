@@ -7,6 +7,7 @@ var express = require('express');
 var path    = require('path');
 var app     = express();
 var http    = require('http');
+var Usage   = require('./model/usage.js')
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 app.set('view engine', 'ejs'); //set the view engine to ejs
 
@@ -29,8 +30,8 @@ app.use(express.static('public', options));
 /**************************************************************
 *						Server information
 ***************************************************************/
-var http_IP = '10.10.7.179';
-var http_port = 8087;
+var http_IP = '192.168.1.199';
+var http_port = 8097;
 
 
 /**************************************************************
@@ -55,7 +56,8 @@ var sessionOpts = {
 
 
 app.use(cookieParser('aspawesomeness')); // read cookies (needed for auth)
-app.use(bodyParser()); //get information from html forms
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(session(sessionOpts)); //tell our app to use sessions initalized with our sessionOpts
 
@@ -85,9 +87,17 @@ app.use(router);
 *						error handling middleware
 **************************************************************/
 app.use(function(err, req, res, next){
+  console.log("I CAUGHT ITTTTT");
 	console.error(err.stack);
 	next(err);
 })
+
+app.on('uncaughtException', function(err) {
+  console.log("uncaughtException\n" + util.inspect(err));
+});
+app.on('error', function(err){
+  console.log("uncaughtException\n" + util.inspect(err));   
+});
 
 /**************************************************************
 *                                               Database
@@ -111,52 +121,51 @@ db.connect(db.MODE_PRODUCTION, function(err){
         } else {
                 /**************************************************************
                 *                               Set up the queue for style transfers
-                **************************************************************/
-                         
-               
+                **************************************************************/    
                var spawn = require('child_process').spawn;
                var scriptExecution = spawn("python3", ['./scripts/processManager.py']);
                scriptExecution.stdout.on('data', function(data) {
-                var usage = String(data).split(",");
-                console.log("Usage: ", usage);
-                var xhttp = new XMLHttpRequest();
-                
-                xhttp.open("POST", "style-content", true);
-                xhttp.send(usage[4] + " " + usage[7]);
+                  var usage = String(data).split(", ");
 
+                  Usage.saveUsage(usage[0], usage[1], usage[2], usage[3], null, null, usage[6], function(err, result){
+                    if(err) throw err;
+                    console.log(result);
+                  })
 
-                
-
-                  
-                  
-              
-               });
-
-               
-               // var pyshell = new PythonShell('./scripts/processManager.py', options, {mode: 'text'});
-               //  event handler for when a style transfer is completed
-               //  pyshell.on('message', function(message){
-               //          // received a message sent from the Python script (a simple "print" statement)
-               //          console.log("asdfasdfasdf");
-               //    console.log(message);
-
-               //          // we finished a style transfer, write the useage to the database
-
-               //      app.post('style-content', function(req, res){
-               //      	res.send(message);
-               //          })
-
-               // });
-
-
+                  console.log("Usage: ", usage);
+                  var options = {
+                    hostname: http_IP,
+                    port: http_port,
+                    path: '/style-content',
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                      'Connection' : 'close'
+                    }
+                  };
+                  var req = http.request(options, function(res){
+                    //console.log("shout out from server.js");
+                    res.send("done");
+                    req.end();
+                    res.end();
+                  }).on('uncaughtException', function(err) {
+                    console.log("uncaughtException\n" + util.inspect(err));
+                  });
+                  req.write(usage[3]+" "+usage[6]);
+                  req.end();
+               }) // end python script event listener
 
                 /****************************************************************************
                 *                       Tell the app to listen to the speicfied port and ip
                 ****************************************************************************/
                 app.listen(http_port,http_IP);
-
+                process.on('uncaughtException', function(err) {
+                    console.log("uncaughtException: ", err);
+                  });
+                process.on('error', function(err) {
+                    console.log("err: ", err);
+                  });
                 //output to console
                 console.log('listening to http://' + http_IP + ':' + http_port);
-
         }
-});
+  })
