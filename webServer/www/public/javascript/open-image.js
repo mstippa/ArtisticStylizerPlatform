@@ -6,6 +6,8 @@ var contentURL;
 // global variable that holds the response 
 var response;
 
+$( window ).on( "load", function() {$('.deleteButtons').css({visibility: 'visible'})});
+
 $(document).ready(function(){
 
   // turn of auto cycle in the carousel
@@ -65,6 +67,14 @@ $(document).ready(function(){
     inputName = inputName.replace(/.*[\/\\]/, '');
     uploadContent('uploadPhotoForm', inputName);
   });
+
+  $("#uploadStyle").change(function () {
+    var inputName = this.value;
+    inputName = inputName.replace(/.*[\/\\]/, '');
+    uploadStyle('uploadStyleForm', inputName);
+  });
+
+
   
   // displays the uploaded profile pic
   function changeProfilePic(inputName) {
@@ -223,6 +233,40 @@ function uploadContent(contentForm, inputName) {
     xhttp.send(formData);
 }
 
+// sends the upload style form to the content-upload controller
+function uploadStyle(contentForm, inputName) {
+    var xhttp = new XMLHttpRequest();
+    var form = document.getElementById(contentForm);
+    var formData = new FormData(form);
+
+    xhttp.open("POST", "styleUpload", true);
+    
+    xhttp.upload.onprogress = function(e){
+      if(e.lengthComputable){
+        var percentage = (e.loaded / e.total)*100;
+        console.log(percentage+"%");
+        $('.sk-folding-cube').css({
+          visibility: 'visible'
+        });
+      }
+    };
+    xhttp.onerror = function(e){
+      console.log('Error: ', e);
+    };
+    xhttp.onload = function(e){
+      var response = xhttp.responseText;
+      var styleName = response.substr(0, response.indexOf(" "));
+      var profileId = response.substr(response.indexOf(" ") + 1, response.length-1);
+      var style = '/profiles/'+profileId+'/styles/'+styleName;
+      console.log(style);
+      var content = document.getElementById('uploaded-image').src;
+      content = content.replace(/^(?:\/\/|[^\/]+)*\//, "");
+      console.log(content);
+      styleContent(content, style);    
+    };
+    xhttp.send(formData);
+}
+
 // sends the content path and style path to the sytle-content-controller
 function styleContent(content, style) {
 
@@ -250,23 +294,23 @@ function styleContent(content, style) {
 }
 
 // sends the content path and upload style form to the style-upload-controller 
-function uploadStyle(contentPath) {
-  var xhr = new XMLHttpRequest();
-  var form = document.getElementById('uploadStyleForm');
-  var formData = new FormData(form);
+// function uploadStyle(contentPath) {
+//   var xhr = new XMLHttpRequest();
+//   var form = document.getElementById('uploadStyleForm');
+//   var formData = new FormData(form);
  
-  xhr.open("POST", "styleUpload", true);
+//   xhr.open("POST", "styleUpload", true);
  
-  xhr.onprogress = function () {
-    console.log(xhr.response); // readyState will be 3
-  };
+//   xhr.onprogress = function () {
+//     console.log(xhr.response); // readyState will be 3
+//   };
 
-  xhr.onload = function () {
-    console.log('DONE', xhr.response); // readyState will be 4
-  };
+//   xhr.onload = function () {
+//     console.log('DONE', xhr.response); // readyState will be 4
+//   };
   
-  http.send(contentPath, formData); 
-}
+//   http.send(contentPath, formData); 
+// }
 
 // sends the stylized photo to the save-content controller to be saved
 function saveContent(contentPath) {
@@ -280,7 +324,7 @@ function saveContent(contentPath) {
           $('#failMessage').css({
             visibility: 'visible'
           });
-          
+
         }  
      }
   };

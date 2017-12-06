@@ -6,8 +6,9 @@
       <%var i = 0; %>
       <% while (i < profile.pictures.length) { %>
           <div class="grid-item" styl="position: relative;">
-            <div id="deleteButton" style="position: absolute;top: 4px;right: 0px;z-index: 1;background-color: lightcoral;border-radius: 11px;cursor: -webkit-grab;font-size: 58px;padding: 0px;">X</div>
+            
             <a href="#" class="pop"><img src= "<%= profile.pictures[i].picturePath %>" ></a>
+            <div id="deleteButton" class="deleteButtons" style="position: absolute;top: 4px;right: 0px;z-index: 1;background-color: lightcoral;border-radius: 11px;cursor: -webkit-grab;font-size: 58px;padding: 0px; visibility: hidden;">X</div>
           </div> 
           <% i++; %> 
       <% } %>

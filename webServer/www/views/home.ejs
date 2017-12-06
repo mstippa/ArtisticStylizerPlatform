@@ -45,7 +45,7 @@
 		      	<div class="file-upload">
 		        	<div class="file-select">	
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon" style="font-size: 30px">camera_alt</i></div>
-		          		<div class="file-select-name" id="noFile" style="font-size:20px">Upload Photo</div>
+		          		<div class="file-select-name" id="noFile" style="font-size:20px" for="uploadPhoto" >Upload Photo</div>
 		          		<form method="post" id="uploadPhotoForm" enctype="multipart/form-data">
 		          			<input id="uploadPhoto" type="file" class="upload" accept=".png,.jpg" name="content"   />
 		          		</form>	
@@ -70,7 +70,10 @@
         			<div class="modal-header">
         				<div class="container carousel-container">
         					<div class="row">
-        						<div class="col-md-12" style="text-align: center; margin-bottom: 20px; font-size: 20px;">Choose Style</div>
+                                <form method="post" id="uploadStyleForm" enctype="multipart/form-data">
+                                    <input id="uploadStyle" type="file" class="upload" accept=".png,.jpg" name="style_content"   />
+                                </form>
+        						<label for="uploadstyle" class="col-md-12" style="text-align: center; margin-bottom: 20px; font-size: 20px;">Choose Style</label>
         					</div>
 							<!-- write the header -->
 							<% include partials/styles %>
