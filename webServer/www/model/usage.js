@@ -4,6 +4,10 @@
 var db      = require('../db.js');
 var async   = require('async');
 
+// constructor
+function Usage(){
+
+}
 /**
 * Gets all the usages with a sort
 **/
@@ -54,21 +58,22 @@ Usage.getUsages = function(done){
 		premium_style_id - The premium Style that is to be transferred (NULL if style_id is used)
 		content_path     - The path to the completed styled imgage  
 **/
-Usage.saveUseage = function(start_time, end_time, content_size, profile_id, style_id, premium_style_id, content_path, done){
+Usage.saveUsage = function(start_time, end_time, content_size, profile_id, style_id, premium_style_id, content_path, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
 		// insert the new usage into our db
-		connection.query('insert into usages(process_time, content_size, profile_id, style_id, premium_style_id, content_path)'
-			+' values(?,?,?,?,?,?)',
-			{
-				process_time	 : process_time,
-				content_size     : content_size,
-				profile_id       : profile_id,
-				style_id 		 : style_id,
-				premium_style_id : premium_style_id,
-				content_path	 : content_path
-			}, function(err, savedUsage){
+		connection.query('insert into usages(start_time, end_time, content_size, profile_id, style_id, premium_style_id, content_path)'
+			+' values(?,?,?,?,?,?,?)',
+			[
+				start_time,
+				end_time,
+				content_size,
+				profile_id,
+				style_id,
+				premium_style_id,
+				content_path
+			], function(err, savedUsage){
 				connection.release();
 
 				if(err) done(err);
@@ -77,6 +82,6 @@ Usage.saveUseage = function(start_time, end_time, content_size, profile_id, styl
 				return done(err, savedUsage);
 			})
 
-	}
+	});
 }
 module.exports = Usage;

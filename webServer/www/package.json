@@ -27,6 +27,7 @@
 		"mysql": "*",
 		"passport": "*",
 		"passport-local": "*",
-		"python-shell": "^0.4.0"
+		"python-shell": "^0.4.0",
+		"xmlhttprequest": "^1.8.0"
 	}
 }

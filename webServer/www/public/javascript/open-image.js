@@ -11,14 +11,14 @@ $(document).ready(function(){
   // turn of auto cycle in the carousel
   $('.carousel').carousel({
     interval: false
-  }); 
-
-  // hide the fail message
+  });
+	
+// hide the fail message
   $('#failMessage').css({
     visibility: 'hidden'
   });
-
-  $('#closeButton').on('click', function() {
+	
+ $('#closeButton').on('click', function() {
     $('#uploaded-image').attr('src', '');
     $('#failMessage').css({
       visibility: 'hidden'
@@ -43,7 +43,7 @@ $(document).ready(function(){
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
-    $('#failMessage').css({
+	$('#failMessage').css({
       visibility: 'hidden'
     });
     $('#uploadModal').modal('show');
@@ -155,9 +155,9 @@ $(document).ready(function(){
   $('#saveButton').click(function() {
     // var contentToSave = $('#uploaded-image').attr('src');
 
-    var contentToSave = document.getElementById('uploaded-image').src;
+    var contentToSave = document.getElementById('styled-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
-    saveContent(contentToSave);    
+    saveContent(contentToSave);
   });
 
   $('#deleteButton').click(function() {
@@ -176,7 +176,7 @@ $(document).ready(function(){
     $('#exploreModal').modal('hide');
   });
 
-  $('#profile-btn').click(function() {
+	$('#profile-btn').click(function() {
     var pictureid = document.getElementById('imagepreview').name;
     exploreProfile(pictureid);
   });
@@ -203,6 +203,9 @@ function uploadContent(contentForm, inputName) {
       if(e.lengthComputable){
         var percentage = (e.loaded / e.total)*100;
         console.log(percentage+"%");
+        $('.sk-folding-cube').css({
+          visibility: 'visable'
+        });
       }
     };
     xhttp.onerror = function(e){
@@ -210,6 +213,9 @@ function uploadContent(contentForm, inputName) {
     };
     xhttp.onload = function(e){
       readURL(xhttp.responseText);
+      $('.sk-folding-cube').css({
+        visibility: 'hidden'
+      });    
     }
     xhttp.send(formData);
 }
@@ -218,24 +224,44 @@ function uploadContent(contentForm, inputName) {
 function styleContent(content, style) {
 
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        response = this.responseText;
-        // document.getElementById('uploaded-image').src = '/tmp/' + this.responseText;
-     } 
+  
+  xhttp.open("POST", "/style-content", true);
+  xhttp.onprogress = function () {
+    console.log(xhttp.response); // readyState will be 3
   };
-  xhttp.open("POST", "style-content", true);
+
+  xhttp.onload = function () {
+      document.getElementById('styled-image').src = '/tmp/'+xhttp.responseText;
+      $('#styled-image').css({
+        visibility: 'visible'
+      });
+      $('.sk-folding-cube').css({
+        visibility: 'hidden'
+      });
+      $('#uploaded-image').css({
+        visibility: 'hidden'
+      });
+      $('#uploadModal').modal('show');
+  };
   xhttp.send(content + " " + style);
 }
 
 // sends the content path and upload style form to the style-upload-controller 
 function uploadStyle(contentPath) {
-  var http = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   var form = document.getElementById('uploadStyleForm');
   var formData = new FormData(form);
-  console.log(formData);
-  http.open("POST", "styleUpload", true);
-  // var form = document.getElementById("uploadPhotoForm").value;
+ 
+  xhr.open("POST", "styleUpload", true);
+ 
+  xhr.onprogress = function () {
+    console.log(xhr.response); // readyState will be 3
+  };
+
+  xhr.onload = function () {
+    console.log('DONE', xhr.response); // readyState will be 4
+  };
+  
   http.send(contentPath, formData); 
 }
 
@@ -245,20 +271,17 @@ function saveContent(contentPath) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         response = String(this.responseText);
-        console.log(xhttp.responseText);
         if (xhttp.responseText !== "fail") {
-          window.location.replace("http://192.168.1.199:8085/home");
-        } else { 
-          $('#failMessage').css({
+	      window.location.replace(window.location.href);
+     } else {
+      $('#failMessage').css({
             visibility: 'visible'
           });
-        }
-      }  
+     }
   };
-  xhttp.open("POST", "save-content", false);
+  xhttp.open("POST", "/save-content", true);
   xhttp.send(contentPath); 
 }
-
 
 function deleteContent(contentPath) {
   var xhttp = new XMLHttpRequest();
@@ -267,13 +290,13 @@ function deleteContent(contentPath) {
         response = String(this.responseText);
         console.log(xhttp.responseText);
         if (xhttp.responseText === "deleted") {
-          window.location.replace("http://192.168.1.199:8085/home");
+          window.location.replace(window.location.href);
         } else { 
           
         }
       } 
   };
-  xhttp.open("POST", "delete-content", true);
+  xhttp.open("POST", "/delete-content", true);
   xhttp.send(contentPath); 
 }
 
@@ -321,17 +344,19 @@ function exploreProfile(pictureid) {
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
-
+    document.getElementById('styled-image').src = '/tmp/'+inputName;
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
-
     $('#failMessage').css({
       visibility: 'hidden'
     });
     $('#uploaded-image').css({
       visibility: 'visible'
     });
+    $('#styled-image').css({
+      visibility: 'hidden'
+    });
     $('#uploadModal').modal('show');
-  }    
+  }   
 
