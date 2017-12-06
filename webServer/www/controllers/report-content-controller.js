@@ -15,14 +15,21 @@ exports.post = function(req, res){
     var dataString = String(data);
     var pictureid = dataString.substr(0, dataString.indexOf(" "));
     var reportcontent = dataString.substr(dataString.indexOf(" ") + 1, dataString.length-1);
-
+    var userProfile;
     Profile.getProfile(req.user.userid, function(err, result) {
       if (err) throw err;
       console.log(result);
       userProfile = result;
-      Profile.reportPicture(userProfile.profileid, pictureid, null, reportcontent, function(err, result) {
+      Profile.getProfileFromPic(pictureid, function(err, result) {
         if (err) throw err;
-        response();
+        var pictureProfileId = result;
+        console.log(result);
+
+        Profile.reportPicture(pictureProfileId, userProfile.profileid, pictureid, null, reportcontent, function(err, result) {
+          if (err) throw err;
+          response();
+
+        });  
 
       });  
 

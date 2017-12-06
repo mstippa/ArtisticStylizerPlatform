@@ -176,6 +176,11 @@ $(document).ready(function(){
     $('#exploreModal').modal('hide');
   });
 
+  $('#profile-btn').click(function() {
+    var pictureid = document.getElementById('imagepreview').name;
+    exploreProfile(pictureid);
+  });
+
 })
 
 ////////////////////////////////////////////////
@@ -242,7 +247,7 @@ function saveContent(contentPath) {
         response = String(this.responseText);
         console.log(xhttp.responseText);
         if (xhttp.responseText !== "fail") {
-          window.location.replace("http://10.10.7.179:8086/home");
+          window.location.replace("http://192.168.1.199:8085/home");
         } else { 
           $('#failMessage').css({
             visibility: 'visible'
@@ -262,7 +267,7 @@ function deleteContent(contentPath) {
         response = String(this.responseText);
         console.log(xhttp.responseText);
         if (xhttp.responseText === "deleted") {
-          window.location.replace("http://10.10.7.179:8086/home");
+          window.location.replace("http://192.168.1.199:8085/home");
         } else { 
           
         }
@@ -301,6 +306,16 @@ function reportContent(pictureId, reportDescription) {
   xhttp.open("POST", "reportContent", true);
   xhttp.send(pictureId + " " + reportDescription);
 
+}
+
+function exploreProfile(pictureid) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      } 
+  };
+  xhttp.open("POST", "account", true);
+  xhttp.send(pictureId);
 }
 
   // displays the uploaded image or video in a modal

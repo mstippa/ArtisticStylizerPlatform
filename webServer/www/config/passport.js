@@ -45,7 +45,7 @@ module.exports = function(passport) {
         	// we are checking to see if the user trying to login already exists
         	User.findByUsername(username, function(err, user) {
             	console.log("user : ",user);
-
+                var createUser = req.body
                 // if there are any errors, return the error
             	if (err)
                 	return done(err);
@@ -65,6 +65,9 @@ module.exports = function(passport) {
 
             		newUser.setUsername(username);
             		newUser.password = newUser.generateHash(password);
+                    newUser.email = createUser.email;
+                    newUser.firstname = createUser.fname;
+                    newUser.lastname = createUser.lname;
 
             		newUser.save(function(err){
             			if(err)

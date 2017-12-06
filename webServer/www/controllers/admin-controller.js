@@ -9,16 +9,30 @@
 
 **/
 
+var User = require('../model/user');
+var db = require('../db');
+var Profile = require('../model/profile');
+
 exports.get = function(req, res) {
 
-	//put in the headers that we were successful
-	// response.writeHead(200, {
-	// 		'Content-Type':'text/html'
-	// });
+	User.isAdmin(req.user.userid, function(err, result) {
+		if (err) throw err;
+		var adminBoolean = result;
+		if (adminBoolean) {
+			Profile.getReports(function(err, result) {
+				if (err) throw err;
+				var reports = result;
+				
+				renderPage(reports);
+			})
+		}
+
+	});
 	
 
-	
-		return res.render("../views/admin.ejs", { user : req.user });
+		function renderPage(result) {
+			return res.render("../views/admin.ejs", { user : req.user, reports: result });
+		}	
 	
 	
 };

@@ -9,18 +9,19 @@
 
 **/
 
+var User = require('../model/user');
+
 exports.get = function(req, res) {
-	var adminBoolean;
+	var userProfile;
 	if (req.user) {
-		User.isAdmin(req.user.userid, function(err, result) {
-			if (err) throw err;
-			adminBoolean = result;
-			console.log(adminBoolean);
-			renderPage();
-		});
+
+			User.isAdmin(req.user.userid, function(err, result) {
+				if (err) throw err;
+				renderPage( result);
+			});
+
 	} else {
-		adminBoolean = false;
-		renderPage();
+		renderPage(false);
 	}
 
 	

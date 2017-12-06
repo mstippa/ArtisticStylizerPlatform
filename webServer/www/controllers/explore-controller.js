@@ -10,6 +10,7 @@
 **/
 
 var Profile = require('../model/profile');
+var User = require('../model/user');
 
 exports.get = function(req, res) {
 
@@ -20,13 +21,18 @@ exports.get = function(req, res) {
 		allPictures = result;
 		Profile.getProfile(req.user.userid, function(err, result) {
 			userProfile = result;
-			displayPage(allPictures, userProfile)
+
+			User.isAdmin(req.user.userid, function(err, result) {
+				if (err) throw err;
+				displayPage(allPictures, userProfile, result);
+			});
+			
 		});
 
 	});
 
-	function displayPage(allPictures, userProfile) {
-		return res.render("../views/explore.ejs", { user : req.user, pictures: allPictures, profile: userProfile });
+	function displayPage(allPictures, userProfile, adminBoolean) {
+		return res.render("../views/explore.ejs", { user : req.user, pictures: allPictures, profile: userProfile, admin: adminBoolean });
 	}	
 };
 

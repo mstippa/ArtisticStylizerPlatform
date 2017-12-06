@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `videos` (
 CREATE TABLE IF NOT EXISTS `reports` (
 	`report_id`				int(11)			NOT NULL		AUTO_INCREMENT,
 	`reporter_profile_id`	int(11)			NOT NULL,
+	`picture_profile_id`	int(11)			NOT NULL,
 	`video_id`				int(11),
 	`picture_id`			int(11),
 	`date_reported`			TIMESTAMP 		DEFAULT CURRENT_TIMESTAMP,
@@ -223,7 +224,9 @@ ALTER TABLE reports
 ALTER TABLE reports
 	ADD FOREIGN KEY(video_id)				REFERENCES videos(video_id);
 ALTER TABLE reports
-	ADD FOREIGN KEY(picture_id)				REFERENCES pictures(picture_id);				
+	ADD FOREIGN KEY(picture_id)				REFERENCES pictures(picture_id);	
+ALTER TABLE reports
+	ADD FOREIGN KEY(picture_profile_id)		REFERENCES profiles(profile_id);				
 
 -- TRANSACTIONS table constraints
 ALTER TABLE transactions

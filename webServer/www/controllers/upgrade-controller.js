@@ -13,12 +13,14 @@ exports.get = function(req, res) {
 	Profile.getProfile(req.user.userid, function(err, res) {
 		if (err) throw err;
 		userProfile = res;
-		renderPage();
-
+		User.isAdmin(req.user.userid, function(err, result) {
+			if (err) throw err;
+			renderPage(result);
+		});
 	});
 
-	function renderPage() {
-		res.render("../views/upgrade.ejs" , {user: req.user, profile: userProfile});
+	function renderPage(adminBoolean) {
+		res.render("../views/upgrade.ejs" , {user: req.user, profile: userProfile, admin: adminBoolean});
 
 	}
 

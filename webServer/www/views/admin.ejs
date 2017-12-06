@@ -37,7 +37,7 @@
                 <li><a href="#reports"><span class="navbar-tab">Reports</span></a></li>
                 <li><a href="#queue"><span class="navbar-tab">Queue</span></a></li>
                 <li><a href="#logs"><span class="navbar-tab">System Logs</span></a></li>
-                <li><a href="/#"><span class="sign-up">Logout</span></a></li>
+                <li><a href="/logout">Logout</a></li>
               <!-- only display the dropdown if the user is logged in -->
             </ul>
           </div>
@@ -82,17 +82,10 @@
                   <th>User</th>
                   <th>Descripition</th>
                   <th>Reported User</th>
-                  <th>Content</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>09/23/2017</td>
-                  <td>h_clinton</td>
-                  <td>Content contains nudity</td>
-                  <td>d_trump44</td>
-                  <td>content_link</td>
-                </tr>
+                <% include partials/reportedContent %>
               </tbody>
             </table>
           </div>  

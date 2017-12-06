@@ -11,7 +11,6 @@
     	</div>
     	<div class="collapse navbar-collapse" id="myNavbar">
       		<ul class="nav navbar-nav navbar-right">
-				<li><a href="/explore"><span class="navbar-tab">Explore</span></a></li>
         		<li><a href="/about"><span class="navbar-tab">About</span></a></li>
 	    		<!-- if the user isnt logged in display the loggin & signup link -->
 	    		<% if(!user){ %>
@@ -20,6 +19,7 @@
 	    		<% } %>
 	    		<!-- only display the dropdown if the user is logged in -->
 				<% if(user && admin === false){ %>
+					<li><a href="/explore"><span class="navbar-tab">Explore</span></a></li>
 				<% if(profile.subscription === 1) { %>
 					<li><a href="/upgradeAccount"><span class="sign-up">Upgrade</span></a></li>
 				<% } %>	

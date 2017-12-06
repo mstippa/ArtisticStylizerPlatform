@@ -109,7 +109,7 @@ User.prototype.save = function(done){
 
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
-		
+		console.log(userOptions);
 		connection.query('INSERT INTO users (username, email_address, password, dob, fname, lname, subscription_id)'
 			+' VALUES (?,?,?,?,?,?,?)',
 			userOptions,

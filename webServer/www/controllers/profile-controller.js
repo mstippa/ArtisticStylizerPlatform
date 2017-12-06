@@ -8,28 +8,27 @@
 	user.
 
 **/
-var sessionUser = require('../model/user.js');
+var User = require('../model/user.js');
 var Profile = require('../model/profile.js');
 
  exports.get = function(req, res) {
- 	sessionUser = req.user;
+ 	
 
- 	Profile.getProfile(sessionUser.userid, function(err, result){
+ 	Profile.getProfile(req.user.userid, function(err, result){
  		if(err) throw err;
 
  		var userProfile = result;
 
 
- 		Profile.getProfilePicture(userProfile.profileid, 
- 			function(err, result) { 
- 				if (err) throw err;
- 				var profilePic = '/images/pip.png';
-      
- 				if(result != null)
- 					profilePic = result.profile_pic_path;
-      
- 				return res.render("../views/profile.ejs", { user : sessionUser , picture: profilePic })
+ 		Profile.getProfilePicture(userProfile.profileid, function(err, result) { 
+			if (err) throw err;
+			profilePic = result.profile_pic_path;
+      			renderPage(userProfile, profilePic);
+ 				
  		});
  	});
+ 	function renderPage(userProfile, profilePic) {
+ 		return res.render("../views/profile.ejs", { user : req.user , picture: profilePic, admin: false });
+ 	}	
 }
 

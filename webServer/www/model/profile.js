@@ -441,13 +441,13 @@ Profile.getAllPictures = function(done){
 
 
 
-Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
+Profile.reportPicture = function(pictureProfileId, reporterProfileId, pictureId, videoId, description, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
 		//lets write a report to the database
-		connection.query('INSERT INTO reports(reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?)',
-			[reporterProfileId, videoId, pictureId, description],
+		connection.query('INSERT INTO reports(picture_profile_id, reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?,?)',
+			[pictureProfileId, reporterProfileId, videoId, pictureId, description],
 			function(err, result){
 				connection.release();
 				return done(err, result);
@@ -494,4 +494,25 @@ Profile.downgradeToFree = function(profileid, done){
 
 	});
 }
+
+Profile.getProfileFromPic = function(pictureid,done){
+
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		// get all the videos associated with the profile
+		connection.query('SELECT profile_id FROM pictures where picture_id =?',
+			[pictureid],
+			function(err, result){
+				connection.release();
+
+				if(err) return done(err);
+
+				// load the videoes and return to the callback when done 
+				return done(err, result[0].profile_id);
+			});
+
+	});
+}
+
 module.exports = Profile;

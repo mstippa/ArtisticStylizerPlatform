@@ -143,7 +143,7 @@ router.get('/admin', function(req, res){
 *				make sure the user is first logged in
 *
 ************************************************************************/
-router.get('/explore', function(req, res){
+router.get('/explore', isLoggedIn, function(req, res){
 	require('./controllers/explore-controller').get(req, res);
 });
 
@@ -157,6 +157,10 @@ router.get('/explore', function(req, res){
 ************************************************************************/
 router.get('/account', function(req, res){
 	require('./controllers/account-controller').get(req, res);
+});
+
+router.post('/account', function(req, res){
+	require('./controllers/account-controller').post(req, res);
 });
 
 /************************************************************************
