@@ -269,18 +269,18 @@ function uploadStyle(contentPath) {
 function saveContent(contentPath) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        response = String(this.responseText);
-        if (xhttp.responseText !== "fail") {
-	      window.location.replace(window.location.href);
-     } else {
-      $('#failMessage').css({
-            visibility: 'visible'
-          });
-     }
-  };
-  xhttp.open("POST", "/save-content", true);
-  xhttp.send(contentPath); 
+    if (this.readyState == 4 && this.status == 200) {
+      if (xhttp.responseText !== "fail") {
+	       window.location.replace(window.location.href);
+      }else {
+        $('#failMessage').css({
+           visibility: 'visible'
+         });
+      }
+    };
+    xhttp.open("POST", "/save-content", true);
+    xhttp.send(contentPath); 
+  }
 }
 
 function deleteContent(contentPath) {
@@ -340,6 +340,7 @@ function exploreProfile(pictureid) {
   xhttp.open("POST", "account", true);
   xhttp.send(pictureId);
 }
+
 
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
