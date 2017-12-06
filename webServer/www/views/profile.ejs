@@ -24,18 +24,21 @@
   <div class="container profile-container">
     <div class="row">
       <div class="col-md-2 col-md-offset-1">
-        <img src= "<%= picture %>" alt="Profile Picture" width="100%" id="profileImage">
+        <% if (profile.profilePath === null) { %>
+        <img src= "/images/default-profile.png" alt="Profile Picture" width="100%" id="profileImage">
+        <% } else { %>
+        <img src= "/images/default-profile.png" alt="Profile Picture" width="100%" id="profileImage">
+        <% } %>
         <form action="post" enctype="multipart/form-data" id="changeProfilePicForm">
           <input type='file'  id="changeProfilePicInput" accept=".png,.jpg" name="profilepic"/>
         </form>  
-        <label for="changeProfilePicInput">Change</label>
+        <label for="changeProfilePicInput" style="cursor: pointer;">Change</label>
       </div>
       <div class="col-md-6 col-md-offset-1">
-        <p style="font-size: 25px; letter-spacing: 5px;">Bilbo Baggins</p>
+        <p style="font-size: 25px; letter-spacing: 5px;"><%=user.firstname %> <%= user.lastname %></p>
         <hr>
         <div style="margin-top: 15px;">
           <span style="color: #A9A9A9; font-size: 12px; letter-spacing: 2px;">Account Information</span>
-          <button style="border: none; background: transparent; position: absolute; left: 180px; color: #224099;"><span>Edit</span></button>
         </div>  
         <label for="username" style="margin-top: 15px;">Username</label>
         <p id="username"> <%= user.username %></p>
@@ -45,18 +48,14 @@
         <hr style="margin-top: 30px;">
         <div style="margin-top: 15px">
           <span style="color: #A9A9A9; font-size: 12px; letter-spacing: 2px;">Basic Information</span>
-          <button style="border: none; background: transparent; position: absolute; left: 180px; color: #224099;"><span>Edit</span></button>
         </div>  
         <div style="margin-top: 30px;">
           <span>Email Address</span>
-          <span style="position: absolute; left: 170px;">my_precious@gmail.com</span>
-        </div>
-        <div style="margin-top: 20px;">  
-          <span>Birthday</span>
-          <span style="position: absolute; left: 170px;">April 5, 2049</span>
-        </div>    
+          <span style="position: absolute; left: 170px;"><%= user.email %></span>
+        </div>   
       </div>  
-    </div>  
+    </div>
+    <div class="row">  
   </div>
 
 

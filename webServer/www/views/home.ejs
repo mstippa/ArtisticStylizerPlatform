@@ -15,7 +15,6 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <script type="text/javascript" src="/javascript/home-grid.js"></script>
 <script type="text/javascript" src="/javascript/open-image.js"></script>
-<meta property="og:url"           content="/images/rowing.jpg" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -41,17 +40,17 @@
 		</div>	
 		<div class="row">
 			<div class="col-md-4 col-md-offset-1 upload" id="upload-photo">
-		      	<div class="file-upload" data-toggle="modal" data-target="#uploadModal">
+		      	<div class="file-upload">
 		        	<div class="file-select">	
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="camera_icon" style="font-size: 30px">camera_alt</i></div>
-		          		<div class="file-select-name" id="noFile" style="font-size:20px">Choose Photo</div>
+		          		<div class="file-select-name" id="noFile" style="font-size:20px">Upload Photo</div>
 		          		<form method="post" id="uploadPhotoForm" enctype="multipart/form-data">
 		          			<input id="uploadPhoto" type="file" class="upload" accept=".png,.jpg" name="content"   />
 		          		</form>	
 		        	</div>
 		      	</div>
 			</div>
-			<div class="col-md-4 upload" id="upload-video">   	
+			<!-- <div class="col-md-4 upload" id="upload-video">   	
 				<div class="file-upload" data-toggle="modal" data-target="#myModal">
 		        	<div class="file-select">
 		          		<div class="file-select-button" id="fileName"><i class="material-icons" id="video_icon" style="font-size: 30px">videocam</i></div>
@@ -61,7 +60,7 @@
 		          		</form>	
 		        	</div>
 		      	</div>
-			</div>	
+			</div>	 -->
 		</div>
 		<div class="modal fade" id="uploadModal" role="dialog">
     		<div class="modal-dialog">
@@ -89,18 +88,22 @@
 						  <div class="sk-cube4 sk-cube" style="background-color: #FA7470;"></div>
 						  <div class="sk-cube3 sk-cube" style="background-color: #FA7470;"></div>
 						</div>
+						<div style="position: absolute;left: 50%;bottom: 2px;">
+							<div id="failMessage" style="background-color: lavender;font-size: 20px;padding: 25px;position: relative;border-radius: 22px;left: -50%; ">Upgrade to Premium to Save More Images</div>
+						</div>	
         			</div>
         			<div class="modal-footer">
         				<div class="fb-share-button" data-href="http://10.10.7.179:8085/public/images/pip.png" data-layout="button" data-size="small" data-mobile-iframe="true"><a style="float:left; width: 50px; height: 50px; margin-right: 10px;" class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F10.10.7.179%2Fpublic%2Fimages%2Fpip.png&amp;src=sdkpreparse"><img src="/images/facebook.png"/></a></div>
         				<img src="/images/twitter.png" style="float:left; width: 50px; height: 50px"/>
 						<button type="button" class="btn btn-primary modal-button" id="saveButton" >Save content</button>
-          				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          				<button type="button" class="btn btn-default" data-dismiss="modal" id="closeButton">Close</button>
         			</div>
       			</div>
     		</div>
   		</div>
 
-	</div>	
+	</div>
+		
 
 	<!-- write the grid -->
 	<% include partials/grid %>
@@ -112,8 +115,8 @@
 </body>
 
 
-<form action="upload_photo" method="post" enctype="multipart/form-data">
+<!-- <form action="upload_photo" method="post" enctype="multipart/form-data">
 content: <input type="file" name="photo" accept=".png,.jpg"><br>
 style: <input type="file" name="photo" accept=".png,.jpg"><br>
 <input type="submit" name="submit" value="stylize">
-</form>
+</form> -->

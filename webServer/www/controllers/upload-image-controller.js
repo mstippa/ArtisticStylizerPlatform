@@ -48,12 +48,12 @@ exports.post = function(req, res){
                         return;
                 }
                 // req.files is an ojbect where fieldname is the key and value is the array of files
-                console.log(req.files);
+                console.log(req.files[0].path);
 		console.log('photo uploaded');
                 var options = {
                         pythonPath: '/usr/bin/python3',
                        // scriptPath: '/home/mike/test/ArtisticStylizerPlatform/webServer/www/scripts',
-                        args: [req.files[0].path, req.files[1].path, '/home/mike/results', 256, 512]
+                        args: [req.files[0].path, req.files[1].path, '/home/morgan/Party_Time/ArtisticStylizerPlatform/webServer/www/public/tmp', 256, 512]
                 };
                 try{
                         PythonShell.run('./scripts/addToQueue.py', options, function(err){

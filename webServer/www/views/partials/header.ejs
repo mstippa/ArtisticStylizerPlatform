@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-inverse navbar-toggleable-sm">
   	<div class="container-fluid">
     	<div class="navbar-header">
@@ -10,7 +11,6 @@
     	</div>
     	<div class="collapse navbar-collapse" id="myNavbar">
       		<ul class="nav navbar-nav navbar-right">
-				<li><a href="/explore"><span class="navbar-tab">Explore</span></a></li>
         		<li><a href="/about"><span class="navbar-tab">About</span></a></li>
 	    		<!-- if the user isnt logged in display the loggin & signup link -->
 	    		<% if(!user){ %>
@@ -18,9 +18,19 @@
 	    			<li><a href="/create-account"><span class="sign-up">Sign Up</span></a></li>
 	    		<% } %>
 	    		<!-- only display the dropdown if the user is logged in -->
-				<% if(user){ %>
+				<% if(user && admin === false){ %>
+					<li><a href="/explore"><span class="navbar-tab">Explore</span></a></li>
+				<% if(profile.subscription === 1) { %>
+					<li><a href="/upgradeAccount"><span class="sign-up">Upgrade</span></a></li>
+				<% } %>	
 					<li class="dropdown">
-	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="/images/pip.png" width="45px" height="45px"><span class="caret"></span></a>
+						<% console.log(profile); %> 
+						<% if (profile.profilePath === null) {  %>
+						<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="/images/default-profile.png" width="45px" 
+						height="45px"><span class="caret"></span></a>
+	          			<% } else { %>
+	          			<a class="dropdown-toggle profile" data-toggle="dropdown" href="#"><img id="profilePic" src="<%= profile.profilePath %>" width="45px" height="45px"><span class="caret"></span></a>
+	          			<% } %>
 	          			<ul class="dropdown-menu">
 	            			<li>
 	            				<a href="/profile">Profile</a>
@@ -31,6 +41,11 @@
 	          			</ul>
 	        		</li>
 	        	<% } %> <!-- end if -->
+	        	<% if (admin === true) { %>
+	        		<li><a href="/admin"><span class="navbar-tab">Statistics</span></a></li>
+	        		<li><a href="/logout">Logout</a></li>
+	        	<% } %>
+
 	  		</ul>
 	  	</div>
 	</div>

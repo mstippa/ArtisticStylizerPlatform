@@ -5,6 +5,8 @@ import re
 import pandas as pd
 import six
 import datetime
+import sys
+import time
 
 logger = logging.getLogger("processManager")
 logger.setLevel(logging.INFO)
@@ -84,23 +86,18 @@ def run(queue_file):
   end_time = datetime.datetime.now() # time after style transfer
   remove_min_elm(file=queue_file, df=queue_df, min_rank=min_rank)
   # print out for nodejs event listener
-  print("start_time: {},\
-    end_time: {},\
-    content_size: {},\
-    profile_id: {},\
-    style_id: {},\
-    premium_style_id: {},\
-    content_path: {}".format(start_time,
-                             end_time,
-                             str(min_elm_dict[0]["final_size"]),
-                             "profile_id",
-                             "style_id",
-                             "premium_style_id",
-                             min_elm_dict[0]["content_img_path"]))
+  print("{}, {}, {}, {}, {}, {}, {}".format(start_time,
+                                            end_time,
+                                            str(min_elm_dict[0]["final_size"]),
+                                            min_elm_dict[0]["profile_id"],
+                                            min_elm_dict[0]["style_id"],
+                                            min_elm_dict[0]["ps_id"],
+                                            min_elm_dict[0]["content_img_path"]))
+  sys.stdout.flush()
 # end
 
 while True:
-  # check if queue exits 
+  # check if queue exits
   queue_file = "process_queue.json"
   if queue_file in os.listdir(os.getcwd()):
     if os.stat(queue_file).st_size != 0:
@@ -108,6 +105,8 @@ while True:
         tf_free = get_tf_status()
         if tf_free:
           logger.info("tf is free")
+          print("tf is free")
+          sys.stdout.flush()
           run(queue_file=queue_file)
       else:
         run(queue_file=queue_file)

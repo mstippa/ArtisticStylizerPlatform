@@ -9,8 +9,24 @@
 
 **/
 
-exports.get = function(req, res) {
+var User = require('../model/user');
 
-	return res.render("../views/about.ejs", { user : req.user });
+exports.get = function(req, res) {
+	var userProfile;
+	if (req.user) {
+
+			User.isAdmin(req.user.userid, function(err, result) {
+				if (err) throw err;
+				renderPage( result);
+			});
+
+	} else {
+		renderPage(false);
+	}
+
+	
+	function renderPage(adminBoolean) {
+		return res.render("../views/about.ejs", { user : req.user, admin: adminBoolean });
+	}	
 
 };

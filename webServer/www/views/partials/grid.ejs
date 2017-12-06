@@ -1,12 +1,13 @@
 <!-- Onyly display the grid if the user is logged in -->
 <% if(user){ %>
   <div class="content">
-    <div clas"grid>
+    <div class="grid">
       <div class="grid-sizer"></div>
       <%var i = 0; %>
       <% while (i < profile.pictures.length) { %>
-          <div class="grid-item">
-          <a href="#" class="pop"><img src= "<%= profile.pictures[i].picturePath %>" ></a>
+          <div class="grid-item" styl="position: relative;">
+            <div id="deleteButton" style="position: absolute;top: 4px;right: 0px;z-index: 1;background-color: lightcoral;border-radius: 11px;cursor: -webkit-grab;font-size: 58px;padding: 0px;">X</div>
+            <a href="#" class="pop"><img src= "<%= profile.pictures[i].picturePath %>" ></a>
           </div> 
           <% i++; %> 
       <% } %>
@@ -14,37 +15,4 @@
     </div>
   </div>
 
-
-  <!--  <div class="content">
-    <div class="grid">
-      <div class="grid-sizer"></div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/dinah.jpg"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/rowing.jpg"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/rowing2.jpg"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/dog.jpg"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/cape.jpg"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/pip.png"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/snow.jpg"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/compound.png"></a>
-      </div>
-      <div class="grid-item">
-        <a href="#" class="pop"><img src="/images/food.jpg"></a>
-      </div>
-    </div>
-  </div> -->
  

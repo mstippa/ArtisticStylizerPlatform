@@ -143,7 +143,7 @@ router.get('/admin', function(req, res){
 *				make sure the user is first logged in
 *
 ************************************************************************/
-router.get('/explore', function(req, res){
+router.get('/explore', isLoggedIn, function(req, res){
 	require('./controllers/explore-controller').get(req, res);
 });
 
@@ -157,6 +157,10 @@ router.get('/explore', function(req, res){
 ************************************************************************/
 router.get('/account', function(req, res){
 	require('./controllers/account-controller').get(req, res);
+});
+
+router.post('/account', function(req, res){
+	require('./controllers/account-controller').post(req, res);
 });
 
 /************************************************************************
@@ -204,6 +208,18 @@ router.post('/save-content', function(req, res){
 
 
 /************************************************************************
+*							Delete content route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/delete-content', function(req, res){
+	require('./controllers/delete-content-controller').post(req, res);
+});
+
+
+
+/************************************************************************
 *							Change Profile Pic route
 *
 *				make sure the user is first logged in
@@ -222,6 +238,28 @@ router.post('/uploadProfilePic', function(req, res){
 ************************************************************************/
 router.post('/reportContent', function(req, res){
 	require('./controllers/report-content-controller').post(req, res);
+});
+
+
+/************************************************************************
+*							Upgrade account route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.get('/upgradeAccount', function(req, res){
+	require('./controllers/upgrade-controller').get(req, res);
+});
+
+
+/************************************************************************
+*							Upgrade account route
+*
+*				make sure the user is first logged in
+*
+************************************************************************/
+router.post('/upgradeToPremium', function(req, res){
+	require('./controllers/upgrade-to-premium-controller').post(req, res);
 });
 
 

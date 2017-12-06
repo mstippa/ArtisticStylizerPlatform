@@ -52,7 +52,6 @@ User.findByUsername = function(username, done){
 				, [username]
 				, function(err, result){
 					connection.release();
-
 					if (err) return done(err); //just return the error if there is one	
 					
 					if (result.length === 0) return done(null, false, 'invalid username');
@@ -77,6 +76,23 @@ User.prototype.setUsername = function(username){
 	this.username = username;
 }
 
+
+User.isAdmin = function(userid, done){
+	db.get(db.READ, function(err,connection) {
+		if (err) return done(err);
+
+		connection.query('SELECT * FROM admins WHERE user_id = ?'
+			, [userid]
+			, function(err, result){
+				connection.release();
+				if (err) return done(err);
+
+				if (result.length === 0) return done(null, false);
+
+				return done(null, true);
+			});
+	});
+}
 // save the current user to the database
 User.prototype.save = function(done){
 
@@ -88,18 +104,18 @@ User.prototype.save = function(done){
 		this.dob,
 		this.firstname,
 		this.lastname,
-		this.subId
+		1
 	];
 
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
-
+		console.log(userOptions);
 		connection.query('INSERT INTO users (username, email_address, password, dob, fname, lname, subscription_id)'
 			+' VALUES (?,?,?,?,?,?,?)',
 			userOptions,
 			function(err, result){
 				if(err) return done(err);
-
+				console.log(result.insertId);
 				//make sure to create the profile
 				Profile.createProfile(result.insertId, function(err){
 					connection.release();

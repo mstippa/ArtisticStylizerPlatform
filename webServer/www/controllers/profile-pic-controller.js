@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
   },
   // keep the filename the same as the uploaded name
   filename: function(req, file,  callback){
-    callback(null, file.originalname);
+    callback(null, 'profilePic.jpg');
   }
 });
 
@@ -30,13 +30,19 @@ exports.post = function(req, res){
     upload(req, res, function(err){
       if(err) throw err;
       else {
-        Profile.changeProfilePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/'+req.file.originalname, function(err, results) {
+        Profile.changeProfilePicture(userProfile.profileid, '/profiles/'+userProfile.profileid+'/profilePic.jpg', function(err, results) {
           if (err) throw err;
-          res.send(userProfile.profileid);
+          sendBack(userProfile.profileid);
+          
         });
       }
     });
   });
+
+  function sendBack(id) {
+
+    res.send("" + id);
+  }
 };
 
 

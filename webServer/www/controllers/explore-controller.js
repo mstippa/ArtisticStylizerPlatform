@@ -10,19 +10,29 @@
 **/
 
 var Profile = require('../model/profile');
+var User = require('../model/user');
 
 exports.get = function(req, res) {
 
 	var allPictures;
+	var userProfile;
 	Profile.getAllPictures(function(err, result) {
-		console.log(result);
 		if (err) throw err;
 		allPictures = result;
-		displayPage(allPictures);
-	})
+		Profile.getProfile(req.user.userid, function(err, result) {
+			userProfile = result;
 
-	function displayPage(allPictures) {
-		return res.render("../views/explore.ejs", { user : req.user, pictures: allPictures });
+			User.isAdmin(req.user.userid, function(err, result) {
+				if (err) throw err;
+				displayPage(allPictures, userProfile, result);
+			});
+			
+		});
+
+	});
+
+	function displayPage(allPictures, userProfile, adminBoolean) {
+		return res.render("../views/explore.ejs", { user : req.user, pictures: allPictures, profile: userProfile, admin: adminBoolean });
 	}	
 };
 

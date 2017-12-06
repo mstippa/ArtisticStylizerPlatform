@@ -9,9 +9,13 @@ var async   = require('async');
 var fs      = require('fs'); // for writing to the file system
 
 // default path for all profiles
-var PATH    = 'public/profiles/'
-var FREE    = 0;
-var PAID    = 1; 
+exports.PATH    = 'public/profiles/'
+exports.FREE    = 1;
+exports.PAID    = 2; 
+
+var PATH = 'public/profiles/';
+var FREE = 1;
+var PAID = 2;
 
 // constructor
 function Profile(userId, profileId){
@@ -73,8 +77,16 @@ Profile.getProfile = function(userId, done){
 
 									profile.subscription = status;
 
-									// return the completed profile to the callback
-									return done(null, profile);
+
+									Profile.getProfilePicture(profile.profileid, function(err, picturePath) {
+										if (err) return done(err);
+
+										profile.profilePath = picturePath.profile_pic_path;
+
+										// return the completed profile to the callback
+										return done(null, profile);
+
+									});	
 								});
 							});
 						});
@@ -89,18 +101,18 @@ Profile.getUserStatus = function(profileid, done){
 		if(err) return done(err);
 
 
-		connection.query(' SELECT subscription_id FROM users where user_id = (SELECT user_id from profiles WHERE profile_id=?)',
+		connection.query(' select subscription_id FROM users where user_id in ( SELECT user_id from profiles WHERE profile_id = ?)',
 			[profileid],
 			function(err, result){
 				connection.release();
 
-
-				return done(err, result.subscription_id);
+				return done(err, result[0].subscription_id);
 			});
 	});
 }
 // create a new profile related to a user by the userid
 Profile.createProfile = function(userId, done){
+
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
@@ -347,12 +359,12 @@ Profile.savePicture = function(profileid, picturePath, size, resolution, styleid
 	});	
 }
 
-Profile.removePicture = function(pictureid, done){
+Profile.removePicture = function(picturePath, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
-		connection.query('DELETE FROM pictures WHERE picture_id=?',
-			[pictureid],
+		connection.query('DELETE FROM pictures WHERE picture_path=?',
+			[picturePath],
 			function(err, result){
 				connection.release();
 				return done(err, result);
@@ -416,13 +428,26 @@ Profile.getDefaultStyles = function(done){
 	});
 }
 
-Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
+Profile.getAllPictures = function(done){
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		connection.query('SELECT * FROM pictures', function(err, result){
+			connection.release();
+			return done(err, result);
+		})
+	})
+}
+
+
+
+Profile.reportPicture = function(pictureProfileId, reporterProfileId, pictureId, videoId, description, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
 
 		//lets write a report to the database
-		connection.query('INSERT INTO reports(reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?)',
-			[reporterProfileId, videoId, pictureId, description],
+		connection.query('INSERT INTO reports(picture_profile_id, reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?,?)',
+			[pictureProfileId, reporterProfileId, videoId, pictureId, description],
 			function(err, result){
 				connection.release();
 				return done(err, result);
@@ -441,91 +466,12 @@ Profile.getReports = function(done){
 	});
 }
 
-Profile.getAllPictures = function(done){
-	db.get(db.READ, function(err, connection){
-		if(err) return done(err);
-
-		connection.query('SELECT * FROM pictures', function(err, result){
-			connection.release();
-			return done(err, result);
-		})
-	})
-}
-
-
-Profile.upgradeToPremium = function(profileid, done){
+Profile.upgradeToPremium = function(userid, done){
 	db.get(db.WRITE, function(err, connection){
 		if(err) return done(err);
-
-		connection.query('UPDATE users SET subscription_id=1 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
-			[profileid],
-			function(err, result){
-				connection.release();
-
-				return done(err, result);
-			});
-	});
-}
-
-
-
-Profile.downgradeToFree = function(profileid, done){
-	db.get(db.WRITE, function(err, connection){
-		if(err) return done(err);
-
-		connection.query('UPDATE users SET subscription_id=0 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
-			[profileid],
-			function(err, result){
-				connection.release();
-
-				return done(err, result);
-			});
-
-	});
-}
-
-Profile.reportPicture = function(reporterProfileId, pictureId, videoId, description, done){
-	db.get(db.WRITE, function(err, connection){
-		if(err) return done(err);
-
-		//lets write a report to the database
-		connection.query('INSERT INTO reports(reporter_profile_id, video_id, picture_id, description) VALUES(?,?,?,?)',
-			[reporterProfileId, videoId, pictureId, description],
-			function(err, result){
-				connection.release();
-				return done(err, result);
-			});
-	});
-}
-
-Profile.getReports = function(done){
-	db.get(db.READ, function(err, connection){
-		if(err) return done(err);
-
-		connection.query('SELECT * FROM reports', function(err, result){
-			connection.release();
-			return done(err, result);
-		});
-	});
-}
-
-Profile.getAllPictures = function(done){
-	db.get(db.READ, function(err, connection){
-		if(err) return done(err);
-
-		connection.query('SELECT * FROM pictures', function(err, result){
-			connection.release();
-			return done(err, result);
-		})
-	})
-}
-
-Profile.upgradeToPremium = function(profileid, done){
-	db.get(db.WRITE, function(err, connection){
-		if(err) return done(err);
-
-		connection.query('UPDATE users SET subscription_id=1 FROM (SELECT * from profiles WHERE profile_id=?) p where users.user_id = p.user_id',
-			[profileid],
+		var userId = userid;
+		connection.query('UPDATE users SET subscription_id=2 WHERE user_id=?',
+			[userid],
 			function(err, result){
 				connection.release();
 
@@ -548,4 +494,25 @@ Profile.downgradeToFree = function(profileid, done){
 
 	});
 }
+
+Profile.getProfileFromPic = function(pictureid,done){
+
+	db.get(db.READ, function(err, connection){
+		if(err) return done(err);
+
+		// get all the videos associated with the profile
+		connection.query('SELECT profile_id FROM pictures where picture_id =?',
+			[pictureid],
+			function(err, result){
+				connection.release();
+
+				if(err) return done(err);
+
+				// load the videoes and return to the callback when done 
+				return done(err, result[0].profile_id);
+			});
+
+	});
+}
+
 module.exports = Profile;
