@@ -40,6 +40,10 @@ $(document).ready(function(){
   $('.pop').on('click', function() {
     contentURL = $(this).find('img').attr('src');
     $('#uploaded-image').attr('src', contentURL);
+    $('#styled-image').attr('src', contentURL);
+    $('#styled-image').css({
+      visibility: 'hidden'
+    });
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
@@ -119,17 +123,16 @@ $(document).ready(function(){
     console.log(content);
     content = content.replace(/^(?:\/\/|[^\/]+)*\//, "");
 
-    console.log(style);
-    console.log(content);
     styleContent(content, style);
     
     $('.sk-folding-cube').css({
-      visibility: 'hidden'
+      visibility: 'visible'
     });
 
     $('#uploaded-image').css({
       visibility: 'hidden'
     });
+    
     
   });
 
@@ -277,6 +280,7 @@ function saveContent(contentPath) {
           $('#failMessage').css({
             visibility: 'visible'
           });
+          
         }  
      }
   };
@@ -308,7 +312,6 @@ function uploadProfilePic(profilePicForm, inputName) {
   var formData = new FormData(form);
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         document.getElementById('profileImage').src = '/profiles/'+ this.responseText + '/profilePic.jpg';
         document.getElementById('profilePic').src = '/profiles/'+ this.responseText + '/profilePic.jpg';
       } 
