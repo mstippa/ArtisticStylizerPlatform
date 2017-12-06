@@ -1,6 +1,9 @@
 
 
 
+
+
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -27,7 +30,7 @@
         <% if (profile.profilePath === null) { %>
         <img src= "/images/default-profile.png" alt="Profile Picture" width="100%" id="profileImage">
         <% } else { %>
-        <img src= "/images/default-profile.png" alt="Profile Picture" width="100%" id="profileImage">
+        <img src= "/images/profilePic.png" alt="Profile Picture" width="100%" id="profileImage">
         <% } %>
         <form action="post" enctype="multipart/form-data" id="changeProfilePicForm">
           <input type='file'  id="changeProfilePicInput" accept=".png,.jpg" name="profilepic"/>
@@ -65,4 +68,6 @@
   </div>
 
 </body>
+
+
 
