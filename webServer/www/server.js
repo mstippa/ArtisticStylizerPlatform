@@ -123,7 +123,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                 *                               Set up the queue for style transfers
                 **************************************************************/    
                var spawn = require('child_process').spawn;
-               var scriptExecution = spawn("python3", ['./scripts/processManager.py']);
+               var scriptExecution = spawn("python3", ['./style_transfer/src/processManager.py']);
                scriptExecution.stdout.on('data', function(data) {
                   var usage = String(data).split(", ");
 

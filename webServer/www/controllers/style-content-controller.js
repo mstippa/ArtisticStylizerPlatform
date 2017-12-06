@@ -42,7 +42,7 @@ exports.post = function(req, res){
 		   					"test"]
 				};
 	        	try{
-	                PythonShell.run('./scripts/addToQueue.py', options, function(err){
+	                PythonShell.run('./style_transfer/src/addToQueue.py', options, function(err){
 	                	if (err) throw err;
 	                	responses[profile.profileid] = res; 
 	                	// let the ajax request know we're finished adding to queue
@@ -66,7 +66,7 @@ function display(data) {
 	responses.splice(data[0], 1);
 
 	//send the ajax request
-	res.send(data[0] + " " + data[1]);
+	res.send(data[1]);
 	console.log(responses);
 }
 

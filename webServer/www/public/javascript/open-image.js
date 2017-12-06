@@ -140,7 +140,7 @@ $(document).ready(function(){
   $('#saveButton').click(function() {
     // var contentToSave = $('#uploaded-image').attr('src');
 
-    var contentToSave = document.getElementById('uploaded-image').src;
+    var contentToSave = document.getElementById('styled-image').src;
     contentToSave = contentToSave.replace(/.*[\/\\]/, '');
     saveContent(contentToSave);
     console.log(response);
@@ -184,11 +184,10 @@ function uploadContent(contentForm, inputName) {
       console.log('Error: ', e);
     };
     xhttp.onload = function(e){
+      readURL(xhttp.responseText);
       $('.sk-folding-cube').css({
         visibility: 'hidden'
-      });
-
-      readURL(xhttp.responseText);    
+      });    
     }
     xhttp.send(formData);
 }
@@ -204,10 +203,17 @@ function styleContent(content, style) {
   };
 
   xhttp.onload = function () {
+      document.getElementById('styled-image').src = '/tmp/'+xhttp.responseText;
+      $('#styled-image').css({
+        visibility: 'visible'
+      });
       $('.sk-folding-cube').css({
         visibility: 'hidden'
       });
-     readURL('results.jpg');
+      $('#uploaded-image').css({
+      visibility: 'hidden'
+      })
+      $('#uploadModal').modal('show');
   };
   xhttp.send(content + " " + style);
 }
@@ -279,13 +285,16 @@ function reportContent(pictureId, reportDescription) {
   // displays the uploaded image or video in a modal
   function readURL(inputName) {
     document.getElementById('uploaded-image').src = '/tmp/'+inputName;
-
+    document.getElementById('styled-image').src = '/tmp/'+inputName;
     $('.sk-folding-cube').css({
       visibility: 'hidden'
     });
     $('#uploaded-image').css({
       visibility: 'visible'
     })
+    $('#styled-image').css({
+      visibility: 'hidden'
+    })
     $('#uploadModal').modal('show');
-  }    
+  }   
 
