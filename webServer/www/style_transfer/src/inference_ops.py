@@ -1,12 +1,22 @@
 import tensorflow as tf
 from module_utils import Utils
+import logging
+#logger = logging.getLogger("inference_ops")
+#logger.setLevel(logging.INFO)
+#formatter = logging.Formatter("%(asctime)s:%(name)s:%(message)s")
+#fileHandler = logging.FileHandler("inference_ops.log")
+#fileHandler.setFormatter(formatter)
+#
+#logger.addHandler(fileHandler)
+#
+#logger.info("in inference_op script")
 
 class Ops(Utils):
-  def __init__(self, args):
-    super().__init__(args)
+  def __init__(self, content_img_path, style_img_path, result_img_path, final_size, transient_size, alpha):
+    super().__init__(content_img_path, style_img_path, result_img_path, final_size, transient_size, alpha)
   # end
 
-  def run(self, args, sess):
+  def run(self, sess):
     """
     """
     content_img_placeholder, style_img_placeholder = self.get_placeholder_inputs()
@@ -48,6 +58,7 @@ class Ops(Utils):
 		            feed_dict={content_img_placeholder:self.CONTENT_IMG_PATH,
     	                               style_img_placeholder:self.STYLE_IMG_PATH})
     with tf.name_scope("write"):
-      self.write_img_to_file(img=decoded_content, size=[1024, 1024])
+      results_path = self.write_img_to_file(img=decoded_content, size=[1024, 1024])
+      return results_path
   # end
 # end
