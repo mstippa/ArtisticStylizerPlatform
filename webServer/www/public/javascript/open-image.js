@@ -211,8 +211,8 @@ function styleContent(content, style) {
         visibility: 'hidden'
       });
       $('#uploaded-image').css({
-      visibility: 'hidden'
-      })
+        visibility: 'hidden'
+      });
       $('#uploadModal').modal('show');
   };
   xhttp.send(content + " " + style);
@@ -291,10 +291,10 @@ function reportContent(pictureId, reportDescription) {
     });
     $('#uploaded-image').css({
       visibility: 'visible'
-    })
+    });
     $('#styled-image').css({
       visibility: 'hidden'
-    })
+    });
     $('#uploadModal').modal('show');
   }   
 
