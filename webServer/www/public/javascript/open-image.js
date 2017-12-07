@@ -288,6 +288,9 @@ function styleContent(content, style) {
       $('#uploaded-image').css({
         visibility: 'hidden'
       });
+      $('#styled-image').css({
+        visibility: 'hidden'
+      });
       $('#uploadModal').modal('show');
   };
   xhttp.send(content + " " + style);

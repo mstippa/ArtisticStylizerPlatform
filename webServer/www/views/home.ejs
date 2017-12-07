@@ -69,12 +69,24 @@
       			<div class="modal-content">
         			<div class="modal-header">
         				<div class="container carousel-container">
-        					<div class="row">
-                                <form method="post" id="uploadStyleForm" enctype="multipart/form-data">
-                                    <input id="uploadStyle" type="file" class="upload" accept=".png,.jpg" name="style_content"   />
-                                </form>
-        						<label for="uploadstyle" class="col-md-12" style="text-align: center; margin-bottom: 20px; font-size: 20px;">Choose Style</label>
-        					</div>
+
+                            <div class="row">
+                                <div class="carousel" id="uploadCarousel">
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <ul class="thumbnails">
+                                                <li class="col-sm-4 first-style-carousel">
+                                                    <div class="thumbnail" style="text-align: center; height: 135px; line-height: 130px;" >
+                                                        <div class="file-upload">
+                                                            <div class="file-select" style="height: 100%; text-align: center; ">
+                                                                <div class="file-select-name" id="premiumStyle" style="font-size:15px">Upload Style</div>
+                                                                <form method="post" id="uploadStyleForm" enctype="multipart/form-data">
+                                    <input value="choose style" id="uploadStyle" type="file" class="col-md-4" accept=".png,.jpg" name="style_content"   />
+                            </form>
+                                                            </div>  
+                                                        </div>  
+                                                    </div>
+                                                </li>
 							<!-- write the header -->
 							<% include partials/styles %>
     						<nav>

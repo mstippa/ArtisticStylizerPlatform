@@ -2,7 +2,7 @@
 
 $(document).ready(function(){
 	$('#getStarted').click(function() {
-		window.location.replace("http://192.168.1.199:8097/create-account");
+		window.location.replace("http://192.168.1.199:8093/create-account");
 	})
 
 
@@ -16,7 +16,7 @@ function upgradeAccount() {
 	var xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
      	if (this.readyState == 4 && this.status == 200) {
-        	window.location.replace("http://192.168.1.199:8097/home");
+        	window.location.replace("http://192.168.1.199:8093/home");
       	} 
   	};
   	xhttp.open("POST", "upgradeToPremium", false);
