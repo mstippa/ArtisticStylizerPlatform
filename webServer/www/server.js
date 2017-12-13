@@ -7,6 +7,8 @@ var express = require('express');
 var path    = require('path');
 var app     = express();
 var http    = require('http');
+var https   = require('https');
+var fs      = require('fs');
 var Usage   = require('./model/usage.js')
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 app.set('view engine', 'ejs'); //set the view engine to ejs
@@ -30,8 +32,8 @@ app.use(express.static('public', options));
 /**************************************************************
 *						Server information
 ***************************************************************/
-var http_IP = '192.168.1.199';
-var http_port = 8093;
+//var http_IP = '192.168.1.199';
+var http_port = 8000;
 
 
 /**************************************************************
@@ -51,7 +53,7 @@ var sessionOpts = {
   saveUninitialized: true, // saved new sessions
   resave: false, // do not automatically write to the session store
   secret: 'asp',
-  cookie : { httpOnly: true, maxAge: 2419200000 } // configure when sessions expires
+  cookie : { httpOnly: false, maxAge: 2419200000 } // configure when sessions expires
 }
 
 
@@ -125,8 +127,7 @@ db.connect(db.MODE_PRODUCTION, function(err){
                var spawn = require('child_process').spawn;
                var scriptExecution = spawn("python3", ['./style_transfer/src/processManager.py']);
                scriptExecution.stdout.on('data', function(data) {
-                  var usage = String(data).split(", ");
-
+                  var usage = String(data).split(", "); 
                   Usage.saveUsage(usage[0], usage[1], usage[2], usage[3], null, null, usage[6], function(err, result){
                     if(err) throw err;
                     console.log(result);
@@ -158,7 +159,11 @@ db.connect(db.MODE_PRODUCTION, function(err){
                 /****************************************************************************
                 *                       Tell the app to listen to the speicfied port and ip
                 ****************************************************************************/
-                app.listen(http_port,http_IP);
+                //app.listen(http_port,http_IP);
+		https.createServer({
+			key: fs.readFileSync('/etc/letsencrypt/live/artilizer.reev.us/privkey.pem'),
+			cert: fs.readFileSync('/etc/letsencrypt/live/artilizer.reev.us/cert.pem')
+		}, app).listen(http_port);
                 process.on('uncaughtException', function(err) {
                     console.log("uncaughtException: ", err);
                   });
@@ -166,6 +171,6 @@ db.connect(db.MODE_PRODUCTION, function(err){
                     console.log("err: ", err);
                   });
                 //output to console
-                console.log('listening to http://' + http_IP + ':' + http_port);
+                console.log('listening to http://' + 'artilizer.reev.us' + ':' + http_port);
         }
   })
